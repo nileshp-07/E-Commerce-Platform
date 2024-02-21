@@ -5,14 +5,16 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev" : "nodemon index.js"
+    "dev": "nodemon index.js"
   },
   "author": "Nilesh Patidar",
   "license": "ISC",
   "dependencies": {
+    "cloudinary": "^2.0.1",
     "dotenv": "^16.4.1",
     "express": "^4.18.2",
     "mongoose": "^8.1.1",
+    "nodemailer": "^6.9.9",
     "nodemon": "^3.0.3"
   }
 }

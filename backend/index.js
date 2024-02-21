@@ -32,7 +32,7 @@ app.get("/" , (req , res) => {
 
 // start the server the port 
 app.listen(PORT , () => {
-    console.log(`Server is stated at port ${PORT}`);
+    console.log(`Server is started at port ${PORT}`);
 })
 
 
