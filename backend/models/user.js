@@ -27,6 +27,7 @@ const userSchema = new mongoose.Schema({
     isSeller : {
         type : Boolean,
         required : true,
+        default : false,
     },
     sellerRating : {
         type : Number,
@@ -54,4 +55,4 @@ const userSchema = new mongoose.Schema({
 
 
 const User = mongoose.model("User" , userSchema);
-export default User;     
+module.exports = User;     
