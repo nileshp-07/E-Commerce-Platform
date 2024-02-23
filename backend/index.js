@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const {connectDB} = require("./config/database")
 const authRoutes = require("./routes/auth");
+const profileRoutes = require("./routes/profile");
+const fileUpload = require("express-fileupload")
 
 require("dotenv").config();
 const PORT = process.env.PORT || 4000;
@@ -13,11 +15,18 @@ connectDB();
 // defining middlewares 
 app.use(express.json());
 
+app.use(
+    fileUpload({
+        useTempFiles : true,
+        tempFileDir : '/tmp/'
+    })
+)
+
 
 // defining the routess 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/profile",profileRoutes);
 // app.use("/api/v1/product")
-// app.use("/api/v1/profile")
 // app.use("/api/v1/payment")
 
 

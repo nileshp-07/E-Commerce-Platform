@@ -44,10 +44,8 @@ const orderSchema = new mongoose.Schema({
         }
     },
     shippingInfo : {
-        address : String,
-        city : String,
-        postalCode : String,
-        state : String
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Address"
     }
 },
 {

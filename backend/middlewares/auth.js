@@ -3,11 +3,14 @@ const { default: User } = require("../models/user");
 
 exports.auth = async (req , res, next) => {
     try{
+        // console.log(req.header)
         // fetch the token first 
-        const token = req.body.token || 
-                      req.cookies.token || 
-                      req.header("Authorization").replace("Bearer ", "");
+        // const token = req.body?.token || 
+        //               req.cookies.token || 
+        //               req.header("Authorization").replace("Bearer ", "");
 
+
+        // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDhjZjc0ZWQ4NzdiMDAyMDAxODFlZiIsImVtYWlsIjoicG44MTIwMTg5NTlAZ21haWwuY29tIiwiaWF0IjoxNzA4NzA4Mzc0LCJleHAiOjE3MDg3NTE1NzR9.yzmMjbxr-cU1HvqGK3Duet5UH05zpgf4OfKe240J6Ow";
 
         if(!token)
         {
@@ -70,8 +73,6 @@ exports.isBuyer = async (req , res) => {
         })
     }
 }
-
-
 
 
 exports.isSeller = async (req , res) => {

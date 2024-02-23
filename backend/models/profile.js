@@ -13,23 +13,7 @@ const profileSchema = new mongoose.Schema({
     },
     bio : {
         type : String,
-    },
-    addresses : [
-        {
-            address : {
-              type : String,
-            },
-            city : {
-              type : String,
-            },
-            postalCode :  {
-             type : String
-            },
-            state : {
-              type: String
-            },
-        }
-    ]
+    }
 },
 {
     timestamps: true,

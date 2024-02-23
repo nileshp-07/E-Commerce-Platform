@@ -1,10 +1,11 @@
 const OTP = require("../models/otp");
-const User = require("../models/user");
+const {User} = require("../models/user");
 const Profile = require("../models/profile");
 const otpGenerator = require("otp-generator");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken")
-
+const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+const mailSender = require("../utils/mailSender");
 
 
 exports.sendOtp = async (req, res) => {
@@ -166,7 +167,7 @@ exports.login = async (req, res) => {
         }
 
         // check if user is registered or not 
-        const user = await User.findOne({email});
+        const user = await User.findOne({email: email});
 
         if(!user)
         {
@@ -218,6 +219,114 @@ exports.login = async (req, res) => {
         }
     }
     catch(error){
+        console.log(error);
+        return res.status(401).json({
+            success : false,
+            message : error.message
+        })
+    }
+}
+
+
+exports.generateResetPasswordToken = async (req , res) => {
+    try{
+        const {email} = req.body;
+
+        // check if user is registered or not
+        const user = await User.findOne({email});
+
+        if(!user)
+        {
+            return res.status(404).json({
+                success : false,
+                message : "User not found , please registered first"
+            })
+        }
+
+        // generate a reset password token 
+        const token = crypto.randomUUID();
+
+
+        // store the token into DB
+        user.resetPasswordToken = token;
+        await user.save()
+
+
+        // now generate a frontend url and send it to the mail 
+        const url = `http://localhost:3000/reset-password/${token}`;
+
+
+        const mailResponse = await mailSender(user.email , "Reset Password Link", `click on the link belowed to reset your password\n Reset password link - ${url}`);
+
+
+        console.log("reset passoword token mail response : ", mailResponse);
+
+
+        return res.status(200).json({
+            success : true,
+            message : "Reset password token has been sent successfully"
+        })
+    }
+    catch(error)
+    {
+        return res.status(402).json({
+            success : false,
+            message : "Password is incorrect, please try again"
+        })
+    }
+}
+
+
+exports.resetPassword = async (req , res) => {
+    try{
+        const {password , confirmPassword , token} = req.body;
+
+        // validation 
+        if(!password || !confirmPassword || !token)
+        {
+            return res.status(402).json({
+                success : false,
+                message : "All fields are required"
+            })
+        }
+
+
+        // check if token is valid or not 
+        const user = await User.findOne({resetPasswordToken: token});
+
+        if(!user)
+        {
+            return res.status(401).json({
+                success : false,
+                message  : "Invalid token"
+            })
+        }
+
+
+        // password validation 
+        if(password !== confirmPassword)
+        {
+            return res.status(403).json({
+                success : false,
+                message: "password and confirm Password are mismatched"
+            })
+        }
+
+
+        // all these are good, now hashed the password  
+        const hashedPassword = await bcrypt.hash(password , 10);
+
+        // and now update the user 
+        user.password = hashedPassword;
+        await user.save();
+
+        return res.status(200).json({
+            success : true,
+            message: "password has been updated successfully"
+        })
+    }
+    catch(error)
+    {
         console.log(error);
         return res.status(401).json({
             success : false,

@@ -1,5 +1,21 @@
 const mongoose = require("mongoose");
 
+
+const addressSchema = new mongoose.Schema({
+    street : {
+      type : String,
+    },
+    city : {
+      type : String,
+    },
+    postalCode :  {
+     type : String
+    },
+    state : {
+      type: String
+    },
+})
+
 const userSchema = new mongoose.Schema({
     name : {
         type : String,
@@ -45,14 +61,22 @@ const userSchema = new mongoose.Schema({
         type : String,
         required : true
     },
+    addresses : [{
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Address"
+    }],
     resetPasswordToken : {
         type : String,
+        expires : 10*60
     }
 },
 {
     timestamps : true
 });
 
-
+const Address = mongoose.model("Address" , addressSchema)
 const User = mongoose.model("User" , userSchema);
-module.exports = User;     
+module.exports = {
+    User,
+    Address
+};     

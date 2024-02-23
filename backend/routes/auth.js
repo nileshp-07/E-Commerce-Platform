@@ -5,7 +5,9 @@ const router = express.Router();
 const {
    sendOtp,
    login,
-   signUp
+   signUp,
+   generateResetPasswordToken,
+   resetPassword
 } = require("../controllers/auth");
 
 
@@ -16,6 +18,9 @@ router.post("/send-otp" , sendOtp);
 router.post("/signup" , signUp);
 router.post("/login" , login);
 
+// reset password 
+router.post("/reset-password-token", generateResetPasswordToken);
+router.post("/reset-password", resetPassword);
 
 
 
