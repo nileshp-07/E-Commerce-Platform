@@ -1,9 +1,13 @@
 const express = require("express");
 const app = express();
 const {connectDB} = require("./config/database")
+const {connectCloudinary} = require("./config/cloudinary");
+const fileUpload = require("express-fileupload")
+const cookieParser = require("cookie-parser");
+
 const authRoutes = require("./routes/auth");
 const profileRoutes = require("./routes/profile");
-const fileUpload = require("express-fileupload")
+const productRoutes = require("./routes/product");
 
 require("dotenv").config();
 const PORT = process.env.PORT || 4000;
@@ -11,10 +15,13 @@ const PORT = process.env.PORT || 4000;
 
 // connect to database 
 connectDB();
+// connect to clodinary 
+connectCloudinary();
+
 
 // defining middlewares 
 app.use(express.json());
-
+app.use(cookieParser());
 app.use(
     fileUpload({
         useTempFiles : true,
@@ -26,7 +33,7 @@ app.use(
 // defining the routess 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/profile",profileRoutes);
-// app.use("/api/v1/product")
+app.use("/api/v1/product",productRoutes );
 // app.use("/api/v1/payment")
 
 

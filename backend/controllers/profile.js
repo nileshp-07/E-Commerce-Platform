@@ -131,6 +131,8 @@ exports.changeProfileImage = async (req , res) => {
             })
         }
 
+        // console.log("TESTing");
+
         // upload image to cloudinary 
         const uploadResponse = await uploadImageToCloudinary(profileImage , process.env.FOLDER_NAME);
 
@@ -159,42 +161,35 @@ exports.changeProfileImage = async (req , res) => {
 }
 
 
-exports.addAddress = async (req , res) => {
+exports.getUserFullDetails = async (req , res) =>{
     try{
-        const {street , city , state , postalCode} = req.body;
         const {id} = req.user;
 
-        // validation 
-        if(!street || !city || !state || !postalCode) 
+        // fetch the user  
+        const user = await User.findById(id)
+                                        .populate("profileDetails")
+                                        .populate("wishlists")
+                                        .populate("products")
+                                        .populate("addresses")
+                                        .exec();
+
+
+        if(!user)
         {
             return res.status(404).json({
                 success : false,
-                message : "All fields are required"
+                message : "User does not found",
+                user
             })
         }
 
-        // creat a new address 
-        const newAddress = await Address.create({street , city , state , postalCode});
-
-        // now add the objectid of the address into userSchema 
-        const updatedUser = await User.findByIdAndUpdate(id , {
-                                                            $push : {
-                                                                addresses : newAddress._id
-                                                            }
-                                                        },
-                                                        {new : true})
-                                                        .populate("addresses").exec();
-
         return res.status(200).json({
             success : true,
-            message : "new address added",
-            newAddress,
-            updatedUser
+            message : "user's details fetched successfully",
+            user
         })
-
     }
-    catch(error)
-    {
+    catch(error){
         console.log(error);
         return res.status(401).json({
             success : false,
@@ -203,81 +198,3 @@ exports.addAddress = async (req , res) => {
     }
 }
 
-
-exports.editAddress = async (req , res) => {
-    try{
-       
-        const {addressId ,street, city, state, postalCode} = req.body;
-
-        // validation
-        if(!street || !city || !state || !postalCode)
-        {
-            return res.status(404).json({
-                success : false,
-                message :"All fields are required"
-            })
-        }
-
-        // now edit the address
-        const updatedAddress = await Address.findByIdAndUpdate(addressId , {
-                                                                street, 
-                                                                city, 
-                                                                state, 
-                                                                postalCode
-                                                            },
-                                                            {new : true})
-
-
-        
-        return res.status(200).json({
-            success : true,
-            message : "Address edited successfully",
-            updatedAddress
-        })
-
-    }
-    catch(error)
-    {
-        console.log(error);
-        return res.status(401).json({
-            success : false,
-            message : error.message
-        })
-    }
-}
-
-
-exports.deleteAddress = async(req , res) => {
-    try{
-        const {addressId} = req.body;
-        const {id} = req.user;
-
-        // delete the address from the database 
-        const deleteAddress = await Address.findByIdAndDelete(addressId);
-
-        // also pull the object id from user's schema 
-        const updatedUser = await User.findByIdAndUpdate(id , {
-                                                            $pull : {
-                                                                addresses : addressId
-                                                            }
-                                                        },
-                                                        {new : true})
-                                                        .populate("addresses").exec();
-
-
-        return res.status(200).json({
-            success : true,
-            message : "Address deleted successfully",
-            deleteAddress,
-            updatedAddress
-        })
-    }
-    catch(error)
-    {
-        console.log(error);
-        return res.status(401).json({
-            success : false,
-            message : error.message
-        })
-    }
-}

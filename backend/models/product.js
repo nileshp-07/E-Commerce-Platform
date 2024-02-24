@@ -9,13 +9,14 @@ const productSchema = new mongoose.Schema({
         type : Number,
         required : [true,  "please define the price of the product"]
     },
-    // category : {
-
-    // },
-    tags : [{
-        type : String,
+    category : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Category"
+    },
+    tags : {
+        type : [String],
         trim : true
-    }],
+    },
     seller : {
         type: mongoose.Schema.Types.ObjectId,
         ref : "User",
@@ -29,6 +30,9 @@ const productSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : "RatingAndReview"
     }],
+    thumbnail : {
+        type : String
+    },
     images : [{
         type : String,
     }],

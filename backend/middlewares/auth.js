@@ -1,16 +1,23 @@
 const jwt = require("jsonwebtoken");
-const { default: User } = require("../models/user");
+const { User } = require("../models/user");
 
 exports.auth = async (req , res, next) => {
     try{
-        // console.log(req.header)
-        // fetch the token first 
-        // const token = req.body?.token || 
-        //               req.cookies.token || 
-        //               req.header("Authorization").replace("Bearer ", "");
+        // fetch the token first -> (make sure to install cookie-parser if fetching the token from cookies)
+        const token = req.cookies.token ||
+                      req.body.token  ||
+                      req.header("Authorization").replace("Bearer ", "");
+                                
 
+        // const header = req.header["authorization"];
 
-        // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDhjZjc0ZWQ4NzdiMDAyMDAxODFlZiIsImVtYWlsIjoicG44MTIwMTg5NTlAZ21haWwuY29tIiwiaWF0IjoxNzA4NzA4Mzc0LCJleHAiOjE3MDg3NTE1NzR9.yzmMjbxr-cU1HvqGK3Duet5UH05zpgf4OfKe240J6Ow";
+        // if(!header)
+        // {
+        //     return res.status(404).json({
+        //         success : false,
+        //         message : "user is unauthorized"
+        //     })
+        // }
 
         if(!token)
         {
