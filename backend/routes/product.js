@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {auth} = require("../middlewares/auth");
+const {auth, isSeller , isBuyer} = require("../middlewares/auth");
 
 const {
     createCategory
@@ -10,19 +10,21 @@ const {
 const {
     addProduct,
     editProductDetails,
-    deleteProduct
+    deleteProduct,
+    getProductFullDetails
 } = require("../controllers/product")
 
 
 // #################################### Categories Routes ###################################
-router.post("/create-category" ,auth, createCategory);
+router.post("/create-category" ,auth, isSeller, createCategory);
 
 
 
 // #################################### product Routes ###################################
-router.post("/add-product" , auth , addProduct);
-router.put("/edit-product-details", auth , editProductDetails);
-router.delete("/delete-product", auth , deleteProduct);
+router.post("/add-product" , auth, isSeller , addProduct);
+router.put("/edit-product-details", auth, isSeller , editProductDetails);
+router.delete("/delete-product", auth, isSeller , deleteProduct);
+router.get("/product-details" , getProductFullDetails);
 
 
 

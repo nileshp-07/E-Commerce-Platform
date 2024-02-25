@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const mailSender = require("../utils/mailSender");
+const Cart = require("../models/cart");
 
 
 exports.sendOtp = async (req, res) => {
@@ -135,6 +136,12 @@ exports.signUp = async (req , res) => {
         })
 
         // console.log("TEST5")
+
+        // now create a cart for user 
+        const cart = await Cart.create({
+                                    user: user._id,
+                                    products : [],
+                                });
 
 
         return res.status(200).json({

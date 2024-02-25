@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {auth} = require("../middlewares/auth")
+const {auth, isBuyer} = require("../middlewares/auth")
 
 const {
     changePassword,
@@ -15,6 +15,18 @@ const {
     deleteAddress,
     getUserAllAddresses
 } = require("../controllers/address")
+
+const {
+    addProductToWishlists,
+    removeProductFromWishlists,
+    getWishlistsProducts
+} = require("../controllers/wishlists");
+
+const {
+    addProductToCart,
+    removeProductFromCart,
+    getCartItems
+} = require("../controllers/cart");
 
 
 // #################################### Profile Routes ###################################
@@ -32,5 +44,20 @@ router.post("/add-address",auth, addAddress);
 router.put("/edit-address",auth, editAddress);
 router.delete("/delete-address",auth, deleteAddress);
 router.get("/show-all-address", auth , getUserAllAddresses);
+
+
+// #################################### wishlists Routes ###################################
+
+router.post("/add-to-wishlists", auth, isBuyer, addProductToWishlists);
+router.post("/remove-from-wishlists", auth , isBuyer, removeProductFromWishlists);
+router.post("/wishlists-products" , auth , isBuyer , getWishlistsProducts);
+
+
+// #################################### cart Routes ###################################
+
+router.post("/add-to-cart", auth, isBuyer, addProductToCart);
+router.post("/remove-from-cart", auth , isBuyer, removeProductFromCart);
+router.post("/cart-products" , auth , isBuyer , getCartItems);
+
 
 module.exports  = router;

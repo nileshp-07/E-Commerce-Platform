@@ -55,7 +55,7 @@ exports.auth = async (req , res, next) => {
 }
 
 
-exports.isBuyer = async (req , res) => {
+exports.isBuyer = async (req , res, next) => {
     try{
         const {email} = req.user;
 
@@ -82,7 +82,7 @@ exports.isBuyer = async (req , res) => {
 }
 
 
-exports.isSeller = async (req , res) => {
+exports.isSeller = async (req , res, next) => {
     try{
         const {email} = req.user;
 

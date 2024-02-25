@@ -210,3 +210,53 @@ exports.deleteProduct = async (req , res) => {
         })
     }
 }
+
+
+exports.getProductFullDetails = async (req , res) => {
+    try{
+        const {productId} = req.body;
+
+        // fetch the product  
+        const productDetails = await Product.findById(productId)
+                                                       .populate("category")
+                                                       .populate({
+                                                         path : "seller",
+                                                         populate : {
+                                                            path : "profileDetails",
+                                                            path : "products"
+                                                         },
+                                                        })
+                                                        .populate({
+                                                            path : "ratingAndReviews",
+                                                            populate : {
+                                                                path : "user"
+                                                            }
+                                                        })
+                                                        .exec();
+
+
+
+        if(!productDetails)
+        {
+            return res.status(404).json({
+                success : false,
+                message : "Product not found"
+            })
+        }
+
+
+        return res.status(200).json({
+            success : true,
+            message : "Product full details fetched successfully",
+            productDetails
+        })
+    }
+    catch(error)
+    {
+        console.log(error);
+        return res.status(401).json({
+            success : false,
+            message : error.message
+        })
+    }
+}

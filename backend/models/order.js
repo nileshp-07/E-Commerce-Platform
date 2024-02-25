@@ -27,6 +27,9 @@ const orderSchema = new mongoose.Schema({
     totalItems : {
         type : Number
     },
+    coinUsed : {
+        type : Number
+    },
     paymentMethod : {
         type : String,
         required: [true , "please define the payment method"],
