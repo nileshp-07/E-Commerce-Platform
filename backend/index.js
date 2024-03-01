@@ -4,6 +4,7 @@ const {connectDB} = require("./config/database")
 const {connectCloudinary} = require("./config/cloudinary");
 const fileUpload = require("express-fileupload")
 const cookieParser = require("cookie-parser");
+const cors = require("cors")
 
 const authRoutes = require("./routes/auth");
 const profileRoutes = require("./routes/profile");
@@ -28,7 +29,12 @@ app.use(
         tempFileDir : '/tmp/'
     })
 )
-
+app.use(
+    cors({
+        origin : "http://localhost:3000",
+        credentials : true
+    })
+)
 
 // defining the routess 
 app.use("/api/v1/auth", authRoutes);
