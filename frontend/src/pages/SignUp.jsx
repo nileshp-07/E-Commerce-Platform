@@ -1,0 +1,156 @@
+import React, { useState } from 'react'
+import signUpImage from "../assets/signUpImage.jpg"
+import { Link } from 'react-router-dom'
+import { IoEye } from "react-icons/io5";
+import { IoMdEyeOff } from "react-icons/io";
+
+const SignUp = () => {
+    const [showPassword , setShowPassword] = useState(false)
+    const [showConfirmPassword , setShowConfirmPassword] = useState(false);
+    const [termAndPolicy , setTermAndPolicy] = useState(false);
+    const [formData , setFormData] = useState({
+        name : "",
+        email : "",
+        password : "",
+        confirmPassword : "",
+    })
+
+    console.log(formData);
+
+    const changeHandler = (e) => {
+        const {name , value} = e.target;
+        
+        setFormData((prev) => (
+            {
+                ...prev ,
+                [name] : value
+            }
+        ))
+    }
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+    }
+  return (
+    <div className='flex justify-center items-center min-h-[calc(100vh-3.5rem)]'>
+
+        <div className='lg:w-[1000px] lg:min-h-[500px] px-16 py-12 rounded-xl flex justify-between custom-shadow ' >
+            <img
+                src={signUpImage}
+                width={340}
+                height={570}
+            />
+
+            <div className='flex flex-col items-center'>
+                <h2 className='text-3xl font-semibold mb-5'>
+                   Fashion Awaits Your Signature <br/>
+                   <span className='flex text-royal-blue-500'>Join Now for Exclusive Offers!</span>
+                </h2>
+
+                <form onSubmit={submitHandler}
+                    className=' w-full'>
+                    <div className='flex flex-col'>
+                        <label htmlFor='name' className='label-style'>Name:</label>
+                        <input
+                            type='text'
+                            name='name'
+                            id='name'
+                            value={formData.name}
+                            onChange={changeHandler}
+                            placeholder='Enter your name'
+                            className='field-style'
+                        />
+                    </div>
+                   
+                    <div className='flex flex-col mt-4'>
+                        <label htmlFor='email' className='label-style'>Email:</label>
+                        <input
+                            type='email'
+                            name='email'
+                            id='email'
+                            value={formData.email}
+                            placeholder='info@xyz.com'
+                            className='field-style'
+                            onChange={changeHandler}
+                        />
+                    </div>
+                    
+
+                    <div className='flex flex-col mt-4 relative'>
+                        <label htmlFor='password' className='label-style'>Password:</label>
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            name='password'
+                            id='password'
+                            value={formData.password}
+                            onChange={changeHandler}
+                            placeholder='xxxxxxxxxx'
+                            className='field-style'
+                        />
+                        <span 
+                            className='absolute right-3 top-[53%] cursor-pointer'
+                            onClick={() => setShowPassword(!showPassword)}>
+                            {
+                                showPassword ? (<IoMdEyeOff size={20}/>) : (<IoEye size={20}/>)
+                            }
+                        </span>
+                    </div>
+                    
+
+                    <div className='flex flex-col mt-4 relative'>
+                        <label htmlFor='confirmPassword' className='label-style'>Confirm Password:</label>
+                        <input
+                            type={showConfirmPassword ? "text" : "password"}
+                            name='confirmPassword'
+                            id='confirmPassword'
+                            value={formData.confirmPassword}
+                            onChange={changeHandler}
+                            placeholder='xxxxxxxxxx'
+                            className='field-style'
+                        />
+                        <span 
+                            className='absolute right-3 top-[53%] cursor-pointer'
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                            {
+                                showConfirmPassword ? (<IoMdEyeOff size={20}/>) : (<IoEye size={20}/>)
+                            }
+                        </span>
+                    </div>
+
+
+                    <div className='space-x-2 flex items-center mt-2'>
+                        <input
+                            type='checkbox'
+                            name='termAndPolicy'
+                            id='termAndPolicy'
+                            onChange={() => setTermAndPolicy(!termAndPolicy)}
+                            checked = {termAndPolicy}
+                            className='cursor-pointer h-[14px] w-[14px]'
+                        />
+                        <label html="T&C" className='text-[14px] font-medium'>I agree with all the <span className='text-[#fb736e] cursor-pointer'>Terms</span> and <span className='text-[#fb736e] cursor-pointer'>Privacy Policy</span></label>
+                    </div>
+
+
+                    <button 
+                        type='submit'
+                        className='bg-royal-blue-500 w-full text-center text-white py-2 text-[14px] rounded-md font-medium mt-5'>
+                        Create Account
+                    </button>
+
+                    <div className='mt-3 text-center'>
+                        Already having an account? {" "}
+                        <Link to="/login">
+                            <button className='text-[#fb736e]'>
+                                Login
+                            </button>
+                        </Link>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+  )
+}
+
+export default SignUp
