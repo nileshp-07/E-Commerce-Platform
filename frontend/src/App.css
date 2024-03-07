@@ -18,3 +18,12 @@
 .custom-shadow{
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+
+
+.otp-style{
+    /* border: 1px solid black; */
+    border-radius: 2px;
+    font-size: 25px;
+    background-color: #EEEEEE;
+    color: #313131;
+}

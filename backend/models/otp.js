@@ -23,7 +23,7 @@ const sendOtpVerificationMail = async (email , otp) => {
 
     const mailResponse = await mailSender(email ,"Email Verification", `enter this otp to verify your email ${otp}`);
 
-    console.log("Verification mail sent successfully : ", mailResponse);
+    // console.log("Verification mail sent successfully : ", mailResponse);
 
   }
   catch(error)

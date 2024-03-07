@@ -1,10 +1,16 @@
 import React, { useState } from 'react'
 import signUpImage from "../assets/signUpImage.jpg"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { IoEye } from "react-icons/io5";
 import { IoMdEyeOff } from "react-icons/io";
+import {toast} from "sonner"
+import { useDispatch } from 'react-redux';
+import { setCredentails } from '../redux/slices/authSlice';
+import { sendOtp } from '../services/operations/authAPI';
 
 const SignUp = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [showPassword , setShowPassword] = useState(false)
     const [showConfirmPassword , setShowConfirmPassword] = useState(false);
     const [termAndPolicy , setTermAndPolicy] = useState(false);
@@ -30,6 +36,47 @@ const SignUp = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
+
+        if(!formData.name || !formData.email  || !formData.password || !formData.confirmPassword)
+        {
+            toast.error("All fields are required");
+            return;
+        }
+
+        if(!termAndPolicy)
+        {
+            toast.error("Please accept terms and privacy policy");
+            return;
+        }
+
+        
+
+        if(formData.password !== formData.confirmPassword)
+        {
+            toast.error("Password does not match");
+            formData.password = "";
+            formData.confirmPassword = "";
+            return;
+        }
+
+
+        // save the signp Credential to redux store
+        dispatch(setCredentails(formData));
+
+
+        // send the verication otp to user email 
+        sendOtp(formData.email , navigate);
+
+
+        // reset the fields 
+        setFormData({
+            name : "",
+            email : "",
+            password : "",
+            confirmPassword : "",
+        });
+
+        setTermAndPolicy(false);
     }
   return (
     <div className='flex justify-center items-center min-h-[calc(100vh-3.5rem)]'>
@@ -37,6 +84,8 @@ const SignUp = () => {
         <div className='lg:w-[1000px] lg:min-h-[500px] px-16 py-12 rounded-xl flex justify-between custom-shadow ' >
             <img
                 src={signUpImage}
+                alt='signupImage'
+                loading='lazy'
                 width={340}
                 height={570}
             />
@@ -137,7 +186,7 @@ const SignUp = () => {
                         Create Account
                     </button>
 
-                    <div className='mt-3 text-center'>
+                    <div className='mt-3 text-center text-[15px] font-medium'>
                         Already having an account? {" "}
                         <Link to="/login">
                             <button className='text-[#fb736e]'>
