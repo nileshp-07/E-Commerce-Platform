@@ -5,7 +5,7 @@ import { IoEye } from "react-icons/io5";
 import { IoMdEyeOff } from "react-icons/io";
 import {toast} from "sonner"
 import { useDispatch } from 'react-redux';
-import { setCredentails } from '../redux/slices/authSlice';
+import { setCredentails } from '../redux/slices/userSlice';
 import { sendOtp } from '../services/operations/authAPI';
 
 const SignUp = () => {
@@ -34,7 +34,7 @@ const SignUp = () => {
         ))
     }
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
 
         if(!formData.name || !formData.email  || !formData.password || !formData.confirmPassword)
@@ -49,7 +49,6 @@ const SignUp = () => {
             return;
         }
 
-        
 
         if(formData.password !== formData.confirmPassword)
         {
@@ -93,7 +92,7 @@ const SignUp = () => {
             <div className='flex flex-col items-center'>
                 <h2 className='text-3xl font-semibold mb-5'>
                    Fashion Awaits Your Signature <br/>
-                   <span className='flex text-royal-blue-500'>Join Now for Exclusive Offers!</span>
+                   <span className='text-royal-blue-500'>Join Now for Exclusive Offers!</span>
                 </h2>
 
                 <form onSubmit={submitHandler}
@@ -182,7 +181,7 @@ const SignUp = () => {
 
                     <button 
                         type='submit'
-                        className='bg-royal-blue-500 w-full text-center text-white py-2 text-[14px] rounded-md font-medium mt-5'>
+                        className='bg-royal-blue-500 w-full text-center text-white py-2 text-[16px] rounded-md font-medium mt-5'>
                         Create Account
                     </button>
 

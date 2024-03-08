@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { toast } from 'sonner';
 
 const VerifyOtp = () => {
-  const {credentials} = useSelector((state) => state.auth);
+  const {credentials} = useSelector((state) => state.user);
   const [otp , setOtp] = useState("");
   const navigate = useNavigate();
 
@@ -66,7 +66,7 @@ const VerifyOtp = () => {
             <button
                 onClick={submitHandler}
                 type='submit'
-                className='bg-royal-blue-500 w-full text-center text-white py-2 text-[14px] rounded-md font-medium mt-6'>
+                className='bg-royal-blue-500 w-full text-center text-white py-2 text-[16px] rounded-md font-medium mt-6'>
                 Verify Code
             </button>
           </div>

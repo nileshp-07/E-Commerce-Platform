@@ -1,6 +1,7 @@
 import {toast} from "sonner"
 import {apiConnector} from "../apiConnector"
 import { authEndPoints } from "../apis";
+import { setToken, setUser } from "../../redux/slices/userSlice";
 
 
 const {
@@ -64,4 +65,51 @@ export const signup = async ({name , email , password, confirmPassword},otp, nav
         toast.error(error.response.data.message);
     }
     toast.dismiss(toastId)
+}
+
+
+export const login = async (email , password , navigate, dispatch) => {
+    const toastId = toast.loading("loading...");
+    try{
+        const response = await apiConnector("POST", LOGIN_API, {email , password});
+
+        console.log("LOGIN API RESPONSE : ", response);
+
+        if(!response.data.success)
+        {
+            throw new Error(response.data.message);
+        }
+
+        // console.log(response.data.token)
+        // console.log(response.data.user);
+
+        // set user and token to store and localStorage 
+        dispatch(setToken(response.data.token));
+        dispatch(setUser(response.data.user));
+
+        localStorage.setItem("token" , JSON.stringify(response.data.token));
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+
+        toast.success("Login successfully");
+
+        navigate("/");
+    }
+    catch(error)
+    {
+        console.log("LOGIN API ERROR : ",error);
+        console.error(error.message);
+        toast.error(error.response.data.message);
+    }
+    toast.dismiss(toastId);
+}
+
+
+export const sendResetPasswordToken = async (email , setMailSent)  => {
+    try{
+        setMailSent(true);
+    }
+    catch(error)
+    {
+
+    }
 }
