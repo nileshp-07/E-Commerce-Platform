@@ -75,7 +75,7 @@ const ForgotPassword = () => {
             height={470}
         />
         </div>
- </div>
+    </div>
   )
 }
 

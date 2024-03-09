@@ -105,11 +105,52 @@ export const login = async (email , password , navigate, dispatch) => {
 
 
 export const sendResetPasswordToken = async (email , setMailSent)  => {
+    const toastId = toast.loading("loading...");
     try{
+        const response = await apiConnector("POST", GENERATE_RESET_PASSWORD_TOKEN_API , {email});
+
+        console.log("GENERATE RESET PASSWORD TOKEN API RESPONSE: ", response);
+
+        if(!response.data.success){
+            throw new Error(response.data.message);
+        }
+
         setMailSent(true);
+
+        toast.success("Mail has been sent");
+
     }
     catch(error)
     {
-
+        console.log("GENERATE RESET PASSWORD TOKEN API ERROR : ",error);
+        console.error(error.message);
+        toast.error(error.response.data.message);
     }
+    toast.dismiss(toastId);
+}
+
+
+export const resetPassword = async (password , confirmPassword,token, navigate) => {
+    const toastId = toast.loading("loading...");
+    try{
+        console.log("token: ", token);
+        const response = await apiConnector("POST", RESET_PASSWORD_API , {password , confirmPassword, token});
+
+        console.log('RESET PASSWORD API RESPONSE  : ', response);
+
+        if(!response.data.success){
+            throw new Error(response.data.message)
+        }
+
+        toast.success("password updated");
+
+        navigate("/login")
+    }
+    catch(error)
+    {
+        console.log("RESET PASSWORD API ERROR : ",error);
+        console.error(error.message);
+        toast.error(error.response.data.message);
+    }
+    toast.dismiss(toastId);
 }
