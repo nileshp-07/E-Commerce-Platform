@@ -1,9 +1,114 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { MdKeyboardArrowDown } from "react-icons/md";
+import { GrFavorite } from "react-icons/gr";
+import { GrCart } from "react-icons/gr";
+import { FaRegUser } from "react-icons/fa";
+import { RiSearch2Line } from "react-icons/ri";
+import { useSelector } from 'react-redux';
+import { BsShopWindow } from "react-icons/bs";
 
 const Navbar = () => {
+  const [searchInput , setSearchInput] = useState("")
+  const {token} = useSelector((state) => state.user);
+  const navigate = useNavigate();
+
+  const searchHandler = async (e) => {
+    e.preventDefault();
+
+    console.log(searchInput)
+
+    navigate(`/search?query=${encodeURIComponent(searchInput)}`)
+  }
+
+
   return (
-    <div className='h-[3.5rem] bg-royal-blue-400 my-auto text-4xl font-bold text-center'>
-       Navbar
+    <div className='h-[3.5rem] bg-royal-blue-500 text-white'>
+        <div className='w-11/12 max-w-[1200px] mx-auto flex justify-between items-center h-full '>
+           <Link to="/">
+             <h2 className='text-4xl font-bold'>LOGO</h2>
+           </Link>
+
+
+           <div className='flex gap-10 items-center'>
+
+              <div className='flex gap-3'>
+                  <div className='flex items-center gap-1 group'>
+                    <p>Categories</p>
+                    <MdKeyboardArrowDown className='group-hover:rotate-180'/>
+                  </div>
+
+                  <div className='flex relative'>
+                    
+                    <form
+                      onSubmit={searchHandler}>
+                      <input
+                        type='text'
+                        name='search'
+                        id='search'
+                        placeholder='what are you looking for?'
+                        value={searchInput}
+                        onChange={(e) => setSearchInput(e.target.value)}
+                        className='w-[500px] h-[40px] rounded-md px-5 text-black focus:outline-gray-500'
+                      />
+                      <button
+                        type='submit'
+                        className='cursor-pointer text-black absolute right-2 top-[50%] -translate-y-[50%]'>
+                        <RiSearch2Line size={24}/>
+                      </button>
+                    </form>
+
+                  </div>
+              </div>
+
+            {
+                token && (
+                  <Link to="/become-seller">
+                    <div className='flex gap-2 items-center'>
+                      <BsShopWindow size={20}/>
+                      <p className='font-medium'>Become a Seller</p>
+                    </div>
+                  </Link>
+                )
+            }
+
+            {
+              !token ? (
+                <div className='flex gap-4 items-center'>
+                    <Link to="/wishlists">
+                        <GrFavorite size={22} className='hover:scale-110 duration-200 transition-all'/>
+                    </Link>
+                    
+                    <Link to="/cart">
+                      <div className='flex relative hover:scale-110 duration-200 transition-all'>
+                          <GrCart size={22}/>
+                          <p className='flex items-center justify-center absolute -top-[5px] left-[10px] h-[10px] p-[8px] w-[10px] rounded-full bg-caribbeangreen-200 text-xs'>
+                            2
+                          </p>
+                      </div>
+                    </Link>
+
+                    <Link to="/profile">
+                      <div className='flex items-center justify-center p-[10px] bg-[#DB4444] rounded-full '>
+                          <FaRegUser size={18}/>
+                      </div>
+                    </Link>
+                </div>
+              ) : (
+                <div className='flex gap-5'>
+                   <Link to="/login">
+                     <p className='font-medium text-[18px]'>Login</p>
+                   </Link>
+
+
+                   <Link to="/signup">
+                     <p className='font-medium text-[18px]'>Register</p>
+                   </Link>
+                </div>
+              )
+            }
+           </div>
+        </div>
     </div>
   )
 }
