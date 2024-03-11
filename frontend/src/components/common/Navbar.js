@@ -73,7 +73,7 @@ const Navbar = () => {
             }
 
             {
-              !token ? (
+              token ? (
                 <div className='flex gap-4 items-center'>
                     <Link to="/wishlists">
                         <GrFavorite size={22} className='hover:scale-110 duration-200 transition-all'/>

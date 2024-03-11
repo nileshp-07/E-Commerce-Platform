@@ -6,6 +6,7 @@ import VerifyOtp from './pages/VerifyOtp';
 import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import HomePage from './pages/HomePage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Navbar/>
 
       <Routes>
+          <Route path='/' element={<HomePage/>}/>
           <Route path='/signup' element={<SignUp/>}/>
           <Route path='/verify-otp' element={<VerifyOtp/>}/>
           <Route path='/login' element={<Login/>}/>

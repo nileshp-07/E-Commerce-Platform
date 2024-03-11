@@ -19,6 +19,7 @@
     "react18-input-otp": "^1.1.4",
     "redux-toolkit": "^1.1.2",
     "sonner": "^1.4.3",
+    "swiper": "^11.0.7",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
