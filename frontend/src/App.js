@@ -10,7 +10,7 @@ import HomePage from './pages/HomePage';
 
 function App() {
   return (
-    <div className='min-h-screen font-inter'>
+    <div className='min-h-screen font-inter  '>
       <Navbar/>
 
       <Routes>
