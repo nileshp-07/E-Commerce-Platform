@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import ProductImageSlider from '../components/core/homePage/ProductImageSlider'
 import Categories from '../components/core/homePage/Categories'
 import ProductCards from '../components/core/homePage/ProductCards'
+import Benefits from '../components/core/homePage/Benefits'
+import Footer from '../components/common/Footer'
 
 
 const products = 
@@ -269,12 +271,16 @@ const HomePage = () => {
             
             <Categories/>
 
-            <ProductCards heading={"Best Deals"} products={products} />
+            <ProductCards heading={"Best Deals"} products={products} isBestDeal = {true} />
 
             <ProductCards heading={"Recently Viewed Products"} products={products} />
 
             <ProductCards heading={"Best Selling Products"} products={products} />
+
+            <Benefits/>
          </div>
+        
+        <Footer/>
      </div>
   )
 }
