@@ -15,7 +15,7 @@ import Wishlist from './components/core/Profile/wishlists/Wishlist';
 
 function App() {
   return (
-    <div className='min-h-screen font-inter  '>
+    <div className='min-h-screen   '>
       <Navbar/>
 
       <Routes>

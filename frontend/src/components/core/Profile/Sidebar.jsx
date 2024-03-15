@@ -13,7 +13,7 @@ const Sidebar = () => {
   }
 
   return (
-    <div className='min-w-[250px] sidebar-shadow h-[calc(100vh-3.5rem)] py-10 flex flex-col'>
+    <div className='min-w-[250px] sidebar-shadow min-h-[calc(100vh-3.5rem)] py-10 flex flex-col'>
         <Link to="/profile/info">
             <div className={`flex gap-2 items-center font-medium transition-all duration-200  px-5 py-2 ${matchRoute("/profile/info") ? "border-l-[5px] bg-royal-blue-50 text-royal-blue-700 border-royal-blue-500" : "border-l-[5px] border-white"}`}>
                 <GoGear/>
