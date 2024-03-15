@@ -208,9 +208,9 @@ const Footer = () => {
                 Copyright © 2024 All Right Reserved
             </div>
 
-            <div className='text-[15px] text-gray-200'>
+            {/* <div className='text-[15px] text-gray-200'>
                 Made with ❤️ by Nilesh
-            </div>
+            </div> */}
         </div>
     </div>
   )

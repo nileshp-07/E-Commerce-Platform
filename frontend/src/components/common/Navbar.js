@@ -75,7 +75,7 @@ const Navbar = () => {
             {
               token ? (
                 <div className='flex gap-4 items-center'>
-                    <Link to="/wishlists">
+                    <Link to="/profile/wishlists">
                         <GrFavorite size={22} className='hover:scale-110 duration-200 transition-all'/>
                     </Link>
                     
@@ -88,7 +88,7 @@ const Navbar = () => {
                       </div>
                     </Link>
 
-                    <Link to="/profile">
+                    <Link to="/profile/info">
                       <div className='flex items-center justify-center p-[10px] bg-[#DB4444] rounded-full '>
                           <FaRegUser size={18}/>
                       </div>
