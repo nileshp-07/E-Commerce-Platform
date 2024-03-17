@@ -175,7 +175,9 @@ exports.login = async (req, res) => {
 
         // check if user is registered or not 
         const user = await User.findOne({email: email})
-                                                    .populate("profileDetails");
+                                                    .populate("profileDetails")
+                                                    .populate("addresses")
+                                                    .exec();
 
         if(!user)
         {

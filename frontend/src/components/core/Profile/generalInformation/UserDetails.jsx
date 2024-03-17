@@ -42,13 +42,15 @@ const UserDetails = ({user}) => {
     <div className='mt-20'>
         <div className='flex justify-between items-center mb-3'>
             <h2 className='text-xl font-semibold'>Profile Details</h2>
-            <button 
-                 onClick={isEdit ? editProfileDetails : () => setIsEdit(true)}    
-                className='py-[6px] px-4 bg-royal-blue-500 rounded-md text-white'>
-                {
-                    isEdit ? "Save Changes" : "Edit"
-                }
-            </button>
+            {
+                !isEdit  && (
+                    <button 
+                        onClick={() => setIsEdit(true)}    
+                        className='py-[6px] px-4 bg-royal-blue-500 rounded-md text-white'>
+                        Edit
+                    </button>
+                )
+            }
         </div>
         <div className='py-6 px-10 rounded-md border profile-shadow'>
             <div className='flex justify-between gap-10'>
@@ -138,6 +140,24 @@ const UserDetails = ({user}) => {
                     disabled = {!isEdit}
                 ></textarea>
             </div>
+            {
+                isEdit && (
+                    <div className='flex justify-end gap-5 mt-4'>
+                        <button 
+                            onClick={() => setIsEdit(false)}    
+                            className='py-[6px] px-4 border rounded-md text-black'>
+                            Cancel
+                        </button>
+
+                        <button 
+                            onClick={editProfileDetails}    
+                            className='py-[6px] px-4 bg-royal-blue-500 rounded-md text-white'>
+                            Save Changes
+                        </button>
+            
+                    </div>
+                )
+            }
         </div>
     </div>
   )

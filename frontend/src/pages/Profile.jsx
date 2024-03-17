@@ -12,7 +12,7 @@ const Profile = () => {
 
         <div className='h-[cal(100vh-3.5rem)] flex-1 overflow-auto w-full '>  
             
-            <div className='w-11/12 max-w-[1000px] mx-auto py-10'>
+            <div className='w-11/12 max-w-[1000px] mx-auto '>
                 <Outlet/>
             </div>
         </div> 

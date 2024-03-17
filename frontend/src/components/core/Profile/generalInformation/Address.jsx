@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { MdModeEditOutline, MdOutlineModeEditOutline } from "react-icons/md";
 import { MdDeleteOutline } from "react-icons/md";
 
-const Address = ({addr}) => {
+const Address = ({addr, isNewAddress}) => {
   const [isEdit , setIsEdit] = useState(false)
   const [address , setAddress] = useState(addr)
 
-
+  console.log("NEW" , isNewAddress)
   const changeHandler = (e) => {
      const {name , value} = e.target;
 
@@ -19,18 +19,22 @@ const Address = ({addr}) => {
   }
   
   return (
-    <div className='p-4 rounded-md border  mb-7'>
-        <div className='flex justify-end gap-5 mb-2'>
-             <button
-               onClick={() => setIsEdit(true)}
-               disabled={isEdit}
-               className="disabled:text-gray-500">
-               <MdModeEditOutline size={24}/>
-             </button>
-             <button>
-               <MdDeleteOutline size={24}/>
-             </button>
-        </div>
+    <div className='p-6 rounded-md border  mb-7'>
+        {
+            !isNewAddress && (
+                <div className='flex justify-end gap-5 mb-2 -mt-2'>
+                    <button
+                    onClick={() => setIsEdit(true)}
+                    disabled={isEdit}
+                    className="disabled:text-gray-500">
+                    <MdModeEditOutline size={24}/>
+                    </button>
+                    <button>
+                    <MdDeleteOutline size={24}/>
+                    </button>
+                </div>
+            )
+        }
  
         <form>
             <div className='w-full relative'>
@@ -39,7 +43,7 @@ const Address = ({addr}) => {
                     <input
                         type='text'
                         name='street'
-                        disabled={!isEdit}
+                        disabled={!isEdit && !isNewAddress}
                         value={address.street}
                         onChange={changeHandler}
                         className='px-[10px] py-[13px] border border-gray-400 rounded-md bg-white w-full'
@@ -54,7 +58,7 @@ const Address = ({addr}) => {
                         <input
                             type='text'
                             name='city'
-                            disabled={!isEdit}
+                            disabled={!isEdit && !isNewAddress}
                             value={address.city}
                             onChange={changeHandler}
                             className='px-[10px] py-[13px] border border-gray-400  rounded-md bg-white w-full'
@@ -67,7 +71,7 @@ const Address = ({addr}) => {
                         <input
                             type='text'
                             name='postalCode'
-                            disabled={!isEdit}
+                            disabled={!isEdit && !isNewAddress}
                             value={address.postalCode}
                             onChange={changeHandler}
                             className='px-[10px] py-[13px] border border-gray-400  rounded-md bg-white w-full'
@@ -85,7 +89,7 @@ const Address = ({addr}) => {
                             name='state'
                             value={address.state}
                             onChange={changeHandler}
-                            disabled={!isEdit}
+                            disabled={!isEdit && !isNewAddress}
                             className='px-[10px] py-[13px] border border-gray-400  rounded-md bg-white w-full'
                         />
                     </div>

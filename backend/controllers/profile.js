@@ -146,7 +146,8 @@ exports.changeProfileImage = async (req , res) => {
 
         return res.status(200).json({
             success : true,
-            message : "profile image updated successfully"
+            message : "profile image updated successfully",
+            user,
         })
 
     }

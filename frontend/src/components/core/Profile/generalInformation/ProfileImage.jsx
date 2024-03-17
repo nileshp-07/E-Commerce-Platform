@@ -1,6 +1,12 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import {setLoading} from "../../../../redux/slices/userSlice"
 
 const ProfileImage = ({user}) => {
+  const dispatch = useDispatch();
+  const {loading} = useSelector((state) => state.user);
+
+
   return (
     <div className='py-6 px-8 border rounded-md flex items-center gap-5 profile-shadow' >
         <div>
