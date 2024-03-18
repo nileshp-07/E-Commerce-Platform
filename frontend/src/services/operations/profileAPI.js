@@ -10,6 +10,7 @@ const {
         EDIT_ADDRESS_API,
         DELETE_ADDRESS_API,
         GET_ALL_ADDRESSES_API,
+        CHANGE_PROFILE_IMAGE
     } = profileEndPoints;
 
 
@@ -17,7 +18,7 @@ const {
 export const updateProfileImage = async (formData, token, dispatch) => {
     const toastId = toast.loading("loading...");
     try{
-        const response = await apiConnector("POST", CHANGE_PASSWORD_API, formData ,{
+        const response = await apiConnector("PUT", CHANGE_PROFILE_IMAGE, formData ,{
             "Content-Type" :  "multipart/form-data",
             Authorization : `Bearer ${token}`
         })
@@ -43,7 +44,7 @@ export const updateProfileImage = async (formData, token, dispatch) => {
 
 
 
-export const updateProfileDetails = async (data, token) => {
+export const updateProfileDetails = async (data, token, dispatch) => {
     const toastId = toast.loading("loading...");
     try{
         const response = await apiConnector("PUT", UPDATE_PROFILE_DETAILS_API, data ,{
@@ -55,6 +56,8 @@ export const updateProfileDetails = async (data, token) => {
         if(!response.data.success){
             throw new Error(response.data.message);
         }
+
+        dispatch(setUser(response.data.updatedUser));
 
         toast.success("Profile Details Updated")
 
@@ -68,10 +71,10 @@ export const updateProfileDetails = async (data, token) => {
 }
 
 
-export const editAddress = async (data, token) => {
+export const editAddress = async (address , addressId , token, dispatch) => {
     const toastId = toast.loading("loading...");
     try{
-        const response = await apiConnector("PUT", EDIT_ADDRESS_API, data ,{
+        const response = await apiConnector("PUT", EDIT_ADDRESS_API, {...address , ["addressId"] : addressId}  ,{
             Authorization : `Bearer ${token}`
         })
 
@@ -82,6 +85,8 @@ export const editAddress = async (data, token) => {
         }
 
         toast.success("Address Updated")
+        dispatch(setUser(response.data.updatedUser))
+
 
     }
     catch(error){
@@ -92,10 +97,10 @@ export const editAddress = async (data, token) => {
     toast.dismiss(toastId);
 }
 
-export const deleteAddress = async (addressId, token) => {
+export const deleteAddress = async (addressId, token, dispatch) => {
     const toastId = toast.loading("loading...");
     try{
-        const response = await apiConnector("DELETE", DELETE_ADDRESS_API, addressId ,{
+        const response = await apiConnector("DELETE", DELETE_ADDRESS_API, {addressId} ,{
             Authorization : `Bearer ${token}`
         })
 
@@ -104,6 +109,8 @@ export const deleteAddress = async (addressId, token) => {
         if(!response.data.success){
             throw new Error(response.data.message);
         }
+
+        dispatch(setUser(response.data.updatedUser));
 
         toast.success("Address Deleted")
 
@@ -117,7 +124,7 @@ export const deleteAddress = async (addressId, token) => {
 }
 
 
-export const addNewAddress = async (data, token) => {
+export const addNewAddress = async (data, token, dispatch) => {
     const toastId = toast.loading("loading...");
     try{
         const response = await apiConnector("POST", ADD_NEW_ADDRESS_API, data ,{
@@ -129,6 +136,9 @@ export const addNewAddress = async (data, token) => {
         if(!response.data.success){
             throw new Error(response.data.message);
         }
+
+
+        // dispatch(setUser(response.data.updatedUser))
 
         toast.success("New Address Added")
 
@@ -164,6 +174,33 @@ export const changePassword = async (data, token) => {
         toast.error(error.response.data.message);
     }
     toast.dismiss(toastId);
+}
+
+
+export const getAllAddresses = async (token) => {
+    const toastId = toast.loading("loading...");
+    let addresses = [];
+    try{
+        const response = await apiConnector("GET", GET_ALL_ADDRESSES_API, null ,{
+            Authorization : `Bearer ${token}`
+        })
+
+        console.log("GET ALL ADDRESS API RESPONSE : ", response);
+
+        if(!response.data.success){
+            throw new Error(response.data.message);
+        }
+
+        addresses = response.data.addresses;
+
+    }
+    catch(error){
+        console.log("GET ALL ADDRESS API ERROR", error);
+        console.error(error.message);
+        toast.error(error.response.data.message);
+    }
+    toast.dismiss(toastId);
+    return addresses;
 }
 
 

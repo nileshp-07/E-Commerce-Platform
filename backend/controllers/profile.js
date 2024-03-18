@@ -66,7 +66,7 @@ exports.changePassword = async (req , res) => {
 
 exports.editProfileDetails = async (req , res) => {
     try{
-        const {name="", gender="", dateOfBirth="" , contactNumber="", bio=""} = req.body;
+        const {name="", gender="", dateOfBirth="" , contactNumber="", about=""} = req.body;
         const {id} = req.user;
         
 
@@ -89,8 +89,8 @@ exports.editProfileDetails = async (req , res) => {
         profileDetails.dateOfBirth = dateOfBirth;
         if(contactNumber)
         profileDetails.contactNumber = contactNumber;
-        if(bio)
-        profileDetails.bio = bio;
+        if(about)
+        profileDetails.bio = about;
         
 
         await profileDetails.save();

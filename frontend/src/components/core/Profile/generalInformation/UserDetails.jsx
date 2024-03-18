@@ -1,8 +1,13 @@
 import React, { useState } from 'react'
+import { setLoading } from '../../../../redux/slices/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateProfileDetails } from '../../../../services/operations/profileAPI';
 
 
 const UserDetails = ({user}) => {
     const [isEdit , setIsEdit] = useState(false);
+    const {token} = useSelector((state) => state.user)
+    const dispatch = useDispatch()
     const [formData , setFormData] = useState({
        name : user.name,
        email : user.email,
@@ -12,7 +17,15 @@ const UserDetails = ({user}) => {
        about : user.profileDetails.bio
     })
 
-    const editProfileDetails = () => {
+    const editProfileDetails = async () => {
+
+        // dispatch(setLoading(true));
+
+        await updateProfileDetails(formData, token , dispatch);
+
+        // dispatch(setLoading(false));
+
+        setIsEdit(false);
 
     }
   
@@ -30,9 +43,9 @@ const UserDetails = ({user}) => {
   
     const formattedDateOfBirth = (date) => {
       // const parts = formData.dateOfBirth.split('-');
-      const parts = date.split('-');
-      if (parts.length === 3) {
-          console.log(`Date : ${parts[2]}-${parts[1]}-${parts[0]}`)
+      const parts = date?.split('-');
+      if (parts?.length === 3) {
+        //   console.log(`Date : ${parts[2]}-${parts[1]}-${parts[0]}`)
           return `${parts[0]}-${parts[1]}-${parts[2]}`;
       }
       return ''; // Invalid date format, return empty string or handle error
@@ -73,7 +86,7 @@ const UserDetails = ({user}) => {
                         name='email'
                         value={isEdit ? formData.email : user.email}
                         onChange={changeHandler}
-                        disabled ={!isEdit}
+                        disabled
                         className={`field-style w-full text-[18px] ${!isEdit && "text-gray-800"}`}
                     />
                 </div>

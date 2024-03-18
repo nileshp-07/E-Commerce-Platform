@@ -1,15 +1,49 @@
-import React from 'react'
-import { Link, matchPath, useLocation } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, matchPath, useLocation, useNavigate } from 'react-router-dom'
+import { useDispatch} from 'react-redux'
 import { GoGear } from "react-icons/go";
 import { IoIosLogOut } from "react-icons/io";
+import { setToken, setUser } from '../../../redux/slices/userSlice';
+import { toast } from 'sonner';
 
+
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "white",
+  borderRadius: 2,
+  boxShadow: 24,
+  p: 4,
+};
 
 
 const Sidebar = () => {
   const location = useLocation();
+  const dispatch  = useDispatch();
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
   const matchRoute = (route) => {
     return matchPath({path :route} , location.pathname);
+  }
+
+  const Logout = () => {
+     dispatch(setUser(null))
+     dispatch(setToken(null))
+     localStorage.removeItem('user');
+     localStorage.removeItem('token');
+
+     toast.success("Logout successfully")
+     navigate("/")
+
   }
 
   return (
@@ -45,10 +79,33 @@ const Sidebar = () => {
         <div className='px-5 bg-gray-200 h-[1px] w-[85%] mx-auto my-4'></div>
 
 
-        <button className='flex gap-2 items-center font-medium px-5 py-2'>
+        <button className='flex gap-2 items-center font-medium px-5 py-2'
+          onClick={() =>setOpen(true)}>
            <IoIosLogOut/>
             Logout
         </button>
+
+
+        <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        >
+            <Box sx={style}>
+              <h2 className='text-xl font-semibold mb-1'>Are you sure??</h2>
+              <p>Do you really want to logout?</p>
+              <div className='flex justify-around mt-8'>
+                 <button
+                    onClick={Logout} 
+                    className='py-2 px-4 bg-royal-blue-600 text-white rounded-md hover:bg-royal-blue-500 transition-all duration-200'>Logout</button>
+
+                 <button 
+                    onClick={() => setOpen(false)}
+                    className='py-2 px-4 border border-black rounded-md hover:bg-gray-100 transition-all duration-200'>Cancel</button>
+              </div>
+            </Box>
+        </Modal>
     </div>
   )
 }

@@ -7,14 +7,22 @@ exports.addAddress = async (req , res) => {
         const {street , city , state , postalCode} = req.body;
         const {id} = req.user;
 
-        // console.log("req body : ",req.body);
-
         // validation 
         if(!street || !city || !state || !postalCode) 
         {
             return res.status(404).json({
                 success : false,
                 message : "All fields are required"
+            })
+        }
+
+
+        const user = await User.findById(id);
+        if(user.addresses.length >= 3)
+        {
+            return res.status(401).json({
+                success: false,
+                message : "A user can have max 3 Addresses"
             })
         }
 
@@ -53,6 +61,7 @@ exports.editAddress = async (req , res) => {
     try{
        
         const {addressId ,street, city, state, postalCode} = req.body;
+        const {id} = req.user;
 
         // validation
         if(!street || !city || !state || !postalCode ||!addressId)
@@ -82,11 +91,17 @@ exports.editAddress = async (req , res) => {
         }
 
 
+        const updatedUser = User.findById(id)
+                                            .populate("profileDetails")
+                                            .populate("addresses")
+                                            .exec();
+
         
         return res.status(200).json({
             success : true,
             message : "Address edited successfully",
-            updatedAddress
+            updatedAddress,
+            updatedUser
         })
 
     }

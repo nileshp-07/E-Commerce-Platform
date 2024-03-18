@@ -12,8 +12,9 @@ export const authEndPoints = {
 
 
 export const profileEndPoints = {
-    CHANGE_PASSWORD_API : BASE_URL + "/profile/change-profile-image",
-    UPDATE_PROFILE_DETAILS_API : BASE_URL + "/profile/edit-profile/details",
+    CHANGE_PASSWORD_API : BASE_URL + "/profile/change-password",
+    CHANGE_PROFILE_IMAGE : BASE_URL + "/profile/change-profile-image",
+    UPDATE_PROFILE_DETAILS_API : BASE_URL + "/profile/edit-profile-details",
     ADD_NEW_ADDRESS_API : BASE_URL +  "/profile/add-address",
     EDIT_ADDRESS_API : BASE_URL + "/profile/edit-address",
     DELETE_ADDRESS_API : BASE_URL +  "/profile/delete-address",

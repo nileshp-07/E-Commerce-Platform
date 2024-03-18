@@ -9,7 +9,7 @@ const ProfileInfo = () => {
   const {loading} = useSelector((state) => state.user)
 
  
-  console.log(user);
+  // console.log(user);
 
   if(loading)
   {

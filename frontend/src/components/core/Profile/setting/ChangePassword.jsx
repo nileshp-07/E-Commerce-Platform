@@ -1,18 +1,33 @@
-import React, { useState } from 'react'
+import React, { useState} from 'react'
+import {useSelector } from 'react-redux'
 import { IoEye } from "react-icons/io5";
 import { IoMdEyeOff } from "react-icons/io";
+import {toast} from "sonner"
+import { changePassword } from '../../../../services/operations/profileAPI';
 
 const ChangePassword = () => {
+    const {token} = useSelector((state) => state.user);
     const [password , setPassword] = useState("");
-    const [confirmPassword , setConfirmPassword] = useState("");
+    const [newPassword , setNewPassword] = useState("");
     const [showPassword , setShowPassword] = useState(false);
-    const [showConfirmPassword , setShowConfirmPassword] = useState(false);
+    const [showNewPassword , setShowNewPassword] = useState(false);
+
+    const handleChangePassword = async () => {
+        if(!password || !newPassword)
+        {
+            toast.error("password and new password required");
+            return;
+        }
+
+        await changePassword({password , newPassword}, token);
+
+        setPassword("");
+        setNewPassword("");
+    }
   return (
     <div>
        <div className='profile-shadow rounded-md py-6 px-10 border'>
-           <h2 className='text-xl font-semibold mb-5'>Change Password</h2>
-           <form>
-              
+           <h2 className='text-xl font-semibold mb-5'>Change Password</h2>              
                 <div className='flex gap-5'>
                     <div className='flex flex-col relative w-[50%]'>
                         <label htmlFor='password'>Current Password:</label>
@@ -38,31 +53,32 @@ const ChangePassword = () => {
                     <div className='flex flex-col relative w-[50%]'>
                         <label htmlFor='confirmPassword'>New password:</label>
                         <input
-                            type={showConfirmPassword ? "text" : "password"}
+                            type={showNewPassword ? "text" : "password"}
                             required
-                            id='confirmPassword'
-                            name='confirmPassword'
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            value={confirmPassword}
+                            id='newPassword'
+                            name='newPassword'
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            value={newPassword}
                             placeholder='xxxxxxx'
                             className='field-style'
                         />
                         <span 
                             className='absolute right-3 top-[53%] cursor-pointer'
-                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                            onClick={() => setShowNewPassword(!showNewPassword)}>
                             {
-                                showConfirmPassword ? (<IoMdEyeOff size={20}/>) : (<IoEye size={20}/>)
+                                newPassword ? (<IoMdEyeOff size={20}/>) : (<IoEye size={20}/>)
                             }
                         </span>
                     </div>  
                 </div>
 
                 <div className='flex justify-end mt-8'>
-                    <button className='py-2 px-4 rounded-md bg-royal-blue-500 text-white font-medium'>
+                    <button 
+                       onClick={handleChangePassword}
+                       className='py-2 px-4 rounded-md bg-royal-blue-500 text-white font-medium'>
                        Update Password
                     </button>
                 </div>
-           </form>
        </div>
     </div>
   )

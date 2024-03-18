@@ -1,12 +1,35 @@
 import React, { useState } from 'react'
 import { MdModeEditOutline, MdOutlineModeEditOutline } from "react-icons/md";
 import { MdDeleteOutline } from "react-icons/md";
+import { deleteAddress, editAddress } from '../../../../services/operations/profileAPI';
+import { useDispatch, useSelector } from 'react-redux';
+import {toast} from "sonner"
 
-const Address = ({addr, isNewAddress}) => {
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "white",
+  borderRadius: 2,
+  boxShadow: 24,
+  p: 4,
+};
+
+const Address = ({addr, isNewAddress, setNewAddress}) => {
+  const dispatch = useDispatch();
+  const {token} = useSelector((state) => state.user);
   const [isEdit , setIsEdit] = useState(false)
   const [address , setAddress] = useState(addr)
+  const [open, setOpen] = useState(false);
 
-  console.log("NEW" , isNewAddress)
+
   const changeHandler = (e) => {
      const {name , value} = e.target;
 
@@ -16,10 +39,44 @@ const Address = ({addr, isNewAddress}) => {
             [name] : value
         }
     ))
+
+    if(isNewAddress)
+    {
+        setNewAddress( (prev) => (
+            {
+                ...prev,
+                [name] : value
+            }
+        ))
+    }
+  }
+
+
+
+  const updateAddress = async () =>{
+     if(addr.street === address.street &&
+        addr.city === address.city &&
+        addr.postalCode === address.postalCode &&
+        addr.state === address.state)
+        {
+            toast.error("No Changes Done")
+            return;
+        }
+
+     await editAddress(address ,addr._id , token , dispatch)
+
+     setIsEdit(false)
+  }
+
+
+  const handleDeleteAddress = async () => {
+      await deleteAddress(addr._id , token , dispatch)
+
+      setOpen(false)
   }
   
   return (
-    <div className='p-6 rounded-md border  mb-7'>
+    <div className='p-6 rounded-md border mb-7'>
         {
             !isNewAddress && (
                 <div className='flex justify-end gap-5 mb-2 -mt-2'>
@@ -29,7 +86,9 @@ const Address = ({addr, isNewAddress}) => {
                     className="disabled:text-gray-500">
                     <MdModeEditOutline size={24}/>
                     </button>
-                    <button>
+
+                    <button
+                      onClick={() => setOpen(true)}>
                     <MdDeleteOutline size={24}/>
                     </button>
                 </div>
@@ -120,13 +179,34 @@ const Address = ({addr, isNewAddress}) => {
                             Cancel
                         </button>
 
-                        <button className='py-2 px-4 rounded-md bg-royal-blue-500 text-white'>
+                        <button 
+                            onClick={updateAddress}
+                            className='py-2 px-4 rounded-md bg-royal-blue-500 text-white'>
                             Save Changes
                         </button>
                     </div>
                 )
             }
         </form>
+        <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        >
+            <Box sx={style}>
+              <p className='text-[18px] font-medium'>Are you sure you want to delete this address?</p>
+              <div className='flex justify-around mt-8'>
+                 <button
+                    onClick={handleDeleteAddress} 
+                    className='py-2 px-4 bg-royal-blue-600 text-white rounded-md hover:bg-royal-blue-500 transition-all duration-200'>Yes, Delete</button>
+
+                 <button 
+                    onClick={() => setOpen(false)}
+                    className='py-2 px-4 border border-black rounded-md hover:bg-gray-100 transition-all duration-200'>Cancel</button>
+              </div>
+            </Box>
+        </Modal>
     </div>
   )
 }
