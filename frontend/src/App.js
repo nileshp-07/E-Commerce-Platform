@@ -12,6 +12,7 @@ import Profile from './pages/Profile';
 import Orders from './components/core/Profile/orders/Orders';
 import Settings from './components/core/Profile/setting/Settings';
 import Wishlist from './components/core/Profile/wishlists/Wishlist';
+import Products from './pages/Products';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/forgot-password' element={<ForgotPassword/>}/>
           <Route path='/reset-password/:token' element={<ResetPassword/>}/>
+          <Route path='/search' element={<Products/>}/>
 
           <Route element={<Profile/>}>
               <Route path='/profile/info' element={<ProfileInfo/>}/>
