@@ -89,17 +89,17 @@ const ratingFilter = [
     {
         id : "4_star",
         name : "rating",
-        label : "90"
+        label : "4"
     },
     {
         id : "3_star",
         name : "discount",
-        label : "80"
+        label : "3"
     },
     {
         id : "2_star",
         name : "discount",
-        label : "70"
+        label : "2"
     }
 ]
 
@@ -141,7 +141,7 @@ const Filters = ({filters , setFilters}) => {
 
   return (
     <div className='w-[350px]'>
-        <div className='flex justify-between items-center'>
+        <div className='flex justify-between items-center px-3'>
             <h2 className='text-2xl font-semibold'>Filters</h2>
             <button className='font-medium text-royal-blue-500'>
                 Apply
