@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
 import { IoIosArrowDown } from "react-icons/io";
-
+import { IoCloseOutline } from "react-icons/io5";
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import { FaStar } from "react-icons/fa";
-
-
 
 
 
@@ -65,22 +63,22 @@ const brandNames = [
 const discountFilter = [
     {
         id : "90_per_discount",
-        name : "discount",
+        value : "90",
         label : "90% & above"
     },
     {
         id : "80_per_discount",
-        name : "discount",
+        value : "80",
         label : "80% & above"
     },
     {
         id : "70_per_discount",
-        name : "discount",
+        value : "70",
         label : "70% & above"
     },
     {
         id : "60_per_discount",
-        name : "discount",
+        value : "60",
         label : "60% & above"
     }
 ]
@@ -88,17 +86,17 @@ const discountFilter = [
 const ratingFilter = [
     {
         id : "4_star",
-        name : "rating",
+        value : "4",
         label : "4"
     },
     {
         id : "3_star",
-        name : "discount",
+        value : "3",
         label : "3"
     },
     {
         id : "2_star",
-        name : "discount",
+        value : "2",
         label : "2"
     }
 ]
@@ -118,14 +116,16 @@ const indianCities = [
 
 
 const Filters = ({filters , setFilters}) => {
-  const [priceSliderValue , setPriceSliderValue] = useState([0 , 20]);
+//   const [priceSliderValue , setPriceSliderValue] = useState([0 , 20]);
   const [filterOpen , setFilterOpen] = useState({
-    brands: false,
-    price : false,
-    cusRating : false,
-    discount : false,
-    location : false
+    brands: true,
+    price : true,
+    cusRating : true,
+    discount : true,
+    location : true
  })
+
+
 
  const toggleFilter = (filter) => {
     setFilterOpen((prevState) => ({
@@ -134,10 +134,49 @@ const Filters = ({filters , setFilters}) => {
     }));
   };
 
+
+
+  const handlePriceSliderChange = (event, newValue) => {
+    // Update the filters state with new min and max prices
+    setFilters({
+        ...filters,
+        minPrice: newValue[0].toString(),
+        maxPrice: newValue[1].toString()
+    });
+};
+
   
   function valuetext(value) {
     return `${value}°C`;
   }
+
+
+
+  const handleChangeInput = (e) => {
+        const {name , value , type , checked} = e.target;
+
+        const updatedFilters = {...filters};
+
+        if(type === "checkbox"){
+            if(checked)
+            {
+                updatedFilters[name] = [...updatedFilters[name] , value]
+            }
+            else{
+                updatedFilters[name] = updatedFilters[name].filter( (item) => item !== value)
+            }
+        }
+        else{
+            updatedFilters[name] = value;
+        }
+
+
+        setFilters(updatedFilters);
+  }
+
+
+
+console.log("Filters : ", filters);
 
   return (
     <div className='w-[350px]'>
@@ -150,7 +189,6 @@ const Filters = ({filters , setFilters}) => {
 
         <div className='rounded-md bg-gray-200 py-3 px-5'>
             <form>
-
                 {/* Brands  */}
                 <div>
                     <div className='flex justify-between items-center mb-2'>
@@ -162,15 +200,17 @@ const Filters = ({filters , setFilters}) => {
                     {
                         filterOpen.brands && (
                             <>
-                                {brandNames.slice(0, 5).map((brand, index) => (
+                                {brandNames.slice(0, 10).map((brand, index) => (
                                     <div className='flex gap-2 items-center' key={index}>
                                         <input
                                             type='checkbox'
-                                            name='brandName'
+                                            name='brands'
+                                            id = {brand}
                                             value={brand}
-                                            className='bg-royal-blue-300'
+                                            checked = {filters.brands.includes(brand)}
+                                            onChange={handleChangeInput}
                                         />
-                                        <label htmlFor='brand'>{brand}</label>
+                                        <label htmlFor={brand}>{brand}</label>
                                     </div>
                                 ))}
                                 <p className='text-[14px] font-medium text-royal-blue-500 mt-2 '>More brands</p>
@@ -195,8 +235,10 @@ const Filters = ({filters , setFilters}) => {
                                 <Box sx={{ width: 300 }}>
                                 <Slider
                                     getAriaLabel={() => 'Temperature range'}
-                                    value={priceSliderValue}
-                                    onChange={(e) => setPriceSliderValue(e.target.value)}
+                                    min={1}
+                                    max={10000}
+                                    value={[filters.minPrice, filters.maxPrice]}
+                                    onChange={handlePriceSliderChange}
                                     valueLabelDisplay="auto"
                                     getAriaValueText={valuetext}
                                 />
@@ -205,16 +247,11 @@ const Filters = ({filters , setFilters}) => {
                                     <div className='flex flex-col '>
                                         <label htmlFor='minPrice'>Min</label>
                                         <input
-                                            type='number'
+                                            type='Number'
                                             name='minPrice'
-                                            value={priceSliderValue[0]}
-                                            onChange={(e) => {
-                                                const priceRange = [...priceSliderValue]
-
-                                                priceRange[0] = e.target.value
-
-                                                setPriceSliderValue(priceRange)
-                                            }}
+                                            id='minPrice'
+                                            value={filters.minPrice}
+                                            onChange={handleChangeInput}
                                             className='w-[100px] text-center p-1 rounded-md'
                                         />
                                     </div>
@@ -223,14 +260,9 @@ const Filters = ({filters , setFilters}) => {
                                         <input
                                             type='number'
                                             name='maxPrice'
-                                            value={priceSliderValue[1]}
-                                            onChange={(e) => {
-                                                const priceRange = [...priceSliderValue]
-
-                                                priceRange[1] = e.target.value
-
-                                                setPriceSliderValue(priceRange)
-                                            }}
+                                            id='maxPrice'
+                                            value={filters.maxPrice}
+                                            onChange={handleChangeInput}
                                             className='w-[100px] text-center p-1 rounded-md'
                                         />
                                     </div>
@@ -256,11 +288,14 @@ const Filters = ({filters , setFilters}) => {
                                 <>
                                     {
                                         discountFilter.map((discount, index) => (
-                                        <div className='flex items-center gap-2'>
+                                        <div className='flex items-center gap-2' key={index}>
                                             <input
                                                 type="radio"
-                                                name = {discount.name}
+                                                name = "discount"
                                                 id={discount.id}
+                                                value={discount.value}
+                                                checked = {filters.discount === discount.value}
+                                                onChange={handleChangeInput}
                                             />
                                             <label htmlFor={discount.id}>{discount.label}</label>
                                         </div>
@@ -286,11 +321,14 @@ const Filters = ({filters , setFilters}) => {
                                 <>
                                     {
                                         ratingFilter.map((rating, index) => (
-                                        <div className='flex items-center gap-2'>
+                                        <div className='flex items-center gap-2' key={index}>
                                             <input
                                                 type="radio"
-                                                name = {rating.name}
+                                                name = "cusRating"
                                                 id={rating.id}
+                                                value={rating.value}
+                                                checked = {filters.cusRating === rating.value}
+                                                onChange={handleChangeInput}
                                             />
                                             <label htmlFor={rating.id} className="flex items-center gap-1">
                                                 <span className='flex items-center'>
@@ -326,6 +364,8 @@ const Filters = ({filters , setFilters}) => {
                                             name='location'
                                             id={city}
                                             value={city}
+                                            checked = {filters.location.includes(city)}
+                                            onChange={handleChangeInput}
                                         />
                                         <label htmlFor={city}>{city}</label>
                                     </div>
@@ -337,9 +377,33 @@ const Filters = ({filters , setFilters}) => {
                 </div>
 
             </form>
+
+            <div 
+              className='flex gap-2 mt-8 font-medium items-center justify-center mr-2 cursor-pointer'
+              onClick={() => setFilters({
+                brands : [],
+                discount : "",
+                minPrice : "1",
+                maxPrice : "10000",
+                cusRating : "",
+                location : []
+              })}>
+                <IoCloseOutline/>
+                Clear all Filters
+            </div>
         </div>
+
     </div>
   )
 }
 
 export default Filters
+
+
+
+// 333333333333333333333333##################33############3sjflilqlfd 
+// daflaldf
+// ajdflkajdlf
+// asdjfljasdf
+// adsdfljlasdf
+// asjdlfjlsd

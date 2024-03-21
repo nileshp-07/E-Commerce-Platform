@@ -10,17 +10,18 @@ import ProductLists from '../components/core/Products/ProductLists';
 const Products = () => {
   const [searchParams] = useSearchParams();
   const searchQuery = decodeURIComponent(searchParams.get("query"));
+  const [loading , setLoading] = useState(false);
   const [page ,setPage] = useState(1);
   const productPage = 18;
   const totalProducts = 250;
   const [sortBy , setSortBy] = useState("");
   const [filters , setFilters] = useState({
-      brands : "",
-      minPrice : "",
-      maxPrice : "",
+      brands : [],
+      minPrice : "1",
+      maxPrice : "10000",
       discount : "",
       cusRating: "",
-      location : ""
+      location : []
   });
 
 
@@ -43,7 +44,7 @@ const Products = () => {
 
                <SortOption sortBy={sortBy} setSortBy={setSortBy}/>
 
-               <ProductLists/>
+               <ProductLists loading={loading}/>
             </div>
         </div>
     </div>

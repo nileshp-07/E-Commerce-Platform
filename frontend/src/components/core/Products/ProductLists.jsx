@@ -247,15 +247,29 @@ const products =
             }
           ]
 
-const ProductLists = () => {
+
+
+   
+const ProductLists = ({loading}) => {
+
   return (
-    <div className='grid lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-2 gap-5 mt-5'>
-      {
-         products.slice(0,18).map((product , id) => (
-            <ProductCard key={id} product={product}/>
-         ))
-      }
-    </div>
+     <>
+        {
+            loading ? (
+                <div className='w-full h-[500px] grid place-items-center'>
+                    <div className='spinner'></div>
+                </div>
+            ) : (
+                <div className='grid lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-2 gap-5 mt-5'>
+                {
+                    products.slice(0,18).map((product , id) => (
+                        <ProductCard key={id} product={product}/>
+                    ))
+                }
+                </div>
+            )
+        }
+     </>
   )
 }
 
