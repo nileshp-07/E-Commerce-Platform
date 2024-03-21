@@ -247,7 +247,7 @@ console.log("Filters : ", filters);
                                     <div className='flex flex-col '>
                                         <label htmlFor='minPrice'>Min</label>
                                         <input
-                                            type='Number'
+                                            type='text'
                                             name='minPrice'
                                             id='minPrice'
                                             value={filters.minPrice}
@@ -258,7 +258,7 @@ console.log("Filters : ", filters);
                                     <div className='flex flex-col '>
                                         <label htmlFor='maxPrice'>Max</label>
                                         <input
-                                            type='number'
+                                            type='text'
                                             name='maxPrice'
                                             id='maxPrice'
                                             value={filters.maxPrice}
