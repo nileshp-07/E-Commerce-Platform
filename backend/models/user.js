@@ -74,6 +74,9 @@ const userSchema = new mongoose.Schema({
     timestamps : true
 });
 
+// Create the TTL index for resetPasswordToken
+userSchema.index({ "resetPasswordToken": 1 }, { expireAfterSeconds: 600 });
+
 const Address = mongoose.model("Address" , addressSchema)
 const User = mongoose.model("User" , userSchema);
 module.exports = {

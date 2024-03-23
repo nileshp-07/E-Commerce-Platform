@@ -39,6 +39,9 @@ const productSchema = new mongoose.Schema({
     stocks : {
         type : Number
     },
+    sold : {
+        type : Number
+    },
     brand : {
         type : String
     },

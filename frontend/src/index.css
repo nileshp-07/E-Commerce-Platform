@@ -16,3 +16,9 @@
   body::-webkit-scrollbar-track {
     background-color: transparent; /* Color of the scrollbar track */
   }
+
+  *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }

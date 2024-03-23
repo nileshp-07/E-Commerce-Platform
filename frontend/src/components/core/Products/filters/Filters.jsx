@@ -397,13 +397,4 @@ console.log("Filters : ", filters);
   )
 }
 
-export default Filters
-
-
-
-// 333333333333333333333333##################33############3sjflilqlfd 
-// daflaldf
-// ajdflkajdlf
-// asdjfljasdf
-// adsdfljlasdf
-// asjdlfjlsd
+export default Filters;
