@@ -3,7 +3,7 @@ import { TiTick } from "react-icons/ti";
 import { RxCross2 } from "react-icons/rx";
 import { GoHeart } from "react-icons/go";
 import RatingStars from '../../common/RatingStars';
-import DoneIcon from '@mui/icons-material/Done';
+import { MdDone } from "react-icons/md";
 import { FaPlus } from "react-icons/fa6";
 import { BsDash } from "react-icons/bs";
 import { FaCartArrowDown } from "react-icons/fa";
@@ -60,7 +60,7 @@ const ProductInfo = ({product}) => {
                 </div>
 
                 <div className='flex items-center gap-1 font-medium'>
-                    <DoneIcon fontSize='25'/>
+                    <MdDone fontSize='25'/>
                     <p>{product.sold} Sold</p>
                 </div>
             </div>
