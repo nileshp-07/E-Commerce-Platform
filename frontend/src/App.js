@@ -14,6 +14,7 @@ import Settings from './components/core/Profile/setting/Settings';
 import Wishlist from './components/core/Profile/wishlists/Wishlist';
 import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
+import Error from './components/common/Error';
 
 function App() {
   return (
@@ -35,7 +36,9 @@ function App() {
               <Route path='/profile/orders' element={<Orders/>}/>
               <Route path='/profile/setting' element={<Settings/>}/>
               <Route path='/profile/wishlists' element={<Wishlist/>}/>
-          </Route>  
+          </Route> 
+
+          <Route path='*' element={<Error/>}/> 
       </Routes>
     </div>
   );
