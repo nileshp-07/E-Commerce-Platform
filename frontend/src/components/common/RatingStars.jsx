@@ -18,7 +18,7 @@ const RatingStars = ({RatingCount, starSize}) => {
     },[RatingCount]);
 
   return (
-    <div className='flex gap-1 text-yellow-100'>
+    <div className='flex  text-yellow-100'>
         {  
             [...new Array(starCount.full)].map( (_, index) => {    //creating an array of startCount.full size and then apply map on it
                 return <TiStarFullOutline key={index} fill='#FFAD33' size={starSize || 20}/>
