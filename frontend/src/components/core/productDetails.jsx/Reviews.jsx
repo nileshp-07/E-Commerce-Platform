@@ -94,7 +94,7 @@ const Reviews = () => {
       <div className='border border-gray-600 rounded-md px-10 py-8 flex justify-between'>
 
          <div className='flex items-center gap-5'>
-            <div className='h-[130px] w-[130px]'>
+            <div className='h-[130px] w-[130px] flex items-center justify-center'>
               <CircularProgressbar
                 value={(avgRating/5)*100}
                 text={`4.6`}
