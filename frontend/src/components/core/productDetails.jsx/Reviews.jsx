@@ -3,7 +3,7 @@ import {
   CircularProgressbar,
   buildStyles,
 } from "react-circular-progressbar";
-// import "react-circular-progressbar/dist/styles.css";
+import "react-circular-progressbar/dist/styles.css";
 import RatingStars from "../../common/RatingStars"
 import ProgressBar from "@ramonak/react-progress-bar";
 import {TiStarFullOutline} from "react-icons/ti"
