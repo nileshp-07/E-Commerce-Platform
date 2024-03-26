@@ -5,7 +5,6 @@ import { GoHeart } from "react-icons/go";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FaC, FaCartArrowDown } from "react-icons/fa6";
 import { toast } from 'sonner';
-import ReactStar from "react-rating-stars-component"
 import { TiStarOutline } from "react-icons/ti";
 import { TiStarHalfOutline } from "react-icons/ti";
 import { TiStarFullOutline } from "react-icons/ti";

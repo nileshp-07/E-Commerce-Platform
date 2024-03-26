@@ -7,6 +7,7 @@ import "react-circular-progressbar/dist/styles.css";
 import RatingStars from "../../common/RatingStars"
 import ProgressBar from "@ramonak/react-progress-bar";
 import {TiStarFullOutline} from "react-icons/ti"
+import SubmitReviews from './SubmitReviews';
 
 
 const reviews =[
@@ -139,6 +140,8 @@ const Reviews = () => {
               }
          </div>
       </div>
+
+      <SubmitReviews/>
 
     </div>
   )

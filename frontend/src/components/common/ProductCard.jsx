@@ -1,6 +1,5 @@
 import React from 'react'
 import { toast } from 'sonner';
-import ReactStar from "react-rating-stars-component"
 import { TiStarOutline } from "react-icons/ti";
 import { TiStarHalfOutline } from "react-icons/ti";
 import { TiStarFullOutline } from "react-icons/ti";
@@ -8,6 +7,7 @@ import { FaC, FaCartArrowDown } from "react-icons/fa6";
 import { Link, Navigate } from 'react-router-dom';
 import { FaStar } from "react-icons/fa";
 import { GoHeart } from "react-icons/go";
+import RatingStars from './RatingStars';
 
 const ProductCard = ({product, isBestDeal}) => {
     const addToWislists = (e) => {
@@ -59,23 +59,7 @@ const ProductCard = ({product, isBestDeal}) => {
                         <p className='font-medium text-[#008000] text-[14px]'>{100*Math.random().toFixed(1)}% off</p>
                     </div>
                     <div className='flex gap-2 items-center'>
-                        {/* <div className='flex gap-1'>
-                            <FaStar/>
-                            <FaStar/>
-                            <FaStar/>
-                            <FaStar/>
-                        </div> */}
-                        <ReactStar
-                            count = {5}
-                            value={product.rating.rate}
-                            edit={false}
-                            size={20}
-                            isHalf = {true}
-                            emptyIcon={<TiStarOutline/>}
-                            halfIcon={<TiStarHalfOutline/>}
-                            fullIcon = {<FaCartArrowDown/>}
-                            // activeColor="#ffd700"
-                        />
+                        <RatingStars RatingCount={product.rating.rate}/>
                         <p className='font-medium text-gray-500'>({product.rating.count})</p>
                     </div>
                 </div>
