@@ -13,7 +13,7 @@ import SubmitReviews from './SubmitReviews';
 const reviews =[
   {
     "rating": 4.5,
-    "review": "Great product, I loved it!",
+    "review": "Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!",
     "username": "john_doe",
     "image": "https://example.com/image1.jpg",
     "last_modified_date": "2023-07-15"
@@ -92,7 +92,7 @@ const Reviews = () => {
   return (
     <div className='my-10'>
       
-      <div className='border border-gray-600 rounded-md px-10 py-8 flex justify-between'>
+      <div className='profile-shadow rounded-md px-10 py-8 flex justify-between'>
 
          <div className='flex items-center gap-5'>
             <div className='h-[130px] w-[130px] flex items-center justify-center'>
@@ -142,6 +142,35 @@ const Reviews = () => {
       </div>
 
       <SubmitReviews/>
+
+
+      <div>
+        {
+           reviews.map((review , index) => (
+             <div key={index} className={`px-4 py-8 w-[80%] ${index != reviews.length-1  && "border-b "}`}>
+                <div className='flex justify-between'>
+                    <div className='flex gap-5'>
+                      <img
+                        src="https://i.pinimg.com/280x280_RS/77/0f/b7/770fb75f5e81e4c2dbe8934f246aeeab.jpg"
+                        alt='userImage'
+                        loading='lazy'
+                        className='h-[80px] w-[80px] rounded-full'
+                      />
+
+                      <div className='mt-2'>
+                         <p className='font-medium ml-1 mb-1'>{review.username}</p>
+                         <RatingStars RatingCount={review.rating}/>
+                      </div>
+                    </div>
+                     
+                    <p className='font-medium text-[14px]'>{review.last_modified_date}</p>
+                </div>
+
+                <p className='max-w-[80%] text-gray-950 mt-2'>{review.review}</p>
+             </div>
+           ))
+        }
+      </div>
 
     </div>
   )

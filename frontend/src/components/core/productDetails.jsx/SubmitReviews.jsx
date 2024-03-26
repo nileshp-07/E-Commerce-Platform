@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Rating from "@mui/material/Rating";
 import Box from "@mui/material/Box";
-import Typography from '@mui/material/Typography';
 import { FaRegStar } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa6";
 
@@ -25,7 +24,7 @@ const SubmitReviews = () => {
 
    console.log(value ,"  " , review);
   return (
-    <div className='my-20 border-b  border-gray-500 pb-10'>
+    <div className='mt-20 mb-10 border-b  border-gray-500 pb-10'>
         <h2 className='text-2xl font-semibold'>Submit your review</h2>
 
         <div className='mt-10 mx-5'>
