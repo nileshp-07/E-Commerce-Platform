@@ -13,10 +13,6 @@ const productSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : "Category"
     },
-    tags : {
-        type : [String],
-        trim : true
-    },
     seller : {
         type: mongoose.Schema.Types.ObjectId,
         ref : "User",
