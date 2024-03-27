@@ -15,6 +15,7 @@ import Wishlist from './components/core/Profile/wishlists/Wishlist';
 import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
 import Error from './components/common/Error';
+import AddProducts from './pages/AddProducts';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
               <Route path='/profile/orders' element={<Orders/>}/>
               <Route path='/profile/setting' element={<Settings/>}/>
               <Route path='/profile/wishlists' element={<Wishlist/>}/>
+              <Route path='/profile/add-product' element={<AddProducts/>}/>
           </Route> 
 
           <Route path='*' element={<Error/>}/> 
