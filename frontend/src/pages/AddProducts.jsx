@@ -9,7 +9,7 @@ import Categories from '../components/core/Profile/addProduct/Categories';
 import ProductImages from '../components/core/Profile/addProduct/ProductImages';
 
 const AddProducts = () => {
-    const [step , setStep] = useState(1);
+    const [step , setStep] = useState(2);
   return (
     <div className='w-full pt-10'>
 

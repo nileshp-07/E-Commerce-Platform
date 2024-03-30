@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useForm, useFieldArray } from 'react-hook-form'
 import { IoMdAddCircle } from "react-icons/io";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { RxCross2 } from "react-icons/rx";
 
 const ProductDescription = () => {
   const [specifications , setSpecifications] = useState({})
@@ -259,9 +260,18 @@ const ProductDescription = () => {
                       <div className='bg-[#EEEEEE] outline-none rounded-md p-2 w-full flex flex-col gap-1'>
                           {
                             Object.entries(specifications).map(([key , value], index) => (
-                                <div key={index} className='flex gap-5 py-2 px-5 rounded-md hover:bg-gray-200'>
+                                <div key={index} className='relative flex gap-5 py-2 px-5 rounded-md hover:bg-gray-200 group'>
                                     <p className='font-medium'>{key} : </p>
                                     <p>{value}</p>
+                                    <div
+                                        onClick={() => {
+                                            const newSpecifications = {...specifications};
+                                            delete newSpecifications[key];
+                                            setSpecifications(newSpecifications);
+                                        }} 
+                                        className='absolute right-1 top-1 cursor-pointer p-[2px] hidden group-hover:flex hover:bg-gray-300 rounded-full'>
+                                        <RxCross2 size={14}/>
+                                    </div>
                                 </div>
                             ))
                           }
