@@ -9,10 +9,10 @@ const productSchema = new mongoose.Schema({
         type : Number,
         required : [true,  "please define the price of the product"]
     },
-    category : {
+    categories : [{
         type : mongoose.Schema.Types.ObjectId,
-        ref : "Category"
-    },
+        ref : "SubSubCategory"
+    }],
     seller : {
         type: mongoose.Schema.Types.ObjectId,
         ref : "User",
