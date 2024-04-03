@@ -36,20 +36,21 @@ const productSchema = new mongoose.Schema({
         type : Number
     },
     sold : {
-        type : Number
+        type : Number,
+        default : 0
     },
     brand : {
         type : String
     },
-    discountPercentage : {
+    discount : {
         type : Number,
-        min:[1, 'wrong min discount'], 
+        min:[0, 'wrong min discount'], 
         max:[99, 'wrong max discount']
     },
     discountedPrice : {
         type : Number
     },
-    productDetails : {  //used to store the key-value pairs of specifications
+    specifications : {  //used to store the key-value pairs of specifications
         type: Map,
         of: String,
     }

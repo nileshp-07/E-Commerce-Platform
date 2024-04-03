@@ -213,7 +213,7 @@ console.log("Filters : ", filters);
                                         <label htmlFor={brand}>{brand}</label>
                                     </div>
                                 ))}
-                                <p className='text-[14px] font-medium text-royal-blue-500 mt-2 '>More brands</p>
+                                <p className='text-[14px] font-medium text-royal-blue-500 mt-2 cursor-pointer '>More brands</p>
                             </>
                         )
                     }
@@ -333,7 +333,7 @@ console.log("Filters : ", filters);
                                             <label htmlFor={rating.id} className="flex items-center gap-1">
                                                 <span className='flex items-center'>
                                                   {rating.label}
-                                                  <FaStar fill='#FDDA0D'/> 
+                                                  <FaStar fill='#FFAD33'/> 
                                                 </span>
                                                 <span>& above</span>
                                             </label>
@@ -370,7 +370,7 @@ console.log("Filters : ", filters);
                                         <label htmlFor={city}>{city}</label>
                                     </div>
                                 ))}
-                                <p className='text-[14px] font-medium text-royal-blue-500 mt-2 '>Show all</p>
+                                <p className='text-[14px] font-medium text-royal-blue-500 mt-2 cursor-pointer'>Show all</p>
                             </>
                         )
                     }

@@ -18,7 +18,7 @@ const categories = [
     {
         icon : computer,
         category : "Computers",
-        link : "/search?query=mobiles"
+        link : "/search?query=computers"
     },
     {
         icon : smartwatch,

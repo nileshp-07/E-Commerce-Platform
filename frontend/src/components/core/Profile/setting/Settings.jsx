@@ -4,8 +4,8 @@ import DeleteAccount from './DeleteAccount'
 
 const Settings = () => {
   return (
-    <div>
-       <h2 className='text-2xl font-semibold mb-10'>Settings</h2>
+    <div className='my-10'>
+       <h2 className='text-2xl font-semibold mb-8'>Settings</h2>
        <ChangePassword/>
 
        <DeleteAccount/>

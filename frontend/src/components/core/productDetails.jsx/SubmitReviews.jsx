@@ -71,7 +71,7 @@ const SubmitReviews = () => {
                 />
             </div>
 
-            <button className='mt-10 bg-royal-blue-500 py-2 px-7 rounded-md text-white font-medium'> 
+            <button className='mt-10 bg-royal-blue-600 py-2 px-7 rounded-md text-white font-medium hover:bg-royal-blue-500 trasition-all duration-200'> 
                 Submit
             </button>
         </div>

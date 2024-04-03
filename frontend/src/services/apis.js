@@ -20,3 +20,9 @@ export const profileEndPoints = {
     DELETE_ADDRESS_API : BASE_URL +  "/profile/delete-address",
     GET_ALL_ADDRESSES_API : BASE_URL + "/profile/show-all-address"
 }
+
+export const productEndPoints = {
+    ADD_PRODUCT_API : BASE_URL + "/product/add-product",
+    GET_ALL_PRODUCTS_API : BASE_URL + "/product/get-all-products",
+    GET_PRODUCT_FULL_DETAILS_API : BASE_URL + "/product/get-product-details",
+}

@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { FaArrowLeftLong } from "react-icons/fa6";
 import ProductImages from '../components/core/productDetails.jsx/ProductImages';
 import ProductInfo from '../components/core/productDetails.jsx/ProductInfo';
@@ -8,47 +8,10 @@ import Reviews from '../components/core/productDetails.jsx/Reviews';
 import Specifications from '../components/core/productDetails.jsx/Specifications';
 import ProductCards from '../components/core/homePage/ProductCards';
 import Footer from '../components/common/Footer';
+import { getProductDetails } from '../services/operations/productAPI';
 
 
-const products = {
-    "id": 0,
-    "url": "http://www.flipkart.com/alisha-solid-women-s-cycling-shorts/p/itmeh2ffvzetthbb?pid=SRTEH2FF9KEDEFGF",
-    "name": "Alisha Solid Women's Cycling Shorts",
-    "categories": ["Clothing >> Women's Clothing >> Lingerie, Sleep & Swimwear >> Shorts >> Alisha Shorts >> Alisha Solid Women's Cycling Shorts"],
-    "price": 999,
-    "discounted_price": 379,
-    "discount" : 67,
-    "image_urls": [
-       "http://img5a.flixcart.com/image/short/u/4/a/altht-3p-21-alisha-38-original-imaeh2d5vm5zbtgg.jpeg",
-       "http://img5a.flixcart.com/image/short/p/j/z/altght4p-26-alisha-38-original-imaeh2d5kbufss6n.jpeg",
-       "http://img5a.flixcart.com/image/short/p/j/z/altght4p-26-alisha-38-original-imaeh2d5npdybzyt.jpeg",
-       "http://img5a.flixcart.com/image/short/z/j/7/altght-7-alisha-38-original-imaeh2d5jsz2ghd6.jpeg"
-    ],
-    "description": "Key Features of Alisha Solid Women's Cycling Shorts Cotton Lycra Navy, Red, Navy,Specifications of Alisha Solid Women's Cycling Shorts Shorts Details Number of Contents in Sales Package Pack of 3 Fabric Cotton Lycra Type Cycling Shorts General Details Pattern Solid Ideal For Women's Fabric Care Gentle Machine Wash in Lukewarm Water, Do Not Bleach Additional Details Style Code ALTHT_3P_21 In the Box 3 shorts",
-    "rating": 4,
-    "ratingCount" : 120,
-    "sold": 1244,
-    "brand": "Alisha",
-    "product_specification": {
-       "Number of Contents in Sales Package": "Pack of 3",
-       "Fabric": "Cotton Lycra",
-       "Type": "Cycling Shorts",
-       "Pattern": "Solid",
-       "Ideal For": "Women's",
-       "Fabric Care": "Gentle Machine Wash in Lukewarm Water, Do Not Bleach",
-       "Style Code": "ALTHT_3P_21",
-       "In the Box": "3 shorts"
-    },
-    "seller" : {
 
-        "name" : "ronaldo chora",
-        "email" : "ronaldokachora@gmail.com",
-        "sellerRating" : 3.5,
-        "bio" : "we provides the best product with lowest price range and with the best service",
-        "image" : "https://res.cloudinary.com/dlwlo89mc/image/upload/v1710694848/E-Commerce/hv63rumvuflwvaawjlj6.jpg"
-    },
-    "stock" : 8,
- }
 
 
  const relatedProducts = 
@@ -297,9 +260,30 @@ const products = {
 
 
 const ProductDetails = () => {
+    const [product , setProduct] = useState("");
+    const {id} = useParams();
     const [loading , setLoading ] = useState(false);
     const navigate = useNavigate();
     const [isReview ,setIsReviews] = useState(false);
+
+
+    const fetchProductDetails  = async () => {
+       setLoading(true);
+
+       const response = await getProductDetails(id);
+
+       if(response)
+       {
+         setProduct(response);
+         console.log(response);
+       }
+
+       setLoading(false)
+    }
+
+    useEffect(() => {
+       fetchProductDetails();
+    }, [id])
 
 
     if(loading)
@@ -321,23 +305,20 @@ const ProductDetails = () => {
 
         <div className='mt-10 mx-20 '>
             <div className='flex gap-10'>
-                 {/* images  */}
-                <ProductImages images={products.image_urls}/>
+                <ProductImages images={product?.images}/>
 
-                {/* details  */}
                 <ProductInfo
-                    product = {products}
+                    product = {product}
                 />
             </div>
 
 
-               {/* Seller Information  */}
             <div className='w-fit my-24'>
                 <h2 className='text-2xl font-semibold'>Seller Information</h2>
                 <div className='flex items-center gap-5 bg-royal-blue-50 mt-4 p-6 border border-black rounded-md'>
                     <div className='h-[100px] w-[100px] rounded-full border border-black'>
                         <img
-                            src={products.seller.image}
+                            src={product?.seller?.profileImage}
                             alt='sellerImage'
                             loading='lazy'
                             className='h-full w-full rounded-full object-cover'
@@ -347,25 +328,24 @@ const ProductDetails = () => {
                     <div>
                         <div className='flex items-center gap-10'>
                             <h2 className='text-xl font-medium'> 
-                                {products.seller.name}
+                                {product?.seller?.name}
                             </h2>
 
                             <div className='flex gap-1 items-center'>
-                            <p className='font-semibold'>{products?.seller?.sellerRating}</p>
+                            <p className='font-semibold'>{product?.seller?.sellerRating}</p>
                             <TiStarFullOutline fill='#FFAD33' size={24}/>
                             </div>
                         </div>
 
                         <div>
-                            <p className='text-lg text-gray-700'>{products?.seller?.email}</p>
-                            <p className='mt-2'>{products?.seller?.bio}</p>
+                            <p className='text-lg text-gray-700'>{product?.seller?.email}</p>
+                            <p className='mt-2'>{product?.seller?.profileDetails?.bio}</p>
                         </div>
                     </div>
                 </div>
             </div>
 
 
-            {/* Specifications and Reivews  */}
             <div className='mb-10'>
                 <div className='flex gap-14'>
                     <h2 
@@ -384,7 +364,7 @@ const ProductDetails = () => {
                     isReview ? (
                         <Reviews/>
                     ) : (
-                        <Specifications productSpecification = {products.product_specification}/>
+                      <Specifications productSpecification = {product?.specifications}/>
                     )
                 }
             </div>
@@ -393,7 +373,6 @@ const ProductDetails = () => {
             <ProductCards products ={relatedProducts} heading={"Related Products"}/>
         </div>
 
-        {/* footer  */}
         <Footer/>
        
     </div>

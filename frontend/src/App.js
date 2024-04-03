@@ -11,12 +11,13 @@ import ProfileInfo from './components/core/Profile/generalInformation/ProfileInf
 import Profile from './pages/Profile';
 import Orders from './components/core/Profile/orders/Orders';
 import Settings from './components/core/Profile/setting/Settings';
-import Wishlist from './components/core/Profile/wishlists/Wishlist';
+import Wishlist from './components/core/Profile/Wishlist';
 import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
 import Error from './components/common/Error';
 import AddProducts from './pages/AddProducts';
-
+import ProductUploader from "./util/ProductUploader"
+import Cart from './pages/Cart';
 function App() {
   return (
     <div className='min-h-screen'>
@@ -31,6 +32,8 @@ function App() {
           <Route path='/reset-password/:token' element={<ResetPassword/>}/>
           <Route path='/search' element={<Products/>}/>
           <Route path='/product/:id' element={<ProductDetails/>}/>
+          <Route path='/product-uploader' element={<ProductUploader/>}/>
+          <Route path='/cart' element={<Cart/>}/>
 
           <Route element={<Profile/>}>
               <Route path='/profile/info' element={<ProfileInfo/>}/>

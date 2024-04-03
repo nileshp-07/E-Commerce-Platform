@@ -11,6 +11,8 @@ const {
     addProduct,
     editProductDetails,
     deleteProduct,
+    uploadProduct,
+    fetchAllProducts,
     getProductFullDetails
 } = require("../controllers/product")
 
@@ -26,10 +28,13 @@ router.post("/create-category" ,auth, isSeller, createCategory);
 
 
 // #################################### product Routes ###################################
-router.post("/add-product" , auth, isSeller , addProduct);
+// router.post("/add-product" , auth, isSeller , addProduct);
 router.put("/edit-product-details", auth, isSeller , editProductDetails);
 router.delete("/delete-product", auth, isSeller , deleteProduct);
-router.get("/product-details" , getProductFullDetails);
+router.get("/get-all-products", fetchAllProducts);
+router.get("/get-product-details", getProductFullDetails);
+router.post("/add-product", uploadProduct);
+
 
 
 // #################################### Reviews Routes ###################################

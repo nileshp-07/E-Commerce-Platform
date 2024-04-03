@@ -16,10 +16,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
       <BrowserRouter>
-            <React.StrictMode>
+            {/* <React.StrictMode> */}
               <Toaster position="top-center" richColors/>
               <App />
-            </React.StrictMode>
+            {/* </React.StrictMode> */}
       </BrowserRouter>
   </Provider>
   

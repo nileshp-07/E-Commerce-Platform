@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { IoIosArrowDown } from "react-icons/io";
 import Filters from '../components/core/Products/filters/Filters';
 import SortOption from '../components/core/Products/SortOption';
 import ProductLists from '../components/core/Products/ProductLists';
+import Footer from '../components/common/Footer';
+import { fetchAllProducts } from '../services/operations/productAPI';
 
 
 
 const Products = () => {
+  const [products, setProducts] = useState([])
   const [searchParams] = useSearchParams();
   const searchQuery = decodeURIComponent(searchParams.get("query"));
   const [loading , setLoading] = useState(false);
@@ -24,6 +27,21 @@ const Products = () => {
       location : []
   });
 
+  const getAllProducts = async () => {
+     setLoading(true)
+     const response = await fetchAllProducts();
+
+     if(response){
+        setProducts(response);
+     }
+     setLoading(false);
+    //  console.log("products : ",response);
+  }
+
+  useEffect(() => {
+      getAllProducts();
+  },[])
+
 
   return (
     <div>
@@ -31,7 +49,7 @@ const Products = () => {
             <h2 className='text-3xl font-semibold'>{`Showing products for "${searchQuery}"`}</h2>
             <p className='text-[17px] text-gray-800'>{`Showing ${(page - 1)*productPage + 1}-${Math.min(page*productPage, totalProducts)} products`}</p>
         </div>
-        <div className='mt-10 flex gap-12 px-5 pl-14 w-fit'>
+        <div className='my-10 flex gap-12 px-5 pl-14 w-fit'>
             {/* filters  */}
             <Filters
                 filters={filters}
@@ -44,9 +62,11 @@ const Products = () => {
 
                <SortOption sortBy={sortBy} setSortBy={setSortBy}/>
 
-               <ProductLists loading={loading}/>
+               <ProductLists loading={loading} products={products}/>
             </div>
         </div>
+
+        <Footer/>
     </div>
   )
 }

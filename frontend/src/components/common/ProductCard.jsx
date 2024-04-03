@@ -3,9 +3,9 @@ import { toast } from 'sonner';
 import { TiStarOutline } from "react-icons/ti";
 import { TiStarHalfOutline } from "react-icons/ti";
 import { TiStarFullOutline } from "react-icons/ti";
-import { FaC, FaCartArrowDown } from "react-icons/fa6";
 import { Link, Navigate } from 'react-router-dom';
 import { FaStar } from "react-icons/fa";
+import { FaC, FaCartArrowDown } from "react-icons/fa6";
 import { GoHeart } from "react-icons/go";
 import RatingStars from './RatingStars';
 
@@ -29,7 +29,7 @@ const ProductCard = ({product, isBestDeal}) => {
             <div className='p-3 w-[280px] min-h-[410px] custom-shadow rounded-md hover:scale-105 duration-200 transition-all relative group'>
                 <div
                   onClick={addToWislists}
-                  className='absolute right-4 top-4 p-2 bg-white rounded-full flex items-center justify-center'>
+                  className='absolute right-4 top-4 p-2 bg-white rounded-full flex items-center justify-center hover:scale-105 transition-all duration-200'>
                   <GoHeart size={20}/>
                 </div>
                 {
@@ -63,10 +63,14 @@ const ProductCard = ({product, isBestDeal}) => {
                         <p className='font-medium text-gray-500'>({product.rating.count})</p>
                     </div>
                 </div>
-                <div 
-                   onClick={addToCart}
-                   className=' p-3 rounded-full bg-black absolute right-3 bottom-3 text-white font-medium  justify-center items-center hidden group-hover:flex duration-200 transition-all'>
-                    <FaCartArrowDown size={23}/>
+
+                <div
+                  className='absolute right-2 bottom-2  p-[6px] hover:bg-[#c1c1c1] justify-center items-center rounded-full hidden group-hover:flex duration-200 transition-all'
+                  onClick={addToCart}>
+                    <div 
+                    className='p-3 rounded-full bg-black text-white font-medium flex justify-center items-center'>
+                        <FaCartArrowDown size={23}/>
+                    </div>
                 </div>
             </div>
         </Link>

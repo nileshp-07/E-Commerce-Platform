@@ -91,6 +91,8 @@ exports.signUp = async (req , res) => {
         const recentOtp = await OTP.find({email}).sort({createdAt : -1}).limit(1);
 
         // if otp not found or expired 
+
+        console.log("recentOtp : " ,recentOtp)
         if(recentOtp.length === 0 ) 
         {
             return res.status(404).json({

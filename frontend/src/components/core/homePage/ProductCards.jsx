@@ -23,7 +23,7 @@ import {Autoplay, FreeMode} from "swiper/modules";
 const ProductCards = ({products, heading, isBestDeal}) => {
     const [loading , setLoading] = useState(false);
 
-    console.log(products)
+    // console.log(products)
 
 
     if(loading)

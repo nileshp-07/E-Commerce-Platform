@@ -9,15 +9,25 @@ import { BsDash } from "react-icons/bs";
 import { FaCartArrowDown } from "react-icons/fa";
 import { FaTruckFast } from "react-icons/fa6";
 import { GrPowerCycle } from "react-icons/gr";
+import {toast} from "sonner"
 
 const ProductInfo = ({product}) => {
     const [stock , setStock] = useState(1);
+
+
+    const addToWishlists = async ()  => {
+        toast.success("Product Added to wishlist")
+    }
+
+    const addToCart = async () => {
+        toast.success("Product Added to Cart");
+    }
   return (
     <div className='w-full'>
         <div className='px-5 pb-3 border-b border-gray-400'>
             <div className='flex justify-between w-full'>
                 {
-                    product.stock > 1 ? (
+                    product?.stocks > 1 ? (
                     <div className='flex gap-1 items-center text-caribbeangreen-500 font-medium'>
                             <TiTick/>
                             <p>In Stock</p>
@@ -30,20 +40,22 @@ const ProductInfo = ({product}) => {
                     )
                 }
                 
-                <div className='p-2'>
+                <div 
+                    onClick={addToWishlists}
+                    className='p-2 hover:scale-105 transition-all duration-200 cursor-pointer' >
                     <GoHeart size={26}/>
                 </div>
             </div>
 
             <h2 className='text-3xl font-semibold w-[90%]'>
                 {
-                    product?.name
+                    product?.title
                 }
             </h2>
 
             <div className='flex gap-8 my-2'>
                 <p className='font-semibold'>Brand:</p>
-                <p className="text-[17px]">{product.brand}</p>
+                <p className="text-[17px]">{product?.brand}</p>
             </div>
         </div>
 
@@ -51,25 +63,25 @@ const ProductInfo = ({product}) => {
             <div className='flex  gap-14 my-3 '>
                 <div className='flex gap-5'>
                     <div className='flex gap-1 items-center'>
-                        <p>{parseFloat(product.rating).toFixed(1)}</p>
-                        <RatingStars RatingCount={4.4}/>
+                        <p>{parseFloat(product?.avgRating).toFixed(1)}</p>
+                        <RatingStars RatingCount={product?.avgRating}/>
                     </div>
                     <div>
-                        ({product.ratingCount} Ratings)
+                        ({product?.ratingAndReviews?.length} Ratings)
                     </div>
                 </div>
 
                 <div className='flex items-center gap-1 font-medium'>
                     <MdDone fontSize='25'/>
-                    <p>{product.sold} Sold</p>
+                    <p>{product?.sold} Sold</p>
                 </div>
             </div>
 
 
             <div className='flex gap-4 items-end select-none'>
-                <p className='text-3xl font-bold text-caribbeangreen-500'>Rs.{product.discounted_price}</p>
-                <p className=' line-through font-medium text-gray-600 ' >Rs.{product.price}</p>
-                <p className='py-[1px] px-[5px] bg-caribbeangreen-300 rounded-md text-white select-none'>{product.discount}%</p>
+                <p className='text-3xl font-bold text-caribbeangreen-500'>Rs.{product?.discountedPrice}</p>
+                <p className=' line-through font-medium text-gray-600 ' >Rs.{product?.price}</p>
+                <p className='py-[1px] px-[5px] bg-caribbeangreen-300 rounded-md text-white select-none'>{product?.discount}%</p>
             </div>
 
 
@@ -86,9 +98,9 @@ const ProductInfo = ({product}) => {
                     <div className='w-[90px] h-full flex items-center justify-center border-y border-black text-xl font-medium select-none' >
                         {stock}
                     </div>
-                    <div className={`w-[45px] h-full flex items-center justify-center rounded-r-md text-white cursor-pointer ${stock == product.stock ? "bg-gray-300 " : "bg-royal-blue-500"}`}
+                    <div className={`w-[45px] h-full flex items-center justify-center rounded-r-md text-white cursor-pointer ${stock === product?.stocks ? "bg-gray-300 " : "bg-royal-blue-500"}`}
                          onClick={() => {
-                            if(stock < product.stock)
+                            if(stock < product?.stocks)
                             setStock(stock+1)
                          }}>
                         <FaPlus size={24}/>
@@ -96,12 +108,15 @@ const ProductInfo = ({product}) => {
                 </div>
 
                 {/* buy now  */}
-                <div className='flex bg-royal-blue-600 rounded-md py-3 px-14 text-[18px] font-medium text-white w-fit'>
+                <div 
+                  className='flex bg-royal-blue-600 rounded-md py-3 px-14 text-[18px] font-medium text-white w-fit cursor-pointer  hover:bg-royal-blue-500 transition-all duration-200'>
                     Buy Now
                 </div>
 
                 {/* cart  */}
-                <div className='border border-black p-3 rounded-md'>
+                <div
+                  onClick={addToCart}
+                  className='border border-black p-3 rounded-md cursor-pointer hover:scale-105 transition-all duration-200'>
                     <FaCartArrowDown size={25}/>
                 </div>
             </div>

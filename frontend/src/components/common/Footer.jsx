@@ -39,7 +39,7 @@ const quickLinks = [
 const account = [
     {
         title : "Orders",
-        link : "/Orders"
+        link : "/profile/orders"
     },
     {
         title : "Wishlist",
@@ -51,11 +51,11 @@ const account = [
     },
     {
         title : "Address",
-        link : "/profile/address"
+        link : "profile/info"
     },
     {
         title : "Personal Info",
-        link : "/profile/my-info"
+        link : "/profile/info"
     },
 ]
 
@@ -98,7 +98,7 @@ const Footer = () => {
                     </a>
 
                     <a href='mailto:mycommerce@gmail.com'>
-                        <div class='flex items-center gap-2 text-gray-700 font-medium mt-2'>
+                        <div className='flex items-center gap-2 text-gray-700 font-medium mt-2'>
                             <MdEmail size={20}/>
                             <p>mycommerce@gmail.com</p>
                         </div>

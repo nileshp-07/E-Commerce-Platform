@@ -3,6 +3,8 @@ const {uploadImageToCloudinary} = require("../utils/imageUploader")
 const RatingAndReview = require("../models/ratingAndReviews");
 const { User } = require("../models/user");
 const Cart = require("../models/cart")
+const {Category, SubCategory,SubSubCategory} = require("../models/category");
+const { default: mongoose } = require("mongoose");
 
 
 exports.addProduct = async (req , res) => {
@@ -81,6 +83,239 @@ exports.addProduct = async (req , res) => {
         })
     }
 }
+
+exports.uploadProduct = async (req , res) => {
+    try{
+        const {title , price, categories,sellerId,thumbnail,images,stocks, brand , discountPercentage,discountedPrice, specifications } = req.body;
+        // const {id} = req.user;
+        // const thumbnail = req.files.image;
+
+
+        if(!title || !price || !categories || !sellerId || !images  || !thumbnail || !discountedPrice || !specifications )
+        {
+            return res.status(404).json({
+                success : false,
+                message : "All fields are required"
+            })
+        }
+
+
+        const mainCategory = categories['category'];
+        const subCategory = categories['subCategory'];
+        const subSubCategory = categories['subSubCategory'];
+
+        let categoryID;
+        let mainCategoryRes;
+        let subCategoryRes;
+        let subSubCategoryRes;
+
+
+        mainCategoryRes = await Category.findOne({name: mainCategory});
+        if(mainCategoryRes)
+        {
+            subCategoryRes = await SubCategory.findOne({name : subCategory});
+
+            if(subCategoryRes)
+            {
+                subSubCategoryRes = await SubSubCategory.findOne({name : subSubCategory});
+
+                if(subSubCategoryRes)
+                {
+                    categoryID = subSubCategoryRes._id;
+                }
+                else{
+                    subSubCategoryRes = await SubSubCategory.create({
+                                                                name : subSubCategory,
+                                                                parentSubCategory : subCategoryRes._id
+                                                            });
+
+                    subCategoryRes.subSubCategories.push(subSubCategoryRes._id);
+                    await subCategoryRes.save();
+                    categoryID = subSubCategoryRes._id;
+                }
+            }
+            else{
+                subCategoryRes = await SubCategory.create({
+                                                            name : subCategory,
+                                                            parentCategory : mainCategoryRes._id
+                                                        });
+
+                mainCategoryRes.subCategories.push(subCategoryRes._id);
+                await mainCategoryRes.save();
+
+                subSubCategoryRes = await SubSubCategory.create({
+                                                            name : subSubCategory,
+                                                            parentSubCategory : subCategoryRes._id
+                                                        })
+
+                categoryID = subSubCategoryRes._id;
+                subCategoryRes.subSubCategories.push(subSubCategoryRes._id)
+                await subCategoryRes.save();
+            }
+
+        }
+        else{
+            mainCategoryRes = await Category.create({name : mainCategory});
+
+            subCategoryRes = await SubCategory.create({
+                name : subCategory,
+                parentCategory : mainCategoryRes._id
+            });
+
+            mainCategoryRes.subCategories.push(subCategoryRes._id);
+            await mainCategoryRes.save();
+
+
+            subSubCategoryRes = await SubSubCategory.create({
+                name : subSubCategory,
+                parentSubCategory : subCategoryRes._id
+            })
+
+            categoryID = subSubCategoryRes._id;
+            subCategoryRes.subSubCategories.push(subSubCategoryRes._id)
+            await subCategoryRes.save();
+        }
+
+        // productDetails should be jsonObject 
+        // const productDetailsJson = JSON.parse(specifications);
+
+        const id = new mongoose.Types.ObjectId(sellerId);
+       
+        
+        const product = await Product.create({
+                                        title,
+                                        price,
+                                        categories : [categoryID],
+                                        stocks,
+                                        brand,
+                                        seller : id,
+                                        discount: discountPercentage,
+                                        discountedPrice,
+                                        specifications,
+                                        thumbnail,
+                                        images
+                                    })
+
+
+       if(!product)
+       {
+         return res.status(406).json({
+            success : false,
+            message : "Product could not be created"
+         })
+       }
+
+       subSubCategoryRes.products.push(product._id);
+       await subSubCategoryRes.save();
+
+
+       //    now add the newProduct id in the sellers collection 
+       const user =  await User.findByIdAndUpdate(id,{
+           $push : {
+              products : product._id
+           }
+       })
+
+
+
+       return res.status(200).json({
+        success : true,
+        message :"New product created",
+        product
+       })
+    }
+    catch(error)
+    {
+        console.log(error);
+        return res.status(401).json({
+            success : false,
+            message : error.message
+        })
+    }
+}
+
+
+exports.fetchAllProducts = async (req , res) => {
+    try{
+        const products = await Product.find({})
+                                        .populate("categories")
+                                        .populate("seller")
+                                        .populate("ratingAndReviews")
+                                        .exec();
+
+
+        if(!products)
+        {
+            return res.status(404).json({
+                success : false,
+                message: "Could fetched products"
+            })
+        }
+
+
+        return res.status(200).json({
+            success : true,
+            message : "products fetched successfully",
+            products
+        })
+    }
+    catch(error)
+    {
+        console.log(error);
+        return res.status(401).json({
+            success : false,
+            message : error.message
+        })
+    }
+}
+
+
+exports.getProductFullDetails = async (req, res) => {
+     try{
+        const { productId } = req.query;
+
+        
+        // const id = new mongoose.Types.ObjectId(productId);
+
+        const productDetails = await Product.findById(productId)
+                                                        .populate("categories")
+                                                        .populate({
+                                                            path : "ratingAndReviews",
+                                                            populate: {
+                                                                path : "user"
+                                                            }
+                                                        })
+                                                        .populate({
+                                                            path : "seller",
+                                                            populate: {
+                                                                path : "profileDetails",
+                                                            }
+                                                        })
+                                                        .exec();
+
+
+        if(!productDetails)
+        {
+            return res.status(404).json({
+                success : false,
+                message : "Product detail could not be fetched"
+            })
+        }
+
+
+        return res.status(200).json({
+            success :true,
+            message : "Product detail fetched successfully",
+            productDetails
+        })
+
+     }
+     catch(error)
+     {
+
+     }
+}
+
 
 
 exports.editProductDetails = async (req , res) => {
@@ -199,56 +434,6 @@ exports.deleteProduct = async (req , res) => {
         return res.status(200).json({
             success : true,
             message : "Product deleted successfully"
-        })
-    }
-    catch(error)
-    {
-        console.log(error);
-        return res.status(401).json({
-            success : false,
-            message : error.message
-        })
-    }
-}
-
-
-exports.getProductFullDetails = async (req , res) => {
-    try{
-        const {productId} = req.body;
-
-        // fetch the product  
-        const productDetails = await Product.findById(productId)
-                                                       .populate("category")
-                                                       .populate({
-                                                         path : "seller",
-                                                         populate : {
-                                                            path : "profileDetails",
-                                                            path : "products"
-                                                         },
-                                                        })
-                                                        .populate({
-                                                            path : "ratingAndReviews",
-                                                            populate : {
-                                                                path : "user"
-                                                            }
-                                                        })
-                                                        .exec();
-
-
-
-        if(!productDetails)
-        {
-            return res.status(404).json({
-                success : false,
-                message : "Product not found"
-            })
-        }
-
-
-        return res.status(200).json({
-            success : true,
-            message : "Product full details fetched successfully",
-            productDetails
         })
     }
     catch(error)

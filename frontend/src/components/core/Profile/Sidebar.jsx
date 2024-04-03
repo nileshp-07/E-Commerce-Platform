@@ -49,28 +49,28 @@ const Sidebar = () => {
   return (
     <div className='min-w-[250px] sidebar-shadow min-h-[calc(100vh-3.5rem)] py-10 flex flex-col'>
         <Link to="/profile/info">
-            <div className={`flex gap-2 items-center font-medium transition-all duration-200  px-5 py-2 ${matchRoute("/profile/info") ? "border-l-[5px] bg-royal-blue-50 text-royal-blue-700 border-royal-blue-500" : "border-l-[5px] border-white"}`}>
+            <div className={`flex gap-2 items-center font-medium transition-all duration-200  px-5 py-2 ${matchRoute("/profile/info") ? "border-l-[5px] bg-royal-blue-50 text-royal-blue-700 border-royal-blue-500" : "border-l-[5px] border-white hover:bg-gray-100"} mr-3 rounded-r-full`}>
                 <GoGear/>
                 <p>General Information</p>
             </div>
         </Link>
 
         <Link to="/profile/orders">
-            <div className={`flex gap-2 items-center font-medium transition-all duration-200 px-5 py-2 ${matchRoute("/profile/orders") ? "border-l-[5px] bg-royal-blue-50 text-royal-blue-700 border-royal-blue-500" : "border-l-[5px] border-white"}`}>
+            <div className={`flex gap-2 items-center font-medium transition-all duration-200 px-5 py-2 ${matchRoute("/profile/orders") ? "border-l-[5px] bg-royal-blue-50 text-royal-blue-700 border-royal-blue-500" : "border-l-[5px] border-white hover:bg-gray-100"}  mr-3 rounded-r-full`}>
                 <GoGear/>
                 <p>Orders</p>
             </div>
         </Link>
         
         <Link to="/profile/wishlists">
-            <div className={`flex gap-2 items-center font-medium transition-all duration-200 px-5 py-2 ${matchRoute("/profile/wishlists") ? "border-l-[5px] bg-royal-blue-50 text-royal-blue-700 border-royal-blue-500" : "border-l-[5px] border-white"}`}>
+            <div className={`flex gap-2 items-center font-medium transition-all duration-200 px-5 py-2 ${matchRoute("/profile/wishlists") ? "border-l-[5px] bg-royal-blue-50 text-royal-blue-700 border-royal-blue-500" : "border-l-[5px] border-white hover:bg-gray-100"}  mr-3 rounded-r-full`}>
                 <GoGear/>
                 <p>Wishlist</p>
             </div>
         </Link>
         
         <Link to="/profile/setting">
-            <div className={`flex gap-2 items-center font-medium transition-all duration-200 px-5 py-2 ${matchRoute("/profile/setting") ? "border-l-[5px] bg-royal-blue-50 text-royal-blue-700 border-royal-blue-500" : "border-l-[5px] border-white"}`}>
+            <div className={`flex gap-2 items-center font-medium transition-all duration-200 px-5 py-2 ${matchRoute("/profile/setting") ? "border-l-[5px] bg-royal-blue-50 text-royal-blue-700 border-royal-blue-500" : "border-l-[5px] border-white hover:bg-gray-100"}  mr-3 rounded-r-full`}>
                 <GoGear/>
                 <p>Settings</p>
             </div>            
