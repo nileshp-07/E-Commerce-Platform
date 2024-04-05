@@ -10,7 +10,11 @@ const {
         EDIT_ADDRESS_API,
         DELETE_ADDRESS_API,
         GET_ALL_ADDRESSES_API,
-        CHANGE_PROFILE_IMAGE
+        CHANGE_PROFILE_IMAGE,
+        ADD_TO_CART_API,
+        REMOVE_FROM_CART_API,
+        ADD_TO_WISHLISTS_API,
+        REMOVE_FROM_WISHLISTS_API
     } = profileEndPoints;
 
 
@@ -201,6 +205,121 @@ export const getAllAddresses = async (token) => {
     }
     toast.dismiss(toastId);
     return addresses;
+}
+
+
+export const addToCart = async (productId, qty, token) => {
+    const toastId = toast.loading("loading...");
+    try{
+        const response = await apiConnector("POST" , ADD_TO_CART_API, {productId , qty}, {
+            Authorization : `Bearer ${token}`
+        } );
+
+        console.log("ADD TO CART API RESPONSE : ", response);
+
+        if(!response.data.success)
+        {
+            throw new Error(response.data.message);
+        }
+
+        localStorage.setItem("cartItems", JSON.stringify(response.data.updatedCart));
+
+
+        toast.success("Product added to cart");
+    }
+    catch(error)
+    {
+        console.log("ADD PRODUCT TO CART API ERROR", error);
+        console.error(error.message);
+        toast.error(error.response.data.message);
+    }
+
+    toast.dismiss(toastId);
+}
+
+
+export const removeFromCart = async (productId , token) => {
+    const toastId = toast.loading("loading...");
+    try{
+        const response = await apiConnector("POST", REMOVE_FROM_CART_API , {productId} ,{
+            Authorization : `Bearer ${token}`
+        });
+
+        console.log("REMOVE FROM CART API RESPONSE : ", response);
+
+        if(!response.data.success)
+        {
+            throw new Error(response.data.message);
+        }
+
+        localStorage.setItem("cartItems", JSON.stringify(response.data.updatedCart));
+        toast.success("Product removed from cart");
+
+    }
+    catch(error)
+    {
+        console.log("ADD PRODUCT TO CART API ERROR", error);
+        console.error(error.message);
+        toast.error(error.response.data.message);
+    }
+
+    toast.dismiss(toastId);
+}
+
+
+export const addToWishlists = async (productId , token) => {
+    const toastId = toast.loading("loading...");
+
+    try{
+        const response = await apiConnector("POST", ADD_TO_WISHLISTS_API , {productId},{
+            Authorization : `Bearer ${token}`
+        });
+
+        console.log("ADD PRODUCT TO WISHLISTS API  RESPONSE : ", response);
+
+        if(!response.data.success)
+        {
+            throw new Error(response.data.message);
+        }
+
+        console.log("wishlists : ",response.data.user.wishlists)
+        toast.success("Product added to wishlists");
+
+    }
+    catch(error)
+    {
+        console.log("ADD PRODUCT TO WISHLISTS API ERROR", error);
+        console.error(error); // Log the entire error object
+        toast.error(error.response.data.message);
+    }
+    toast.dismiss(toastId);
+}
+
+
+export const removeFromWishlists = async (productId,  token) => {
+    const toastId = toast.loading("loading...");
+
+    try{
+        const response = await apiConnector("POST" , REMOVE_FROM_WISHLISTS_API, {productId},{
+            Authorization : `Bearer ${token}`
+        })
+
+        console.log('REMOVE PRODUCT FROM WISHLISTS API RESPONSE : ', response);
+
+        if(!response.data.success)
+        {
+            throw new Error(response.data.message);
+        }
+
+        toast.success("product removed from wishlists");
+    }
+    catch(error)
+    {
+        console.log("REMOVE PRODUCT FROM WISHLISTS API ERROR", error);
+        console.error(error.message);
+        toast.error(error.response.data.message);
+    }
+    toast.dismiss(toastId);
 }
 
 

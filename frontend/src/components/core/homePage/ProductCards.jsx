@@ -37,8 +37,8 @@ const ProductCards = ({products, heading, isBestDeal}) => {
   return (
     <div className='my-20'>
          <div className='flex items-center gap-2 mb-5'>
-            <div className='w-[15px] h-[40px] bg-royal-blue-500 rounded-[4px]'></div>
-            <h2 className='text-3xl font-semibold'>{heading}</h2>
+            <div className='w-[13px] h-[35px] bg-royal-blue-500 rounded-[4px]'></div>
+            <h2 className='text-[26px] font-semibold'>{heading}</h2>
          </div>
 
 

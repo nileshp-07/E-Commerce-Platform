@@ -18,7 +18,11 @@ export const profileEndPoints = {
     ADD_NEW_ADDRESS_API : BASE_URL +  "/profile/add-address",
     EDIT_ADDRESS_API : BASE_URL + "/profile/edit-address",
     DELETE_ADDRESS_API : BASE_URL +  "/profile/delete-address",
-    GET_ALL_ADDRESSES_API : BASE_URL + "/profile/show-all-address"
+    GET_ALL_ADDRESSES_API : BASE_URL + "/profile/show-all-address",
+    ADD_TO_CART_API : BASE_URL + "/profile/add-to-cart",
+    REMOVE_FROM_CART_API : BASE_URL + "/profile/remove-from-cart",
+    ADD_TO_WISHLISTS_API : BASE_URL + "/profile/add-to-wishlists",
+    REMOVE_FROM_WISHLISTS_API : BASE_URL +  "/profile/remove-from-wishlists"
 }
 
 export const productEndPoints = {

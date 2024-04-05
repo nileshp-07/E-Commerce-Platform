@@ -10,17 +10,33 @@ import { FaCartArrowDown } from "react-icons/fa";
 import { FaTruckFast } from "react-icons/fa6";
 import { GrPowerCycle } from "react-icons/gr";
 import {toast} from "sonner"
+import { addToCart, addToWishlists } from '../../../services/operations/profileAPI';
+import { useSelector } from 'react-redux';
+
 
 const ProductInfo = ({product}) => {
+    const {token} = useSelector((state) => state.user);
     const [stock , setStock] = useState(1);
+    const [loading, setLoading] = useState(false);
 
-
-    const addToWishlists = async ()  => {
-        toast.success("Product Added to wishlist")
+    const addToWishlistsHandler = async (productId)  => {
+        setLoading(true);
+        await addToWishlists(productId , token);
+        setLoading(false);
     }
 
-    const addToCart = async () => {
-        toast.success("Product Added to Cart");
+    const addToCartHandler = async () => {
+        await addToCart(product._id , stock, token)
+    }
+
+
+    if(loading)
+    {
+        return (
+            <div className='h-[calc(100vh-3.5rem)] w-full flex items-center justify-center'>
+                <div className='spinner'></div>
+            </div>
+        )
     }
   return (
     <div className='w-full'>
@@ -115,7 +131,7 @@ const ProductInfo = ({product}) => {
 
                 {/* cart  */}
                 <div
-                  onClick={addToCart}
+                  onClick={addToCartHandler}
                   className='border border-black p-3 rounded-md cursor-pointer hover:scale-105 transition-all duration-200'>
                     <FaCartArrowDown size={25}/>
                 </div>

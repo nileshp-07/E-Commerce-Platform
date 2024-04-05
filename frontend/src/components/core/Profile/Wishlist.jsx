@@ -247,6 +247,7 @@ const products =
           ]
 
 const Wishlist = () => {
+  
   return (
     <div className='my-10'>
        <h2 className='text-2xl font-semibold mb-8'>Wishlists</h2>

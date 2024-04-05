@@ -64,7 +64,7 @@ function ProductAdder() {
                       
 
                       const sellerId = "660a8f2007ef7b9ad8c14669"
-                      const stocks = Math.ceil(100*Math.random());
+                      const stocks = Math.ceil(50*Math.random());
                       const brand = product.brand;
                       const price = product.retail_price;
                       const productSpecifications = product.product_specifications.product_specification;

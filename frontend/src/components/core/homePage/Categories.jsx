@@ -48,8 +48,8 @@ const Categories = () => {
     <div className='my-20'>
 
         <div className='flex items-center gap-2 mb-10'>
-            <div className='w-[15px] h-[40px] bg-royal-blue-500 rounded-[4px]'></div>
-            <h2 className='text-3xl font-semibold'>Browse By Category</h2>
+            <div className='w-[13px] h-[35px] bg-royal-blue-500 rounded-[4px]'></div>
+            <h2 className='text-[26px] font-semibold'>Browse By Category</h2>
         </div>
 
         <div className='flex gap-2 justify-between'>

@@ -50,7 +50,7 @@ const ProductCard = ({product, isBestDeal}) => {
                 </div> 
                 <div className='py-2'>
                     <p className='text-[17px] font-medium leading-[1.3rem]'>
-                       {product.title.split("").length > 30 ? `${product.title.split("").splice(0,50).join("")}...` : (product.title)}
+                       {product?.title?.split("").length > 30 ? `${product?.title?.split("").splice(0,50).join("")}...` : (product.title)}
                     </p>
                     <p className='font-medium text-gray-500'>{product.category}</p>
                     <div className='flex gap-2 my-1'>

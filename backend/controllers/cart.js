@@ -16,6 +16,16 @@ exports.addProductToCart = async (req , res) => {
             })
         }
 
+        const itemExist  = await Cart.findOne({user :  id , 'products.productId' : {$in: [productId]}});
+
+        if(itemExist)
+        {
+            return res.status(401).json({
+                success :false,
+                message : "Product already exist in cart"
+            })
+        }
+
         const updatedCart = await Cart.findOneAndUpdate({user : id},{
                                                         $push : {
                                                             products : {
@@ -67,6 +77,16 @@ exports.removeProductFromCart = async (req , res) => {
             })
         }
 
+        const productExist = await Cart.findOne({user: id, 'products.productId' : {$in: [productId]}});
+
+        if(!productExist)
+        {
+            return res.status(404).json({
+                message : "Product does not found in cart",
+                success : false,
+            })
+        }
+        
         const updatedCart = await Cart.findOneAndUpdate({user : id},{
                                                         $pull : {
                                                             products : {  productId  }

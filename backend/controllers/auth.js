@@ -137,13 +137,14 @@ exports.signUp = async (req , res) => {
             profileImage : `https://api.dicebear.com/5.x/initials/svg?seed=${name}`   //an api to fetch the image by user's first and last name
         })
 
-        // console.log("TEST5")
 
         // now create a cart for user 
         const cart = await Cart.create({
                                     user: user._id,
                                     products : [],
                                 });
+
+        console.log("CART : ", cart);
 
 
         return res.status(200).json({
@@ -179,6 +180,7 @@ exports.login = async (req, res) => {
         const user = await User.findOne({email: email})
                                                     .populate("profileDetails")
                                                     .populate("addresses")
+                                                    .populate("wishlists")
                                                     .exec();
 
         if(!user)
@@ -205,6 +207,12 @@ exports.login = async (req, res) => {
                                    process.env.JWT_SECRET, 
                                    {expiresIn : "12h"});
 
+
+            // now find the cart 
+            const cartItems = await Cart.findOne({user: user._id})
+                                                    .populate("products.productId")
+                                                    .exec();
+
             
             user.token = token,
             user.password = undefined;
@@ -215,12 +223,13 @@ exports.login = async (req, res) => {
                 httpOnly : true
             }
 
-
             res.cookie("token" ,token ,options).status(200).json({
                 success : true,
                 message : "User logged in successfully",
                 token, 
-                user
+                user,
+                cartItems,
+                wishlists : user.wishlists
             })
         }
         else{
