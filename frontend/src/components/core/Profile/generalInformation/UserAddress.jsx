@@ -1,17 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Address from './Address';
-import { MdAdd, MdAddLocationAlt } from "react-icons/md";
-import { useDispatch, useSelector } from 'react-redux';
-import { setLoading } from '../../../../redux/slices/userSlice';
+import { MdAddLocationAlt } from "react-icons/md";
+import { useSelector,useDispatch } from 'react-redux';
 import { addNewAddress, getAllAddresses } from '../../../../services/operations/profileAPI';
-import { useSyncExternalStore } from 'react';
+
 
 
 const UserAddress = ({user}) => {
-  const dispatch = useDispatch();
   const {token} = useSelector((state) => state.user);
-//   const [addresses , setAddresses] = useState([]);
+  const [addresses , setAddresses] = useState([]);
   const [isNewAddress , setisNewAddress] = useState(false);
+  const [loading , setLoading] = useState(false);
   const [newAddress , setNewAddress] = useState({
                                                     street : "",
                                                     postalCode : "",
@@ -22,7 +21,14 @@ const UserAddress = ({user}) => {
 
 
   const CreateNewAddress = async() => {
-    await addNewAddress(newAddress , token, dispatch);
+    setLoading(true);
+    const response = await addNewAddress(newAddress , token);
+
+    if(response)
+    {
+      setAddresses(response);
+    }
+    setLoading(false);
 
     setisNewAddress(false);
 
@@ -36,7 +42,6 @@ const UserAddress = ({user}) => {
   }
  
 
-//   console.log("NEW address : ", newAddress);
   
   useEffect(() => {
     if (isNewAddress && childRef.current) {
@@ -44,24 +49,27 @@ const UserAddress = ({user}) => {
     }
   }, [isNewAddress]);
 
-//   useEffect(() => {
 
-//     const fetchAllAddresses = async () => {
-//         dispatch(setLoading(true));
+  const fetchAllAddresses = async () => {
 
-//         const response = await getAllAddresses(token);
+      setLoading(true);
 
-//         if(response)
-//         {
-//             setAddresses(response);
-//         }
+      const response = await getAllAddresses(token);
 
-//         dispatch(setLoading(false));
-//     }
+      if(response)
+      {
+          setAddresses(response);
+      }
 
-//     fetchAllAddresses();
+      setLoading(false);
+  }
 
-//   },[])
+
+  useEffect(() => {
+
+    fetchAllAddresses();
+
+  },[])
 
 
 
@@ -80,21 +88,21 @@ const UserAddress = ({user}) => {
         </div>
         <div className='py-6 px-8 rounded-md border profile-shadow mt-2'>
             {
-               ( user.addresses.length < 1 && !isNewAddress) && (
+               (addresses.length < 1 && !isNewAddress) && (
                     <div className='w-full h-[100px] flex items-center justify-center'>
                         <h2 className='text-xl font-medium text-gray-900'>No addresses</h2>
                     </div>
                 )
             }
             {
-                user.addresses.length > 0 && user.addresses.map((address, id) => (
-                   <Address key={id} addr={address}/>
+                addresses.length > 0 && addresses.map((address, id) => (
+                   <Address key={id} addr={address} setLoading={setLoading}/>
                 ) ) 
             }
             {
                 isNewAddress && (
                     <div ref={childRef}>
-                        <Address addr={newAddress} setNewAddress={setNewAddress}
+                        <Address addr={newAddress} setNewAddress={setNewAddress} setLoading = {setLoading}
                             isNewAddress={isNewAddress}/>
                     </div>
                 )

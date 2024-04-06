@@ -7,10 +7,12 @@ import { FaRegUser } from "react-icons/fa";
 import { RiSearch2Line } from "react-icons/ri";
 import { useSelector } from 'react-redux';
 import { BsShopWindow } from "react-icons/bs";
+import { FaPlus } from "react-icons/fa6";
 
 const Navbar = () => {
   const [searchInput , setSearchInput] = useState("")
   const {token} = useSelector((state) => state.user);
+  const {user} = useSelector((state) => state.user);
   const navigate = useNavigate();
 
   const searchHandler = async (e) => {
@@ -63,12 +65,21 @@ const Navbar = () => {
 
             {
                 token && (
-                  <Link to="/become-seller">
-                    <div className='flex gap-2 items-center'>
-                      <BsShopWindow size={20}/>
-                      <p className='font-medium'>Become a Seller</p>
-                    </div>
+                   user?.isSeller ? (
+                     <Link to={"/profile/add-product"}>
+                        <div className='py-[6px] px-5 border rounded-md flex items-center gap-2'>
+                            <p className='font-medium'>Add Product</p>
+                            <FaPlus/>
+                        </div>
+                     </Link>
+                   ) : (
+                    <Link to="/become-seller">
+                      <div className='flex gap-2 items-center'>
+                        <BsShopWindow size={20}/>
+                        <p className='font-medium'>Become a Seller</p>
+                      </div>
                   </Link>
+                   )
                 )
             }
 

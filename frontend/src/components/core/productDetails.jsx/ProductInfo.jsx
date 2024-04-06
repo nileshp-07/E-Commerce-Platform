@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TiTick } from "react-icons/ti";
 import { RxCross2 } from "react-icons/rx";
 import { GoHeart } from "react-icons/go";
@@ -9,8 +9,8 @@ import { BsDash } from "react-icons/bs";
 import { FaCartArrowDown } from "react-icons/fa";
 import { FaTruckFast } from "react-icons/fa6";
 import { GrPowerCycle } from "react-icons/gr";
-import {toast} from "sonner"
-import { addToCart, addToWishlists } from '../../../services/operations/profileAPI';
+import { GoHeartFill } from "react-icons/go";
+import { addToCart, addToWishlists, removeFromWishlists } from '../../../services/operations/profileAPI';
 import { useSelector } from 'react-redux'
 
 
@@ -18,18 +18,43 @@ const ProductInfo = ({product}) => {
     const {token} = useSelector((state) => state.user);
     const [stock , setStock] = useState(1);
     const [loading, setLoading] = useState(false);
+    const [wishlists, setWishlists] = useState([]);
+    const [cartItems, setCartItems] = useState([]);
 
-    const addToWishlistsHandler = async (productId)  => {
+    const addToWishlistsHandler = async ()  => {
         setLoading(true);
 
-        await addToWishlists(productId , token);
+        await addToWishlists(product._id , token);
         setLoading(false);
     }
 
-    const addToCartHandler = async () => {
-        await addToCart(product._id , stock, token)
+    const removeFromWishlistsHandler = async () => {
+        setLoading(true);
+        await removeFromWishlists(product._id, token);
+        setLoading(false);        
     }
 
+    const addToCartHandler = async () => {
+        setLoading(true);
+        await addToCart(product._id , stock, token)
+        setLoading(false);
+    }
+
+
+    useEffect(() => {
+        const wishlistsProducts = JSON.parse(localStorage.getItem("wishlists")) || [];
+        const cartProducts = JSON.parse(localStorage.getItem("cartItems"));
+        if(wishlistsProducts)
+        {
+            setWishlists(wishlistsProducts);
+        }
+
+        if(cartProducts)
+        {
+            setCartItems(cartProducts);
+        }
+
+    }, [loading])
 
     if(loading)
     {
@@ -45,10 +70,10 @@ const ProductInfo = ({product}) => {
             <div className='flex justify-between w-full'>
                 {
                     product?.stocks > 1 ? (
-                    <div className='flex gap-1 items-center text-caribbeangreen-500 font-medium'>
-                            <TiTick/>
-                            <p>In Stock</p>
-                    </div>
+                        <div className='flex gap-1 items-center text-caribbeangreen-500 font-medium'>
+                                <TiTick/>
+                                <p>In Stock</p>
+                        </div>
                     ) : (
                         <div className='flex gap-1 items-center text-pink-400 font-medium'>
                             <RxCross2/>
@@ -57,10 +82,23 @@ const ProductInfo = ({product}) => {
                     )
                 }
                 
-                <div 
-                    onClick={() => addToWishlistsHandler(product._id)}
-                    className='p-2 hover:scale-105 transition-all duration-200 cursor-pointer' >
-                    <GoHeart size={26}/>
+
+                <div>
+                    {
+                        wishlists?.some(item => item._id === product._id) ? (
+                            <div 
+                                onClick={removeFromWishlistsHandler}
+                                className='p-2 border rounded-full hover:scale-105 transition-all duration-200 cursor-pointer'>
+                                    <GoHeartFill size={20} fill='#DE3163'/>
+                            </div>
+                        ) : (
+                            <div
+                                onClick={addToWishlistsHandler}
+                                className='p-2 border rounded-full hover:scale-105 transition-all duration-200 cursor-pointer'>
+                                    <GoHeart size={20}/>
+                            </div>
+                        )
+                    }
                 </div>
             </div>
 
@@ -131,11 +169,18 @@ const ProductInfo = ({product}) => {
                 </div>
 
                 {/* cart  */}
-                <div
-                  onClick={addToCartHandler}
-                  className='border border-black p-3 rounded-md cursor-pointer hover:scale-105 transition-all duration-200'>
-                    <FaCartArrowDown size={25}/>
-                </div>
+                {
+                    !cartItems?.some(item => item.productId._id === product._id) && (
+                        <div
+                        className='absolute right-2 bottom-2  p-[6px] hover:bg-[#c1c1c1] justify-center items-center rounded-full hidden group-hover:flex duration-200 transition-all'
+                        onClick={addToCartHandler}>
+                            <div 
+                            className='border border-black p-3 rounded-md cursor-pointer hover:scale-105 transition-all duration-200'>
+                                <FaCartArrowDown size={25}/>
+                            </div>
+                        </div>
+                    )
+                }
             </div>
 
 

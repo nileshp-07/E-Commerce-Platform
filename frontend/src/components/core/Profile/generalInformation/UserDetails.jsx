@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import { setLoading } from '../../../../redux/slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateProfileDetails } from '../../../../services/operations/profileAPI';
 
 
-const UserDetails = ({user}) => {
+const UserDetails = ({user, setLoading}) => {
     const [isEdit , setIsEdit] = useState(false);
     const {token} = useSelector((state) => state.user)
     const dispatch = useDispatch()
@@ -19,11 +18,11 @@ const UserDetails = ({user}) => {
 
     const editProfileDetails = async () => {
 
-        // dispatch(setLoading(true));
+        setLoading(true);
 
         await updateProfileDetails(formData, token , dispatch);
 
-        // dispatch(setLoading(false));
+        setLoading(false);
 
         setIsEdit(false);
 

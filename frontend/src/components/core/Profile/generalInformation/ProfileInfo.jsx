@@ -6,7 +6,7 @@ import UserAddress from './UserAddress';
 
 const ProfileInfo = () => {
   const {user} = useSelector((state) => state.user)
-  const {loading} = useSelector((state) => state.user)
+  const [loading , setLoading] = useState(false);
 
  
   // console.log(user);
@@ -21,11 +21,11 @@ const ProfileInfo = () => {
     <div className='pb-10'>
         <h2 className='text-2xl font-semibold mb-10 py-10 '>General Information</h2>
         
-        <ProfileImage user={user}/>
+        <ProfileImage user={user} setLoading = {setLoading}/>
 
-        <UserDetails user={user}/> 
+        <UserDetails user={user} setLoading = {setLoading}/> 
 
-        <UserAddress user={user}/>
+        <UserAddress user={user} setLoading = {setLoading}/>
     </div>
   )
 }

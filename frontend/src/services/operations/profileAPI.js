@@ -75,8 +75,9 @@ export const updateProfileDetails = async (data, token, dispatch) => {
 }
 
 
-export const editAddress = async (address , addressId , token, dispatch) => {
+export const editAddress = async (address , addressId , token) => {
     const toastId = toast.loading("loading...");
+    let result;
     try{
         const response = await apiConnector("PUT", EDIT_ADDRESS_API, {...address , ["addressId"] : addressId}  ,{
             Authorization : `Bearer ${token}`
@@ -88,10 +89,9 @@ export const editAddress = async (address , addressId , token, dispatch) => {
             throw new Error(response.data.message);
         }
 
-        toast.success("Address Updated")
-        dispatch(setUser(response.data.updatedUser))
+        result = response.data.updatedUser.addresses;
 
-
+        toast.success("Address Updated");
     }
     catch(error){
         console.log("EDIT ADDRESS API ERROR", error);
@@ -99,10 +99,12 @@ export const editAddress = async (address , addressId , token, dispatch) => {
         toast.error(error.response.data.message);
     }
     toast.dismiss(toastId);
+    return result;
 }
 
-export const deleteAddress = async (addressId, token, dispatch) => {
+export const deleteAddress = async (addressId, token) => {
     const toastId = toast.loading("loading...");
+    let result;
     try{
         const response = await apiConnector("DELETE", DELETE_ADDRESS_API, {addressId} ,{
             Authorization : `Bearer ${token}`
@@ -114,7 +116,7 @@ export const deleteAddress = async (addressId, token, dispatch) => {
             throw new Error(response.data.message);
         }
 
-        dispatch(setUser(response.data.updatedUser));
+        result = response.data.updatedUser.addresses;
 
         toast.success("Address Deleted")
 
@@ -125,11 +127,13 @@ export const deleteAddress = async (addressId, token, dispatch) => {
         toast.error(error.response.data.message);
     }
     toast.dismiss(toastId);
+    return  result;
 }
 
 
-export const addNewAddress = async (data, token, dispatch) => {
+export const addNewAddress = async (data, token) => {
     const toastId = toast.loading("loading...");
+    let result;
     try{
         const response = await apiConnector("POST", ADD_NEW_ADDRESS_API, data ,{
             Authorization : `Bearer ${token}`
@@ -141,8 +145,7 @@ export const addNewAddress = async (data, token, dispatch) => {
             throw new Error(response.data.message);
         }
 
-
-        // dispatch(setUser(response.data.updatedUser))
+        result = response.data.updatedUser.addresses;
 
         toast.success("New Address Added")
 
@@ -153,6 +156,7 @@ export const addNewAddress = async (data, token, dispatch) => {
         toast.error(error.response.data.message);
     }
     toast.dismiss(toastId);
+    return  result;
 }
 
 

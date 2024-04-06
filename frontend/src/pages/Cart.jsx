@@ -91,7 +91,7 @@ const Cart = () => {
                                 products?.map((product, index) => (
                                     <div key={product?.productId?._id} className={`flex justify-between ${index !== products.length - 1 && " border-b-2 border-[#d1d6d9a8]  pb-5"}`}>
                                         <Link to={`/product/${product?.productId?._id}`} className='w-[70%]'>
-                                            <div className='flex gap-4 max-w-[70%]'>
+                                            <div className='flex gap-4 min-w-[70%]'>
                                                 <div className='h-[150px] min-w-[150px] max-w-[150px] p-3 bg-white rounded-md'>
                                                     <img
                                                         src={product?.productId?.thumbnail}
@@ -102,7 +102,7 @@ const Cart = () => {
                                                 </div>
 
 
-                                                <div>
+                                                <div className='w-full'>
                                                     <h2 className='text-xl font-semibold'>{product?.productId?.title}</h2>
                                                     <p className='text-lg text-gray-900'>seller : {product?.productId?.seller?.name}</p>
                                                     <div className=' mt-2 flex items-center gap-2 '>

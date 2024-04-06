@@ -5,12 +5,14 @@ import { GoHeart } from "react-icons/go";
 import { GoHeartFill } from "react-icons/go";
 import RatingStars from './RatingStars';
 import { addToCart, addToWishlists, removeFromWishlists } from '../../services/operations/profileAPI';
-import { useSelector } from 'react-redux'
+import { useSelector,useDispatch } from 'react-redux'
+import { setLoading } from '../../redux/slices/userSlice';
 
 
 const ProductCard = ({product, isBestDeal}) => {
     const {token} = useSelector((state) => state.user);
-    const [loading , setLoading] = useState(false);
+    const {loading} = useSelector((state) => state.user);  
+    const dispatch = useDispatch();
     const [wishlists , setWishlists] = useState([]);
     const [cartItems , setCartItems] = useState([]);
     console.log("CART : ",cartItems);
@@ -36,27 +38,28 @@ const ProductCard = ({product, isBestDeal}) => {
         // e.stopPropagation();
         e.preventDefault();
         
-        setLoading(true);
+        dispatch(setLoading(true))
+        
         await addToWishlists(product._id, token);
-        setLoading(false);
+        dispatch(setLoading(false))
     } 
 
     const removeFromWishlistsHandler = async (e) => {
         e.preventDefault();
 
-        setLoading(true);
+        dispatch(setLoading(true))
         await removeFromWishlists(product._id, token);
-        setLoading(false);
+        dispatch(setLoading(false))
     }
 
     const addToCartHandler =async (e) => {
         e.preventDefault();
 
-        setLoading(false);
+        dispatch(setLoading(true))
 
         await addToCart(product._id, 1 , token);
 
-        setLoading(false);
+        dispatch(setLoading(false))
     } 
   return (
      <>

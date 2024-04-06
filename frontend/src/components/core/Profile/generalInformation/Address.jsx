@@ -22,8 +22,7 @@ const style = {
   p: 4,
 };
 
-const Address = ({addr, isNewAddress, setNewAddress}) => {
-  const dispatch = useDispatch();
+const Address = ({addr, isNewAddress, setNewAddress, setLoading}) => {
   const {token} = useSelector((state) => state.user);
   const [isEdit , setIsEdit] = useState(false)
   const [address , setAddress] = useState(addr)
@@ -53,7 +52,9 @@ const Address = ({addr, isNewAddress, setNewAddress}) => {
 
 
 
-  const updateAddress = async () =>{
+  const updateAddress = async (e) =>{
+    e.preventDefault();
+
      if(addr.street === address.street &&
         addr.city === address.city &&
         addr.postalCode === address.postalCode &&
@@ -62,16 +63,29 @@ const Address = ({addr, isNewAddress, setNewAddress}) => {
             toast.error("No Changes Done")
             return;
         }
+     
+    setLoading(true);
+    const response = await editAddress(address ,addr._id , token)
 
-     await editAddress(address ,addr._id , token , dispatch)
+    if(response)
+    {
+        setAddress(response);
+    }
 
      setIsEdit(false)
   }
 
 
   const handleDeleteAddress = async () => {
-      await deleteAddress(addr._id , token , dispatch)
+      setLoading(true);
+      const response = await deleteAddress(addr._id , token);
 
+      if(response)
+      {
+        setAddress(response);
+        console.log("Address after delete : ",response);
+      }
+      setLoading(false);
       setOpen(false)
   }
   

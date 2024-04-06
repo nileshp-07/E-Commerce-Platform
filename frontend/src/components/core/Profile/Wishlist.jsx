@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import ProductCard from '../../common/ProductCard'
+import {useSelector} from "react-redux"
 
 
 
 const Wishlist = () => {
   const [products , setProducts] = useState([]);
-  const [loading , setLoading] = useState(false);
-  
+  const {loading} = useSelector((state) => state.user);  
 
   useEffect(() => {
     const wishlists = JSON.parse(localStorage.getItem("wishlists")) || [];

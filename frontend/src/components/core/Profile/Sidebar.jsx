@@ -40,6 +40,9 @@ const Sidebar = () => {
      dispatch(setToken(null))
      localStorage.removeItem('user');
      localStorage.removeItem('token');
+     localStorage.removeItem('cartItems');
+     localStorage.removeItem('wishlists');
+     localStorage.removeItem('recentlyViewedProducts');
 
      toast.success("Logout successfully")
      navigate("/")
