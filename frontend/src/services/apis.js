@@ -29,4 +29,5 @@ export const productEndPoints = {
     ADD_PRODUCT_API : BASE_URL + "/product/add-product",
     GET_ALL_PRODUCTS_API : BASE_URL + "/product/get-all-products",
     GET_PRODUCT_FULL_DETAILS_API : BASE_URL + "/product/get-product-details",
+    GET_HOMEPAGE_PRODUCTS_API : BASE_URL + "/product/home-page-products",
 }

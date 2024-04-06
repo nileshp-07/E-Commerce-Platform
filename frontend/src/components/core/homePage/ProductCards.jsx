@@ -49,7 +49,7 @@ const ProductCards = ({products, heading, isBestDeal}) => {
                 delay: 2000,
                 disableOnInteraction: false,
             }}
-            loop={true}
+            // loop={true}
             freeMode = {true}
             //    modules={[Autoplay,FreeMode]}
             //    modules={[FreeMode]}

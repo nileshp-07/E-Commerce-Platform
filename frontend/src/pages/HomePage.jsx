@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ProductImageSlider from '../components/core/homePage/ProductImageSlider'
 import Categories from '../components/core/homePage/Categories'
 import ProductCards from '../components/core/homePage/ProductCards'
 import Benefits from '../components/core/homePage/Benefits'
 import Footer from '../components/common/Footer'
+import { getHomePageProducts } from '../services/operations/productAPI'
 
 
 const products = 
@@ -252,6 +253,37 @@ const products =
 
 const HomePage = () => {
   const [loading , setLoading] = useState(false);
+  const [products , setProducts] = useState([]);
+  const [recentlyViewedProducts, setRecentlyViewedProducts] = useState([])
+
+  console.log("best selling and best deals products : ", products);
+  console.log("recently viewed products : ", recentlyViewedProducts);
+
+
+  const fetchHomePageProducts = async () => {
+     setLoading(true);
+
+     const response = await getHomePageProducts();
+
+     if(response)
+     {
+        setProducts(response);
+     }
+
+     setLoading(false);
+  }
+  useEffect(() => {
+    
+    fetchHomePageProducts();
+
+    const viewedProducts = JSON.parse(localStorage.getItem("recentlyViewedProducts"))  || [];
+
+    if(viewedProducts)
+    {
+       setRecentlyViewedProducts(viewedProducts);
+    }
+
+  }, [])
 
   if(loading)
   {
@@ -271,11 +303,11 @@ const HomePage = () => {
             
             <Categories/>
 
-            <ProductCards heading={"Best Deals"} products={products} isBestDeal = {true} />
+            <ProductCards heading={"Best Deals"} products={products.bestDealsProducts} isBestDeal = {true} />
 
-            <ProductCards heading={"Recently Viewed Products"} products={products} />
+            <ProductCards heading={"Recently Viewed Products"} products={recentlyViewedProducts} />
 
-            <ProductCards heading={"Best Selling Products"} products={products} />
+            <ProductCards heading={"Best Selling Products"} products={products.bestSellingProducts} /> 
 
             <Benefits/>
          </div>

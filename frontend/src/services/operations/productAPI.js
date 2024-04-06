@@ -6,7 +6,8 @@ import { productEndPoints } from "../apis";
 const {
     ADD_PRODUCT_API,
     GET_ALL_PRODUCTS_API,
-    GET_PRODUCT_FULL_DETAILS_API
+    GET_PRODUCT_FULL_DETAILS_API,
+    GET_HOMEPAGE_PRODUCTS_API
 } = productEndPoints;
 
 
@@ -92,6 +93,32 @@ export const getProductDetails = async (productId) => {
         toast.error(error.response.data.message);
     }
 
+    toast.dismiss(toastId);
+    return result;
+}
+
+export const getHomePageProducts = async () => {
+    const toastId = toast.loading("loading...");
+    let result;
+
+    try{
+        const response = await apiConnector("GET",GET_HOMEPAGE_PRODUCTS_API);
+
+        console.log("GET HOME PAGE PRODUCTS API RESPONSE : ",response);
+
+        if(!response.data.success)
+        {
+            throw new Error(response.data.message);
+        }
+
+        result = response.data.data;
+    }
+    catch(error)
+    {
+        console.log("GET HOME PAGE PRODUCTS API ERROR : ",error);
+        console.error(error.message);
+        toast.error(error.response.data.message);
+    }
     toast.dismiss(toastId);
     return result;
 }

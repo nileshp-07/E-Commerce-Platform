@@ -445,3 +445,37 @@ exports.deleteProduct = async (req , res) => {
         })
     }
 }
+
+
+exports.getHomePageProducts = async (req , res) => {
+    try{
+        const bestDealsProducts = await Product.find().sort({discount : -1}).limit(10);
+
+        const bestSellingProducts = await Product.find().sort({sold : -1}).limit(10);
+
+        if(!bestSellingProducts || !bestDealsProducts)
+        {
+            return res.status(404).json({
+                success : false,
+                message  : "Home pages products could not be fetched"
+            })
+        }
+
+        return res.status(200).json({
+            success : true,
+            message : "all homePage product fetched successfully",
+            data : {
+                bestDealsProducts,
+               bestSellingProducts
+            }
+        })
+    }
+    catch(error)
+    {
+        console.log(error)
+        return res.status(500).json({
+            success  : false,
+            message : "Error while fetching homepage products"
+        })
+    }
+}

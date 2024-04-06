@@ -9,6 +9,7 @@ import Specifications from '../components/core/productDetails.jsx/Specifications
 import ProductCards from '../components/core/homePage/ProductCards';
 import Footer from '../components/common/Footer';
 import { getProductDetails } from '../services/operations/productAPI';
+const MAX_RECENTLY_VIEWED = 10;
 
 
 
@@ -267,6 +268,36 @@ const ProductDetails = () => {
     const [isReview ,setIsReviews] = useState(false);
 
 
+    const addProductToRecentlyViewed = (product) => {
+        let recentlyViewedProducts = JSON.parse(localStorage.getItem("recentlyViewedProducts")) || [];
+
+  
+        console.log("RECENTLY VIEWED PRODUCTS : ", recentlyViewedProducts);
+        console.log("PRODUCT : ",product);
+  
+        // Check if the product is already in the recently viewed list
+        const index = recentlyViewedProducts?.findIndex(p => p?._id === product._id);
+  
+        if (index !== -1) {
+            // If the product already exists, remove it from its current position
+            recentlyViewedProducts.splice(index, 1);
+        }
+  
+        // Add the product to the beginning of the list
+        recentlyViewedProducts.unshift(product);
+  
+        // Ensure that the length of the list does not exceed the maximum limit
+        if (recentlyViewedProducts.length > MAX_RECENTLY_VIEWED) {
+            recentlyViewedProducts = recentlyViewedProducts.slice(0, MAX_RECENTLY_VIEWED);
+        }
+
+        console.log("REACHING HERE :: ", recentlyViewedProducts);
+  
+        // Store the updated list back in localStorage
+        localStorage.setItem("recentlyViewedProducts", JSON.stringify(recentlyViewedProducts));
+    }
+  
+
     const fetchProductDetails  = async () => {
        setLoading(true);
 
@@ -275,6 +306,7 @@ const ProductDetails = () => {
        if(response)
        {
          setProduct(response);
+         addProductToRecentlyViewed(response);
          console.log(response);
        }
 

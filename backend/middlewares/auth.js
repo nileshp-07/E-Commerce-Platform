@@ -38,7 +38,7 @@ exports.auth = async (req , res, next) => {
             console.log(error);
             return res.status(401).json({
                 success : false,
-                message : "invalid token"
+                message : "Token Expired, Please login again!!"
             })
         }
 

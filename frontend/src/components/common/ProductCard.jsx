@@ -25,7 +25,7 @@ const ProductCard = ({product, isBestDeal}) => {
     } 
   return (
      <>
-        <Link to={`/product/${product.id}`}>
+        <Link to={`/product/${product?._id}`}>
             <div className='p-3 w-[280px] min-h-[410px] custom-shadow rounded-md hover:scale-105 duration-200 transition-all relative group'>
                 <div
                   onClick={addToWislists}
@@ -35,14 +35,14 @@ const ProductCard = ({product, isBestDeal}) => {
                 {
                     isBestDeal && (
                         <div className='absolute top-4 left-4 w-[55px] bg-[#AFE1AF] text-[#008000] font-medium px-[7px] py-[1px] rounded-3xl'>
-                           -{100*Math.random().toFixed(1)}%
+                           -{product?.discount}%
                         </div>
                     )
                 }
                 <div className='rounded-md bg-gray-200 p-6 flex items-center justify-center'>
                     <img
-                        src={product.image}
-                        alt='ProductImage'
+                        src={product?.thumbnail}
+                        alt='ProductThumbnail'
                         loading='lazy'
                         className='h-[190px] w-[190px] object-contain'
                         style={{ mixBlendMode: 'multiply' }}
@@ -52,15 +52,15 @@ const ProductCard = ({product, isBestDeal}) => {
                     <p className='text-[17px] font-medium leading-[1.3rem]'>
                        {product?.title?.split("").length > 30 ? `${product?.title?.split("").splice(0,50).join("")}...` : (product.title)}
                     </p>
-                    <p className='font-medium text-gray-500'>{product.category}</p>
+                    <p className='font-medium text-gray-500'>{product?.categories?.[0].name}</p>
                     <div className='flex gap-2 my-1'>
-                        <p className='text-[#DB4444] font-me'>Rs.{product.price}</p>
-                        <p className='flex line-through font-medium text-gray-400'>Rs.{2*product.price}</p>
-                        <p className='font-medium text-[#008000] text-[14px]'>{100*Math.random().toFixed(1)}% off</p>
+                        <p className='text-[#DB4444] font-me'>Rs.{product?.discountedPrice}</p>
+                        <p className='flex line-through font-medium text-gray-400'>Rs.{product.price}</p>
+                        <p className='font-medium text-[#008000] text-[14px]'>{product?.discount}% off</p>
                     </div>
                     <div className='flex gap-2 items-center'>
-                        <RatingStars RatingCount={product.rating.rate}/>
-                        <p className='font-medium text-gray-500'>({product.rating.count})</p>
+                        <RatingStars RatingCount={product?.avgRating}/>
+                        <p className='font-medium text-gray-500'>({product?.ratingAndReviews?.length})</p>
                     </div>
                 </div>
 

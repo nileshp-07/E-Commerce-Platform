@@ -13,7 +13,8 @@ const {
     deleteProduct,
     uploadProduct,
     fetchAllProducts,
-    getProductFullDetails
+    getProductFullDetails,
+    getHomePageProducts
 } = require("../controllers/product")
 
 const {
@@ -34,6 +35,7 @@ router.delete("/delete-product", auth, isSeller , deleteProduct);
 router.get("/get-all-products", fetchAllProducts);
 router.get("/get-product-details", getProductFullDetails);
 router.post("/add-product", uploadProduct);
+router.get("/home-page-products", getHomePageProducts);
 
 
 
