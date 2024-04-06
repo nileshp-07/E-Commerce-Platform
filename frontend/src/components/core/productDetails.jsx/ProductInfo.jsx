@@ -11,7 +11,7 @@ import { FaTruckFast } from "react-icons/fa6";
 import { GrPowerCycle } from "react-icons/gr";
 import {toast} from "sonner"
 import { addToCart, addToWishlists } from '../../../services/operations/profileAPI';
-import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux'
 
 
 const ProductInfo = ({product}) => {
@@ -21,6 +21,7 @@ const ProductInfo = ({product}) => {
 
     const addToWishlistsHandler = async (productId)  => {
         setLoading(true);
+
         await addToWishlists(productId , token);
         setLoading(false);
     }
@@ -57,7 +58,7 @@ const ProductInfo = ({product}) => {
                 }
                 
                 <div 
-                    onClick={addToWishlists}
+                    onClick={() => addToWishlistsHandler(product._id)}
                     className='p-2 hover:scale-105 transition-all duration-200 cursor-pointer' >
                     <GoHeart size={26}/>
                 </div>

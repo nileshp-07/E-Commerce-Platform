@@ -305,8 +305,11 @@ const HomePage = () => {
 
             <ProductCards heading={"Best Deals"} products={products.bestDealsProducts} isBestDeal = {true} />
 
-            <ProductCards heading={"Recently Viewed Products"} products={recentlyViewedProducts} />
-
+            {
+               recentlyViewedProducts?.length > 0 &&  (
+                 <ProductCards heading={"Recently Viewed Products"} products={recentlyViewedProducts} />
+               )
+            }
             <ProductCards heading={"Best Selling Products"} products={products.bestSellingProducts} /> 
 
             <Benefits/>

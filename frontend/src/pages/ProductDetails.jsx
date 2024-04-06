@@ -271,10 +271,6 @@ const ProductDetails = () => {
     const addProductToRecentlyViewed = (product) => {
         let recentlyViewedProducts = JSON.parse(localStorage.getItem("recentlyViewedProducts")) || [];
 
-  
-        console.log("RECENTLY VIEWED PRODUCTS : ", recentlyViewedProducts);
-        console.log("PRODUCT : ",product);
-  
         // Check if the product is already in the recently viewed list
         const index = recentlyViewedProducts?.findIndex(p => p?._id === product._id);
   
@@ -290,8 +286,6 @@ const ProductDetails = () => {
         if (recentlyViewedProducts.length > MAX_RECENTLY_VIEWED) {
             recentlyViewedProducts = recentlyViewedProducts.slice(0, MAX_RECENTLY_VIEWED);
         }
-
-        console.log("REACHING HERE :: ", recentlyViewedProducts);
   
         // Store the updated list back in localStorage
         localStorage.setItem("recentlyViewedProducts", JSON.stringify(recentlyViewedProducts));

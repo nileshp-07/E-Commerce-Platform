@@ -449,10 +449,19 @@ exports.deleteProduct = async (req , res) => {
 
 exports.getHomePageProducts = async (req , res) => {
     try{
-        const bestDealsProducts = await Product.find().sort({discount : -1}).limit(10);
+        const bestDealsProducts = await Product.find()
+                                                .populate("categories")
+                                                .sort({ discount: -1 })
+                                                .limit(10)
+                                                .exec();
 
-        const bestSellingProducts = await Product.find().sort({sold : -1}).limit(10);
+        const bestSellingProducts = await Product.find()
+                                                .populate("categories")
+                                                .sort({ sold: -1 })
+                                                .limit(10)
+                                                .exec();
 
+                                                
         if(!bestSellingProducts || !bestDealsProducts)
         {
             return res.status(404).json({

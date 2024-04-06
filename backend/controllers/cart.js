@@ -35,7 +35,14 @@ exports.addProductToCart = async (req , res) => {
                                                         }
                                                     },
                                                     {new : true})
-                                                    .populate("products.productId").exec();  //populate the productId present in the products of cart
+                                                    .populate("products.productId")  //populate the productId present in the products of cart
+                                                    .populate({
+                                                        path : "products.productId",
+                                                        populate : {
+                                                            path : "seller"
+                                                        }
+                                                    })
+                                                    .exec();
 
         if(!updatedCart)
         {

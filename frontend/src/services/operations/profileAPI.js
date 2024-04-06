@@ -222,7 +222,7 @@ export const addToCart = async (productId, qty, token) => {
             throw new Error(response.data.message);
         }
 
-        localStorage.setItem("cartItems", JSON.stringify(response.data.updatedCart));
+        localStorage.setItem("cartItems", JSON.stringify(response.data.updatedCart.products));
 
 
         toast.success("Product added to cart");
@@ -252,7 +252,7 @@ export const removeFromCart = async (productId , token) => {
             throw new Error(response.data.message);
         }
 
-        localStorage.setItem("cartItems", JSON.stringify(response.data.updatedCart));
+        localStorage.setItem("cartItems", JSON.stringify(response.data.updatedCart.products));
         toast.success("Product removed from cart");
 
     }
@@ -270,6 +270,8 @@ export const removeFromCart = async (productId , token) => {
 export const addToWishlists = async (productId , token) => {
     const toastId = toast.loading("loading...");
 
+    console.log("token", token);
+
     try{
         const response = await apiConnector("POST", ADD_TO_WISHLISTS_API , {productId},{
             Authorization : `Bearer ${token}`
@@ -282,7 +284,7 @@ export const addToWishlists = async (productId , token) => {
             throw new Error(response.data.message);
         }
 
-        console.log("wishlists : ",response.data.user.wishlists)
+        localStorage.setItem("wishlists", JSON.stringify(response.data.wishlists));
         toast.success("Product added to wishlists");
 
     }
@@ -311,6 +313,7 @@ export const removeFromWishlists = async (productId,  token) => {
             throw new Error(response.data.message);
         }
 
+        localStorage.setItem("wishlists", JSON.stringify(response.data.wishlists));
         toast.success("product removed from wishlists");
     }
     catch(error)

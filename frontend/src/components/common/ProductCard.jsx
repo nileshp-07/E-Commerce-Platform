@@ -1,36 +1,83 @@
-import React from 'react'
-import { toast } from 'sonner';
-import { TiStarOutline } from "react-icons/ti";
-import { TiStarHalfOutline } from "react-icons/ti";
-import { TiStarFullOutline } from "react-icons/ti";
-import { Link, Navigate } from 'react-router-dom';
-import { FaStar } from "react-icons/fa";
-import { FaC, FaCartArrowDown } from "react-icons/fa6";
+import React, { useEffect, useState } from 'react'
+import { Link, } from 'react-router-dom';
+import { FaCartArrowDown } from "react-icons/fa6";
 import { GoHeart } from "react-icons/go";
+import { GoHeartFill } from "react-icons/go";
 import RatingStars from './RatingStars';
+import { addToCart, addToWishlists, removeFromWishlists } from '../../services/operations/profileAPI';
+import { useSelector } from 'react-redux'
+
 
 const ProductCard = ({product, isBestDeal}) => {
-    const addToWislists = (e) => {
+    const {token} = useSelector((state) => state.user);
+    const [loading , setLoading] = useState(false);
+    const [wishlists , setWishlists] = useState([]);
+    const [cartItems , setCartItems] = useState([]);
+    console.log("CART : ",cartItems);
+
+    useEffect(() => {
+        const wishlistsProducts = JSON.parse(localStorage.getItem("wishlists")) ||  [];
+        const cartProducts = JSON.parse(localStorage.getItem("cartItems")) ||  [];
+
+        if(wishlistsProducts)
+        {
+            setWishlists(wishlistsProducts);
+        }
+
+        if(cartProducts)
+        {
+            setCartItems(cartProducts)
+        }
+
+    }, [loading])
+
+
+    const addToWislistsHandler = async (e) => {
         // e.stopPropagation();
         e.preventDefault();
-
-        toast.success("Product added to wishlists")
+        
+        setLoading(true);
+        await addToWishlists(product._id, token);
+        setLoading(false);
     } 
 
-    const addToCart = (e) => {
+    const removeFromWishlistsHandler = async (e) => {
         e.preventDefault();
 
-        toast.success("Product added to Cart")
+        setLoading(true);
+        await removeFromWishlists(product._id, token);
+        setLoading(false);
+    }
 
+    const addToCartHandler =async (e) => {
+        e.preventDefault();
+
+        setLoading(false);
+
+        await addToCart(product._id, 1 , token);
+
+        setLoading(false);
     } 
   return (
      <>
         <Link to={`/product/${product?._id}`}>
             <div className='p-3 w-[280px] min-h-[410px] custom-shadow rounded-md hover:scale-105 duration-200 transition-all relative group'>
-                <div
-                  onClick={addToWislists}
-                  className='absolute right-4 top-4 p-2 bg-white rounded-full flex items-center justify-center hover:scale-105 transition-all duration-200'>
-                  <GoHeart size={20}/>
+                <div>
+                    {
+                        wishlists?.some(item => item._id === product._id) ? (
+                            <div 
+                                onClick={removeFromWishlistsHandler}
+                                className='absolute right-4 top-4 p-2 bg-white rounded-full flex items-center justify-center hover:scale-105 transition-all duration-200'>
+                                    <GoHeartFill size={20} fill='#DE3163'/>
+                            </div>
+                        ) : (
+                            <div
+                                onClick={addToWislistsHandler}
+                                className='absolute right-4 top-4 p-2 bg-white rounded-full flex items-center justify-center hover:scale-105 transition-all duration-200'>
+                                    <GoHeart size={20}/>
+                            </div>
+                        )
+                    }
                 </div>
                 {
                     isBestDeal && (
@@ -64,14 +111,18 @@ const ProductCard = ({product, isBestDeal}) => {
                     </div>
                 </div>
 
-                <div
-                  className='absolute right-2 bottom-2  p-[6px] hover:bg-[#c1c1c1] justify-center items-center rounded-full hidden group-hover:flex duration-200 transition-all'
-                  onClick={addToCart}>
-                    <div 
-                    className='p-3 rounded-full bg-black text-white font-medium flex justify-center items-center'>
-                        <FaCartArrowDown size={23}/>
-                    </div>
-                </div>
+                {
+                    !cartItems?.some(item => item.productId._id === product._id) && (
+                        <div
+                        className='absolute right-2 bottom-2  p-[6px] hover:bg-[#c1c1c1] justify-center items-center rounded-full hidden group-hover:flex duration-200 transition-all'
+                        onClick={addToCartHandler}>
+                            <div 
+                            className='p-3 rounded-full bg-black text-white font-medium flex justify-center items-center'>
+                                <FaCartArrowDown size={23}/>
+                            </div>
+                        </div>
+                    )
+                }
             </div>
         </Link>
      </>

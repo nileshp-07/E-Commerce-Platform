@@ -17,12 +17,30 @@ exports.addProductToWishlists = async (req , res) => {
             })
         }
 
+        const productExists = await User.findById(id);
+
+        if(productExists.wishlists.includes(productId))
+        {
+            return res.status(401).json({
+                success : false,
+                message : "product already exist into wishlists"
+            })
+        }
+        
+
         const user = await User.findByIdAndUpdate(id,{
                                                     $push : {
                                                         wishlists : productId
                                                     }
                                                 },
-                                                {new : true});
+                                                {new : true})
+                                                .populate({
+                                                    path : "wishlists",
+                                                    populate : {
+                                                        path : "categories"
+                                                     }
+                                                })
+                                                .exec();                                               
 
 
         if(!user)
@@ -37,7 +55,7 @@ exports.addProductToWishlists = async (req , res) => {
         return res.status(200).json({
             success : true,
             message : "product added to wishlist",
-            user
+            wishlists : user.wishlists
         })
 
     }
@@ -67,12 +85,29 @@ exports.removeProductFromWishlists = async (req , res) => {
             })
         }
 
+        const productExists = await User.findById(id);
+
+        if(!productExists.wishlists.includes(productId))
+        {
+            return res.status(401).json({
+                success : false,
+                message : "product does not exist into wishlists"
+            })
+        }
+
         const user = await User.findByIdAndUpdate(id,{
                                                     $pull : {
                                                         wishlists : productId
                                                     }
                                                 },
-                                                {new : true});
+                                                {new : true})
+                                                .populate({
+                                                    path : "wishlists",
+                                                    populate : {
+                                                        path : "categories"
+                                                     }
+                                                })
+                                                .exec(); 
 
 
         if(!user)
@@ -86,8 +121,8 @@ exports.removeProductFromWishlists = async (req , res) => {
         
         return res.status(200).json({
             success : true,
-            message : "product added to wishlist",
-            user
+            message : "product removed from wishlist",
+            wishlists : user?.wishlists
         })
 
     }
