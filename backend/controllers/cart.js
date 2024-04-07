@@ -132,10 +132,10 @@ exports.getCartItems = async (req,res) => {
         const {id} = req.user;
 
         // fetch the cart first 
-        const cart = await Cart.findOne({user : id})
+        const cartItems = await Cart.findOne({user : id})
                                                 .populate("products.productId").exec();
 
-        if(!cart)
+        if(!cartItems)
         {
             return res.status(404).json({
                 success : false,
@@ -143,7 +143,6 @@ exports.getCartItems = async (req,res) => {
             })
         }
 
-        const cartItems  = cart.products;
 
         return res.status(200).json({
             success : true,

@@ -14,7 +14,8 @@ const {
     uploadProduct,
     fetchAllProducts,
     getProductFullDetails,
-    getHomePageProducts
+    getHomePageProducts,
+    searchProducts
 } = require("../controllers/product")
 
 const {
@@ -36,6 +37,7 @@ router.get("/get-all-products", fetchAllProducts);
 router.get("/get-product-details", getProductFullDetails);
 router.post("/add-product", uploadProduct);
 router.get("/home-page-products", getHomePageProducts);
+router.get("/search-products", searchProducts);
 
 
 
