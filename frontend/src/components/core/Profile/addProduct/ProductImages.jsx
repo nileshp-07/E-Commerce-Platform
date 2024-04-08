@@ -2,17 +2,20 @@ import React, { useRef, useState } from 'react'
 import { FiUpload } from "react-icons/fi";
 import { toast } from 'sonner';
 import { RiDeleteBin5Line } from "react-icons/ri";
+import {useSelector, useDispatch} from "react-redux"
 
-const ProductImages = () => {
+const ProductImages = ({setStep}) => {
   const thumbnailRef = useRef();
   const imagesRef = useRef();
+  const dispatch = useDispatch()
   const [thumbnail, setThumbnail] = useState("");
   const [images , setImages] = useState([]);
+  const {product} = useSelector((state) => state.product);
 
 
+  console.log("product : ",product);
   const handleThumbnailInput = (e) => {
     const productThumbnail = e.target.files[0];
-
     setThumbnail(productThumbnail);
   }
 
@@ -28,6 +31,14 @@ const ProductImages = () => {
     setImages(prevImages => [...prevImages, ...productImages])
   }
 
+  const handleAddProduct = async () => {
+      const newProduct = {...product};
+
+      newProduct.thumbnail = thumbnail;
+      newProduct.images = images;
+
+      console.log("updated product : ",newProduct);
+  }
   
   return (
     <div>
@@ -118,7 +129,9 @@ const ProductImages = () => {
         </div>
 
         <div className='my-9 mx-auto flex justify-end px-16'>
-            <button className=' flex items-center gap-2 py-1 pt-2 px-5 bg-royal-blue-500 rounded-md text-white'>
+            <button 
+               onClick={handleAddProduct}
+               className=' flex items-center gap-2 py-1 pt-2 px-5 bg-royal-blue-500 rounded-md text-white'>
                 <p className='mb-1'>Add Product</p>
             </button>
         </div>

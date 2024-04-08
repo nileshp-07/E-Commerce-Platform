@@ -171,13 +171,10 @@ const ProductInfo = ({product}) => {
                 {/* cart  */}
                 {
                     !cartItems?.some(item => item.productId._id === product._id) && (
-                        <div
-                        className='absolute right-2 bottom-2  p-[6px] hover:bg-[#c1c1c1] justify-center items-center rounded-full hidden group-hover:flex duration-200 transition-all'
-                        onClick={addToCartHandler}>
-                            <div 
-                            className='border border-black p-3 rounded-md cursor-pointer hover:scale-105 transition-all duration-200'>
-                                <FaCartArrowDown size={25}/>
-                            </div>
+                        <div 
+                          className='border rounded-md p-2 cursor-pointer border-black'
+                          onClick={addToCartHandler}>
+                           <FaCartArrowDown size={34}/>
                         </div>
                     )
                 }

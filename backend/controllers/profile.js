@@ -97,7 +97,10 @@ exports.editProfileDetails = async (req , res) => {
 
 
         // fetch the user updated info 
-        const updatedUser = await User.findById(id).populate("profileDetails").exec();
+        const updatedUser = await User.findById(id)
+                                           .populate("profileDetails")
+                                           .populate("addresses")
+                                           .populate("wishlists").exec();
 
         return res.status(200).json({
             success : true,
@@ -139,15 +142,18 @@ exports.changeProfileImage = async (req , res) => {
         console.log("profile image upload response : ", uploadResponse);
 
         // update the user image
-        const user = await User.findByIdAndUpdate(id , {
+        const updatedUser = await User.findByIdAndUpdate(id , {
                                                     profileImage : uploadResponse.secure_url,
                                                 },
-                                                {new: true});
+                                                {new: true})
+                                                .populate("profileDetails")
+                                                .populate("addresses")
+                                                .populate("wishlists").exec();
 
         return res.status(200).json({
             success : true,
             message : "profile image updated successfully",
-            user,
+            updatedUser,
         })
 
     }
@@ -199,3 +205,43 @@ exports.getUserFullDetails = async (req , res) =>{
     }
 }
 
+
+
+exports.getSellerProducts = async (req ,res) => {
+    try{
+        const {id} = req.user;
+
+        const user = await User.findById(id)
+                                        .populate({
+                                            path : "products",
+                                            populate : {
+                                                path : "categories"
+                                            }
+                                        })
+                                        .exec();
+
+
+        if(!user){
+            return res.status(404).json({
+                success : false,
+                message : "seller does not found"
+            })
+        }
+
+        const products = user.products;
+
+        return res.status(200).json({
+            success : true,
+            message : "seller products successfully fetched",
+            products
+        })
+    }
+    catch(error)
+    {
+        console.log(error);
+        return res.status(401).json({
+            success : false,
+            message : error.message
+        })
+    }
+}

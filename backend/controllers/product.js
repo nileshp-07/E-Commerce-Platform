@@ -494,93 +494,93 @@ exports.searchProducts = async (req , res) => {
     try{
         const {searchQuery, filters, sortOption} = req.body;
 
-        console.log("reqBody : ", req.body);
+        // console.log("reqBody : ", req.body);
 
-        console.log(
-            "Filters : " , filters,
-            "SearchQuery : ", searchQuery,
-            "SortOption : " , sortOption
-        )
+        // console.log(
+        //     "Filters : " , filters,
+        //     "SearchQuery : ", searchQuery,
+        //     "SortOption : " , sortOption
+        // )
 
-        // let query = {};
+        let query = {};
 
-        // // applying filters 
-        // if(filters.brands && filters.brands.length > 0)
-        // {
-        //     query.brand = {$in: filters.brands}
-        // }
+        // applying filters 
+        if(filters.brands && filters.brands.length > 0)
+        {
+            query.brand = {$in: filters.brands}
+        }
 
-        // if(filters.cusRating)
-        // {
-        //     query.avgRating = {$gte: filters.cusRating}
-        // }
+        if(filters.cusRating)
+        {
+            query.avgRating = {$gte: filters.cusRating}
+        }
 
-        // if(filters.discount)
-        // {
-        //     query.discount = { $gte: filters.discount}
-        // }
+        if(filters.discount)
+        {
+            query.discount = { $gte: filters.discount}
+        }
 
-        // if(filters.minPrice)
-        // {
-        //     query.price = {$gte: filters.minPrice}
-        // }
+        if(filters.minPrice)
+        {
+            query.price = {$gte: filters.minPrice}
+        }
 
-        // if(filters.maxPrice)
-        // {
-        //     query.discountedPrice = {$lte : filters.maxPrice}
-        // }
+        if(filters.maxPrice)
+        {
+            query.discountedPrice = {$lte : filters.maxPrice}
+        }
 
-        // // searcQuery 
-        // if(searchQuery)
-        // {
-        //     const searchTerms = searchQuery.split(" ").map(term => `(?=.*${term})`).join("");
-        //     query.title = { $regex: `^${searchTerms}`, $options: 'i' };
-        //     // query.title = { $regex: searchQuery, $options: 'i'}
-        // }
+        // searcQuery 
+        if(searchQuery)
+        {
+            const searchTerms = searchQuery.split(" ").map(term => `(?=.*${term})`).join("");
+            query.title = { $regex: `^${searchTerms}`, $options: 'i' };
+            // query.title = { $regex: searchQuery, $options: 'i'}
+        }
         // console.log("query :", query);
 
 
-        // // sortOptions 
-        // let sort = {};
-        // switch (sortOption) {
-        //     case "highest_rated":
-        //         sort = { avgRating: -1 };
-        //         break;
-        //     case "lowest_price":
-        //         sort = { discountedPrice: 1 };
-        //         break;
-        //     case "highest_price":
-        //         sort = { discountedPrice: -1 };
-        //         break;
-        //     case "newest_first":
-        //         sort = { createdAt: -1 };
-        //         break;
-        //     case "most_discounted":
-        //         sort = { discount: -1 };
-        //         break;
-        //     // case "popularity":
-        //     //     sort = { sold: -1 }; // Assuming 'sold' is the field indicating popularity
-        //     //     break;
-        //     default:
-        //         break;
-        // }
+        // sortOptions 
+        let sort = {};
+        switch (sortOption) {
+            case "highest_rated":
+                sort = { avgRating: -1 };
+                break;
+            case "lowest_price":
+                sort = { discountedPrice: 1 };
+                break;
+            case "highest_price":
+                sort = { discountedPrice: -1 };
+                break;
+            case "newest_first":
+                sort = { createdAt: -1 };
+                break;
+            case "most_discounted":
+                sort = { discount: -1 };
+                break;
+            // case "popularity":
+            //     sort = { sold: -1 }; // Assuming 'sold' is the field indicating popularity
+            //     break;
+            default:
+                break;
+        }
 
 
-        // // now search the product 
-        // const products = await Product.find(query).sort(sort);
+        // now search the product 
+        const products = await Product.find(query).sort(sort);
 
-        // if(!products)
-        // {
-        //     return res.status(404).json({
-        //         success : false,
-        //         message : "products does not found"
-        //     })
-        // }
+        if(!products)
+        {
+            return res.status(404).json({
+                success : false,
+                message : "products does not found"
+            })
+        }
 
         return res.status(200).json({
             success : true,
             message : "products has been returned based on the search options",
-            // products,
+            products,
         })
     }
     catch(error)

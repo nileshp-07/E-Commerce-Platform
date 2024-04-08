@@ -8,6 +8,7 @@ import { RiSearch2Line } from "react-icons/ri";
 import { useSelector } from 'react-redux';
 import { BsShopWindow } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
+import Logo from "../../assets/logo_white.png"
 
 const Navbar = () => {
   const [searchInput , setSearchInput] = useState("")
@@ -28,7 +29,14 @@ const Navbar = () => {
     <div className='h-[3.5rem] bg-royal-blue-500 text-white'>
         <div className='w-11/12 max-w-[1200px] mx-auto flex justify-between items-center h-full '>
            <Link to="/">
-             <h2 className='text-4xl font-bold'>LOGO</h2>
+             {/* <h2 className='text-4xl font-bold'>LOGO</h2> */}
+             <div className='-ml-10'>
+               <img
+                  src={Logo}
+                  className='h-[60px]'
+                  // style={{ mixBlendMode: 'multiply' }}
+               />
+             </div>
            </Link>
 
 

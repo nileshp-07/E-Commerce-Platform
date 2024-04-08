@@ -7,7 +7,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import { FaArrowRightLong } from "react-icons/fa6";
-
+import Logo from "../../assets/logo_blue.png"
 import visa from "../../assets/footerPaymentMethods/visa.png"
 import masterCard from "../../assets/footerPaymentMethods/mastercard.png"
 import upi from "../../assets/footerPaymentMethods/upi.png"
@@ -88,7 +88,13 @@ const Footer = () => {
         <div className='w-11/12 max-[1200px] mx-auto border-t border-gray-700 pt-10 ' >
             <div className='flex justify-between w-full p-5 pb-10'>
                 <div>
-                    <h2 className='text-5xl font-bold'>LOGO</h2>
+                    {/* <h2 className='text-5xl font-bold'>LOGO</h2> */}
+                    <div>
+                        <img
+                            src={Logo}
+                            className='h-[50px]'
+                        />
+                    </div>
 
                     <a href='tel:'>
                         <div className='flex items-center gap-2 mt-8 text-gray-700 font-medium'>

@@ -5,7 +5,7 @@ import Filters from '../components/core/Products/filters/Filters';
 import SortOption from '../components/core/Products/SortOption';
 import ProductLists from '../components/core/Products/ProductLists';
 import Footer from '../components/common/Footer';
-import { fetchAllProducts } from '../services/operations/productAPI';
+import { searchProducts } from '../services/operations/productAPI';
 
 
 
@@ -27,20 +27,26 @@ const Products = () => {
       location : []
   });
 
-  const getAllProducts = async () => {
-     setLoading(true)
-     const response = await fetchAllProducts();
+  console.log("#  Filters : ", filters);
+  console.log("#  sortOption : ", sortBy);
+  console.log("#  searchQuery : ", searchQuery);
 
-     if(response){
+  const searchProductsHandler = async () => {
+      setLoading(true);
+      
+      console.log("Queries :  ",searchQuery, "  ",sortBy , "  ",filters);
+      const response = await searchProducts(searchQuery, filters, sortBy);
+
+      if(response)
+      {
         setProducts(response);
-     }
-     setLoading(false);
-    //  console.log("products : ",response);
+      }
+      setLoading(false);
   }
 
   useEffect(() => {
-      getAllProducts();
-  },[])
+       searchProductsHandler();
+  },[searchQuery, sortBy, filters])
 
 
   return (

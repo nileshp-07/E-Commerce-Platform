@@ -3,9 +3,12 @@ import { useForm, useFieldArray } from 'react-hook-form'
 import { IoMdAddCircle } from "react-icons/io";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
+import {useDispatch} from "react-redux"
+import { setProduct } from '../../../../redux/slices/productSlice';
 
-const ProductDescription = () => {
+const ProductDescription = ({setStep}) => {
   const [specifications , setSpecifications] = useState({})
+  const dispatch = useDispatch();
 
   const {
      register ,
@@ -57,8 +60,20 @@ const ProductDescription = () => {
     const values = getValues();
     const discountedPrice = watch("discountedPrice")
     
-    console.log(values, discountedPrice);
+    const productDetails = {};
 
+    productDetails.title = values.title;
+    productDetails.description = values.description;
+    productDetails.discount = parseInt(values.discount);
+    productDetails.price = parseInt(values.price);
+    productDetails.discountedPrice = parseInt(values.discountedPrice);
+    productDetails.stocks = parseInt(values.stocks);
+    productDetails.brand = values.brand;
+    productDetails.specifications = specifications;
+
+    dispatch(setProduct(productDetails));
+
+    setStep(2);
   }
   return (
     <div>

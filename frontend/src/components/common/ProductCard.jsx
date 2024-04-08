@@ -15,8 +15,7 @@ const ProductCard = ({product, isBestDeal}) => {
     const dispatch = useDispatch();
     const [wishlists , setWishlists] = useState([]);
     const [cartItems , setCartItems] = useState([]);
-    console.log("CART : ",cartItems);
-
+   
     useEffect(() => {
         const wishlistsProducts = JSON.parse(localStorage.getItem("wishlists")) ||  [];
         const cartProducts = JSON.parse(localStorage.getItem("cartItems")) ||  [];

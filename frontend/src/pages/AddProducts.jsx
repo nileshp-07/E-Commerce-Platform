@@ -9,7 +9,7 @@ import Categories from '../components/core/Profile/addProduct/Categories';
 import ProductImages from '../components/core/Profile/addProduct/ProductImages';
 
 const AddProducts = () => {
-    const [step , setStep] = useState(3);
+    const [step , setStep] = useState(1);
   return (
     <div className='w-full pt-10'>
 
@@ -75,8 +75,8 @@ const AddProducts = () => {
         
         <div className='mt-14'>
             {
-                step == 1 ? (<ProductDescription/>) : 
-                            (step == 2 ? (<Categories/>) : (<ProductImages/>))
+                step == 1 ? (<ProductDescription setStep= {setStep}/>) : 
+                            (step == 2 ? (<Categories setStep={setStep}/>) : (<ProductImages setStep={setStep}/>))
             }
         </div>
     </div>

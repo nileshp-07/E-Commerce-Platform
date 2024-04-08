@@ -86,7 +86,11 @@ export const login = async (email , password , navigate, dispatch) => {
         dispatch(setUser(response.data.user));
         localStorage.setItem("token" , JSON.stringify(response.data.token));
         localStorage.setItem("user", JSON.stringify(response.data.user));
-        localStorage.setItem("cartItems", JSON.stringify(response.data.products));
+
+        if(response?.data?.cartItems)
+        localStorage.setItem("cartItems", JSON.stringify(response.data?.cartItems?.products));
+
+        if(response?.data?.wishlists)
         localStorage.setItem("wishlists", JSON.stringify(response.data.wishlists));
 
         toast.success("Login successfully");

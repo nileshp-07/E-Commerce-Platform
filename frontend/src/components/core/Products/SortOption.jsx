@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 
 
-const SortOption = ({sortBy , setSortBy}) => {
+const SortOption = ({sortBy ,setSortBy}) => {
   return (
     <div className='flex gap-2 items-center'>
         <p className='font-medium'>Sort By: </p>

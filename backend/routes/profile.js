@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const {auth, isBuyer} = require("../middlewares/auth")
+const {auth, isBuyer, isSeller} = require("../middlewares/auth")
 
 const {
     changePassword,
     editProfileDetails,
     changeProfileImage,
-    getUserFullDetails
+    getUserFullDetails,
+    getSellerProducts
 } = require("../controllers/profile");
 
 const {
@@ -35,6 +36,7 @@ router.post("/change-password" ,auth, changePassword);
 router.put("/edit-profile-details",auth, editProfileDetails);
 router.put("/change-profile-image",auth, changeProfileImage);
 router.get("/get-user-details", auth , getUserFullDetails);
+router.get("/get-seller-products", auth, isSeller, getSellerProducts);
 
 
 
@@ -48,16 +50,16 @@ router.get("/show-all-address", auth , getUserAllAddresses);
 
 // #################################### wishlists Routes ###################################
 
-router.post("/add-to-wishlists", auth, isBuyer, addProductToWishlists);
-router.post("/remove-from-wishlists", auth , isBuyer, removeProductFromWishlists);
-router.post("/wishlists-products" , auth , isBuyer , getWishlistsProducts);
+router.post("/add-to-wishlists", auth, addProductToWishlists);
+router.post("/remove-from-wishlists", auth , removeProductFromWishlists);
+router.post("/wishlists-products" , auth , getWishlistsProducts);
 
 
 // #################################### cart Routes ###################################
 
-router.post("/add-to-cart", auth, isBuyer, addProductToCart);
-router.post("/remove-from-cart", auth , isBuyer, removeProductFromCart);
-router.post("/cart-products" , auth , isBuyer , getCartItems);
+router.post("/add-to-cart", auth, addProductToCart);
+router.post("/remove-from-cart", auth , removeProductFromCart);
+router.post("/cart-products" , auth , getCartItems);
 
 
 module.exports  = router;

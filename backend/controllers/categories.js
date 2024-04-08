@@ -1,4 +1,4 @@
-const Category = require("../models/category");
+const {Category} = require("../models/category");
 
 exports.createCategory = async (req , res) => {
    try{
@@ -59,6 +59,41 @@ exports.createCategory = async (req , res) => {
             message : error.message
         })
    }
+}
+
+exports.getAllCategories = async (req , res) => {
+    try{
+        const categories = await Category.find({})
+                                                .populate({
+                                                    path : "subCategories",
+                                                    populate : {
+                                                        path : "subSubCategories"
+                                                    }
+                                                })
+                                                .exec();
+
+        if(!categories)
+        {
+            return res.status(404).json({
+                success : false,
+                message : "Categories could not found"
+            })   
+        }
+
+        return res.status(200).json({
+            success : true,
+            message : "all categories fetched",
+            categories
+        })
+    }
+    catch(error)
+    {
+        console.log(error);
+        return res.status(401).json({
+            success : false,
+            message : error.message
+        })
+    }
 }
 
 

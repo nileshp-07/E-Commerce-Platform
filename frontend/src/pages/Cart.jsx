@@ -180,8 +180,11 @@ const Cart = () => {
             }
 
 
-            <ProductCards heading={"Recently Viewed Products"} products={recentlyViewedProducts} />
-
+            {
+                recentlyViewedProducts.length > 0 && (
+                 <ProductCards heading={"Recently Viewed Products"} products={recentlyViewedProducts} />
+                )
+            }
         </div>
 
     </div>

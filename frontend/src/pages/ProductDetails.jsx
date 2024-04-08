@@ -396,7 +396,7 @@ const ProductDetails = () => {
             </div>
 
 
-            <ProductCards products ={relatedProducts} heading={"Related Products"}/>
+            {/* <ProductCards products ={relatedProducts} heading={"Related Products"}/> */}
         </div>
 
         <Footer/>

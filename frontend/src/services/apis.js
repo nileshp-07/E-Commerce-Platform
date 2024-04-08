@@ -22,7 +22,8 @@ export const profileEndPoints = {
     ADD_TO_CART_API : BASE_URL + "/profile/add-to-cart",
     REMOVE_FROM_CART_API : BASE_URL + "/profile/remove-from-cart",
     ADD_TO_WISHLISTS_API : BASE_URL + "/profile/add-to-wishlists",
-    REMOVE_FROM_WISHLISTS_API : BASE_URL +  "/profile/remove-from-wishlists"
+    REMOVE_FROM_WISHLISTS_API : BASE_URL +  "/profile/remove-from-wishlists",
+    GET_SELLER_PRODUCTS_API : BASE_URL + "/profile/get-seller-products"
 }
 
 export const productEndPoints = {
@@ -30,4 +31,7 @@ export const productEndPoints = {
     GET_ALL_PRODUCTS_API : BASE_URL + "/product/get-all-products",
     GET_PRODUCT_FULL_DETAILS_API : BASE_URL + "/product/get-product-details",
     GET_HOMEPAGE_PRODUCTS_API : BASE_URL + "/product/home-page-products",
+    SEARCH_PRODUCTS_API : BASE_URL + "/product/search-products",
+    GET_ALL_CATEGORIES : BASE_URL +  "/product/get-all-categories",
+    GET_PRODUCT_LIST : BASE_URL +  "/product/productlist"
 }

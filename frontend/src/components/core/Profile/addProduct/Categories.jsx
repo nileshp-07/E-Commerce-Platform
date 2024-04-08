@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { RiArrowRightSLine } from "react-icons/ri";
 import { RxCross2 } from "react-icons/rx";
 import { FaArrowRightLong } from "react-icons/fa6";
 import {toast} from "sonner"
+import {useSelector,useDispatch} from "react-redux"
+import { setProduct } from '../../../../redux/slices/productSlice';
+import { getAllCategories } from '../../../../services/operations/productAPI';
 
 
 
@@ -312,11 +315,32 @@ const categories = [
 ]
 
  
-const Categories = () => {
+const Categories = ({setStep}) => {
   const [mainCategory, setMainCategory] = useState(categories[0]);
+  const dispatch = useDispatch()
   const [selectedCategories , setSelectedCategories] = useState([]);
+  const {product} = useSelector((state) => state.product);
+  const [loading ,setLoading] = useState(false);
 
+  console.log("product : ",product);
   console.log(selectedCategories);
+
+  const fetchAllCategories = async () => {
+     setLoading(true);
+
+     const response = await getAllCategories();
+
+     if(response)
+     {
+      console.log(response);
+     }
+  }
+
+  useEffect(() => {
+    fetchAllCategories();
+  }, [])
+
+
   const changeHandler = (e) => {
       const category = e.target.value;
 
@@ -335,6 +359,16 @@ const Categories = () => {
           }
          setSelectedCategories([...selectedCategories, category])
       }
+  }
+
+  const handleNextSubmit = () => {
+     const newProduct = {...product};
+
+     newProduct.categories = selectedCategories;
+
+     dispatch(setProduct(newProduct));
+
+     setStep(3);
   }
 
   console.log(mainCategory)
@@ -413,7 +447,9 @@ const Categories = () => {
            )
         }
         <div className='my-9 mx-auto flex justify-end px-16'>
-            <button className=' flex items-center gap-2 py-1 pt-2 px-5 bg-royal-blue-500 rounded-md text-white'>
+            <button 
+              onClick={handleNextSubmit}
+              className=' flex items-center gap-2 py-1 pt-2 px-5 bg-royal-blue-500 rounded-md text-white'>
                 <p className='mb-1'>Next</p>
                 <FaArrowRightLong/>
             </button>

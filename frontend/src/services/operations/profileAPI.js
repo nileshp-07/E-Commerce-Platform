@@ -14,7 +14,8 @@ const {
         ADD_TO_CART_API,
         REMOVE_FROM_CART_API,
         ADD_TO_WISHLISTS_API,
-        REMOVE_FROM_WISHLISTS_API
+        REMOVE_FROM_WISHLISTS_API,
+        GET_SELLER_PRODUCTS_API
     } = profileEndPoints;
 
 
@@ -33,7 +34,9 @@ export const updateProfileImage = async (formData, token, dispatch) => {
             throw new Error(response.data.message);
         }
 
-        dispatch(setUser(response.data.user))
+        // store the updated user into state and localStorage 
+        dispatch(setUser(response.data.updatedUser))
+        localStorage.setItem("user", JSON.stringify(response.data.updatedUser));
 
         toast.success("Profile Image Updated")
 
@@ -61,7 +64,10 @@ export const updateProfileDetails = async (data, token, dispatch) => {
             throw new Error(response.data.message);
         }
 
+
+        // store the updated user into state and localStorage 
         dispatch(setUser(response.data.updatedUser));
+        localStorage.setItem("user", JSON.stringify(response.data.updatedUser));
 
         toast.success("Profile Details Updated")
 
@@ -332,3 +338,32 @@ export const removeFromWishlists = async (productId,  token) => {
 
 
 
+export const getSellerProducts = async (token) => {
+    const toastId = toast.loading("loading...");
+    let result;
+
+    try{
+        const response = await apiConnector("GET" , GET_SELLER_PRODUCTS_API, null , {
+            Authorization : `Bearer ${token}`
+        });
+
+        console.log("GET SELLER PRODUCTS API RESPONSE : ",response);
+
+        if(!response.data.success)
+        {
+            throw new Error(response.data.message);
+        }
+
+        result = response.data.products;
+
+        toast.success("Seller products fetched successfully");
+    }
+    catch(error)
+    {
+        console.log("GET SELLER PRODUCTS API ERROR : ",error);
+        console.error(error.message);
+        toast.error(error.response.data.message);
+    }
+    toast.dismiss(toastId);
+    return  result;
+}

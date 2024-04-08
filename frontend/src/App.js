@@ -18,6 +18,8 @@ import Error from './components/common/Error';
 import AddProducts from './pages/AddProducts';
 import ProductUploader from "./util/ProductUploader"
 import Cart from './pages/Cart';
+import Dashboard from './components/core/Profile/Dashboard';
+import SellerProducts from './components/core/Profile/SellerProducts';
 function App() {
   return (
     <div className='min-h-screen'>
@@ -41,6 +43,8 @@ function App() {
               <Route path='/profile/setting' element={<Settings/>}/>
               <Route path='/profile/wishlists' element={<Wishlist/>}/>
               <Route path='/profile/add-product' element={<AddProducts/>}/>
+              <Route path='/profile/products' element={<SellerProducts/>}/>
+              <Route path='/profile/dashboard' element={<Dashboard/>}/>
           </Route> 
 
           <Route path='*' element={<Error/>}/> 
