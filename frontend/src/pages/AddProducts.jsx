@@ -7,13 +7,21 @@ import doneIcon from "../assets/done-icon.png"
 import ProductDescription from '../components/core/Profile/addProduct/ProductDescription';
 import Categories from '../components/core/Profile/addProduct/Categories';
 import ProductImages from '../components/core/Profile/addProduct/ProductImages';
+import {useSelector} from "react-redux"
 
 const AddProducts = () => {
     const [step , setStep] = useState(1);
+    const {isEdit} = useSelector((state) => state.product);
   return (
     <div className='w-full pt-10'>
 
+        <h2 className='text-2xl font-semibold mb-8'>
+            {
+                isEdit ? "Edit Product" : "Add Product"
+            }
+        </h2>
         <div className='flex justify-between w-[600px] mx-auto items-center'>
+
             <div className='flex flex-col items-center'>
                 <div 
                     className={`p-3 relative rounded-full w-fit  ${step === 1 ? "bg-royal-blue-500 text-white" : "bg-royal-blue-100 text-royal-blue-600"}`}>

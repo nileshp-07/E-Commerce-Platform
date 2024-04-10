@@ -3,12 +3,17 @@ import {useSelector} from "react-redux"
 import { getSellerProducts } from '../../../services/operations/profileAPI';
 import { Link, } from 'react-router-dom';
 import RatingStars from '../../common/RatingStars';
+import {useDispatch} from "react-redux"
+import { setIsEdit, setProduct } from '../../../redux/slices/productSlice';
+import {useNavigate} from "react-router-dom"
 
 const description = "This will help you identify if any of these values are null or undefined, or if the structure of your data is different from what you expect. Once you identify the issue, you can adjust your code accordingly."
 const SellerProducts = () => {
   const [products , setProducts] = useState([]);
   const [loading , setLoading] = useState(false);
   const {token} = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const fetchSellerProducts = async () => {
      setLoading(true);
@@ -43,7 +48,7 @@ const SellerProducts = () => {
         
         <div className='flex flex-col gap-5 items-center justify-center'>
           {
-             products.length < 0 ? (
+             products.length > 0 ? (
                 (
                    products.map((product) => (
                      <div key={product._id}
@@ -73,11 +78,17 @@ const SellerProducts = () => {
                                 </div>
                             </div>
                         </Link>
-                        <div className='flex gap-5 font-medium mx-3'>
-                           <p>
+                        <div className='flex gap-5 font-medium mx-3 '>
+                           <p 
+                             className='cursor-pointer'
+                             onClick={() => {
+                              dispatch(setProduct(product))
+                              dispatch(setIsEdit(true))
+                              navigate("/profile/add-product")
+                           }}>
                              Edit
                            </p>
-                           <p>
+                           <p className='cursor-pointer'>
                              delete
                            </p>
                         </div>

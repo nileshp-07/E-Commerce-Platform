@@ -14,10 +14,13 @@ const {
 } = productEndPoints;
 
 
-export const addProduct = async (title , price ,categories,sellerId,thumbnail,images ,stocks, brand, discountPercentage, discountedPrice, specifications) => {
+export const addProduct = async (formData, token) => {
     const toastId = toast.loading("loading...");
     try{
-        const response = await apiConnector("POST" ,ADD_PRODUCT_API ,{title , price, categories,sellerId,thumbnail,images,stocks, brand , discountPercentage,discountedPrice, specifications});
+        const response = await apiConnector("POST" ,ADD_PRODUCT_API ,formData,{
+            "Content-Type": "multipart/form-data",
+            Authorization : `Bearer ${token}`
+        });
 
         console.log("ADD PRODUCT API RESPONSE : ", response);
 
@@ -140,8 +143,8 @@ export const searchProducts = async (searchQuery, filters, sortOption) => {
         if(!response.data.success){
             throw new Error(response.data.message);
         }
-
-        result = response.data.products;
+        
+        result = response.data;
     }
     catch(error)
     {

@@ -280,7 +280,6 @@ export const removeFromCart = async (productId , token) => {
 export const addToWishlists = async (productId , token) => {
     const toastId = toast.loading("loading...");
 
-    console.log("token", token);
 
     try{
         const response = await apiConnector("POST", ADD_TO_WISHLISTS_API , {productId},{

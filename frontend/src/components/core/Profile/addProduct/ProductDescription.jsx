@@ -3,12 +3,15 @@ import { useForm, useFieldArray } from 'react-hook-form'
 import { IoMdAddCircle } from "react-icons/io";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import { setProduct } from '../../../../redux/slices/productSlice';
 
 const ProductDescription = ({setStep}) => {
   const [specifications , setSpecifications] = useState({})
+  const {product, isEdit} = useSelector((state) => state.product);
   const dispatch = useDispatch();
+
+  console.log("Edit product : ",product);
 
   const {
      register ,
@@ -24,6 +27,21 @@ const ProductDescription = ({setStep}) => {
     // Watch for changes in price and discount fields
     const price = watch("price");
     const discount = watch("discount");
+
+
+    useEffect(() => {
+        if(isEdit)
+        {
+            setValue("title", product.title);
+            setValue("brand", product.brand);
+            setValue("stocks", product.stocks);
+            setValue("description", product.description);
+            setValue("price", product.price);
+            setValue("discount", product.discount);
+            setValue("discountedPrice", product.discountedPrice);
+            setSpecifications(product.specifications);
+        }
+    }, [])
   
     useEffect(() => {
       // Recalculate discounted price when price or discount changes

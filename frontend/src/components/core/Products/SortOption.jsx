@@ -1,6 +1,27 @@
 import React, { useEffect } from 'react'
 
-
+const sortOptions = [
+    {
+        name : "Highest Rated",
+        value : "highest_rated"
+    },
+    {
+        name : "Price: Low to High",
+        value : "lowest_price"
+    },
+    {
+        name : "Price: High to Low",
+        value : "highest_price"
+    },
+    {
+        name : "Newest First",
+        value : "newest_first"
+    },
+    {
+        name : "Most Discount",
+        value : "most_discounted"
+    }
+]
 
 const SortOption = ({sortBy ,setSortBy}) => {
   return (
@@ -8,12 +29,11 @@ const SortOption = ({sortBy ,setSortBy}) => {
         <p className='font-medium'>Sort By: </p>
         <div className='flex gap-3'>
             {
-                ["Popularity" , "Price: Low to High" , "Price:  High to Low" ,  "Newest First" , "Most Discounted"]
-                .map((sort, index) => (
-                    <div className={`text-[17px] py-1 px-3 rounded-full cursor-pointer ${sortBy === sort && "text-royal-blue-500 bg-royal-blue-100"}`} 
+                sortOptions.map((sort, index) => (
+                    <div className={`text-[17px] py-1 px-3 rounded-full cursor-pointer ${sortBy === sort.value && "text-royal-blue-500 bg-royal-blue-100"}`} 
                          key={index}
-                         onClick={() => setSortBy(sort)}>
-                        {sort}
+                         onClick={() => setSortBy(sort.value)}>
+                        {sort.name}
                     </div>
                 ) )
             }

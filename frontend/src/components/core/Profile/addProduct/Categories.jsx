@@ -318,7 +318,7 @@ const categories = [
 const Categories = ({setStep}) => {
   const [mainCategory, setMainCategory] = useState(categories[0]);
   const dispatch = useDispatch()
-  const [selectedCategories , setSelectedCategories] = useState([]);
+  const [selectedCategories , setSelectedCategories] = useState(["660add6677a1575468c1a7d3"]);
   const {product} = useSelector((state) => state.product);
   const [loading ,setLoading] = useState(false);
 

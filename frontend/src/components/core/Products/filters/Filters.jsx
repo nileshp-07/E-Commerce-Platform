@@ -7,58 +7,58 @@ import { FaStar } from "react-icons/fa";
 
 
 
-const brandNames = [
-    "QuantumPulse",
-    "VortexEdge",
-    "ZenithSphere",
-    "NovaFusion",
-    "ApexGlide",
-    "InfinityForge",
-    "SummitRise",
-    "AuroraBlaze",
-    "FusionBloom",
-    "VertexQuest",
-    "EchoZest",
-    "SwiftSail",
-    "StellarPulse",
-    "Everglow",
-    "VelocityVista",
-    "EonEmerge",
-    "GenesisGlide",
-    "MomentumMist",
-    "VitalityVista",
-    "BlazeBurst",
-    "HorizonHarbor",
-    "RadiantRise",
-    "CrestCrest",
-    "SolarCrest",
-    "EvolveGlow",
-    "ThriveThrive",
-    "RiseRise",
-    "EchoEcho",
-    "PulsePulse",
-    "QuestQuest",
-    "NexusNexus",
-    "SurgeSurge",
-    "EdgeEdge",
-    "HorizonHorizon",
-    "VelocityVelocity",
-    "EclipseEclipse",
-    "FusionFusion",
-    "AuroraAurora",
-    "NovaNova",
-    "VortexVortex",
-    "SummitSummit",
-    "ZenithZenith",
-    "QuantumQuantum",
-    "VertexVertex",
-    "StellarStellar",
-    "EverglowEverglow",
-    "VitalityVitality",
-    "MomentumMomentum",
-    "VelocityVelocity",
-    "AuroraAurora"
-  ];
+// const brandNames = [
+//     "QuantumPulse",
+//     "VortexEdge",
+//     "ZenithSphere",
+//     "NovaFusion",
+//     "ApexGlide",
+//     "InfinityForge",
+//     "SummitRise",
+//     "AuroraBlaze",
+//     "FusionBloom",
+//     "VertexQuest",
+//     "EchoZest",
+//     "SwiftSail",
+//     "StellarPulse",
+//     "Everglow",
+//     "VelocityVista",
+//     "EonEmerge",
+//     "GenesisGlide",
+//     "MomentumMist",
+//     "VitalityVista",
+//     "BlazeBurst",
+//     "HorizonHarbor",
+//     "RadiantRise",
+//     "CrestCrest",
+//     "SolarCrest",
+//     "EvolveGlow",
+//     "ThriveThrive",
+//     "RiseRise",
+//     "EchoEcho",
+//     "PulsePulse",
+//     "QuestQuest",
+//     "NexusNexus",
+//     "SurgeSurge",
+//     "EdgeEdge",
+//     "HorizonHorizon",
+//     "VelocityVelocity",
+//     "EclipseEclipse",
+//     "FusionFusion",
+//     "AuroraAurora",
+//     "NovaNova",
+//     "VortexVortex",
+//     "SummitSummit",
+//     "ZenithZenith",
+//     "QuantumQuantum",
+//     "VertexVertex",
+//     "StellarStellar",
+//     "EverglowEverglow",
+//     "VitalityVitality",
+//     "MomentumMomentum",
+//     "VelocityVelocity",
+//     "AuroraAurora"
+//   ];
 
 const discountFilter = [
     {
@@ -115,7 +115,7 @@ const indianCities = [
 ];
 
 
-const Filters = ({filters , setFilters}) => {
+const Filters = ({filters ,filtersData, setFilters}) => {
 //   const [priceSliderValue , setPriceSliderValue] = useState([0 , 20]);
   const [filterOpen , setFilterOpen] = useState({
     brands: true,
@@ -124,6 +124,8 @@ const Filters = ({filters , setFilters}) => {
     discount : true,
     location : true
  })
+
+ 
 
 
 
@@ -174,6 +176,9 @@ const Filters = ({filters , setFilters}) => {
         setFilters(updatedFilters);
   }
 
+  console.log(
+    "filtersData : ",filtersData
+  )
 
 
 console.log("Filters : ", filters);
@@ -200,7 +205,7 @@ console.log("Filters : ", filters);
                     {
                         filterOpen.brands && (
                             <>
-                                {brandNames.slice(0, 10).map((brand, index) => (
+                                {filtersData?.brands?.slice(0, 10).map((brand, index) => (
                                     <div className='flex gap-2 items-center' key={index}>
                                         <input
                                             type='checkbox'
@@ -213,7 +218,7 @@ console.log("Filters : ", filters);
                                         <label htmlFor={brand}>{brand}</label>
                                     </div>
                                 ))}
-                                <p className='text-[14px] font-medium text-royal-blue-500 mt-2 cursor-pointer '>More brands</p>
+                                {/* <p className='text-[14px] font-medium text-royal-blue-500 mt-2 cursor-pointer '>More brands</p> */}
                             </>
                         )
                     }
@@ -235,8 +240,8 @@ console.log("Filters : ", filters);
                                 <Box sx={{ width: 300 }}>
                                 <Slider
                                     getAriaLabel={() => 'Temperature range'}
-                                    min={1}
-                                    max={10000}
+                                    min={filtersData?.minPrice || "1"}
+                                    max={filtersData?.maxPrice || "10000"}
                                     value={[filters.minPrice, filters.maxPrice]}
                                     onChange={handlePriceSliderChange}
                                     valueLabelDisplay="auto"

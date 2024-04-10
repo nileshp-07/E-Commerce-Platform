@@ -1,16 +1,22 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { FiUpload } from "react-icons/fi";
 import { toast } from 'sonner';
 import { RiDeleteBin5Line } from "react-icons/ri";
 import {useSelector, useDispatch} from "react-redux"
+import { addProduct } from '../../../../services/operations/productAPI';
+import { useNavigate } from 'react-router-dom'
+import { resetProduct } from '../../../../redux/slices/productSlice';
+
 
 const ProductImages = ({setStep}) => {
   const thumbnailRef = useRef();
+  const navigate = useNavigate();
   const imagesRef = useRef();
   const dispatch = useDispatch()
   const [thumbnail, setThumbnail] = useState("");
   const [images , setImages] = useState([]);
-  const {product} = useSelector((state) => state.product);
+  const {product, isEdit} = useSelector((state) => state.product);
+  const {token} = useSelector((state) => state.user);
 
 
   console.log("product : ",product);
@@ -18,6 +24,15 @@ const ProductImages = ({setStep}) => {
     const productThumbnail = e.target.files[0];
     setThumbnail(productThumbnail);
   }
+
+  useEffect(() => {
+    if(isEdit)
+    {
+       setThumbnail(product.thumbnail);
+       console.log("product :  : ",product);
+      //  setImages(product.images);
+    }
+  }, [])
 
 
   const handleImagesInput = (e) => {
@@ -34,10 +49,32 @@ const ProductImages = ({setStep}) => {
   const handleAddProduct = async () => {
       const newProduct = {...product};
 
-      newProduct.thumbnail = thumbnail;
+      newProduct.thumbnail = thumbnail; 
       newProduct.images = images;
 
-      console.log("updated product : ",newProduct);
+      const formData = new FormData();
+
+      formData.append("title", newProduct.title);
+      formData.append("price", newProduct.price);
+      formData.append("brand", newProduct.brand);
+      formData.append("categories", newProduct.categories);
+      formData.append("thumbnail", newProduct.thumbnail);
+      // formData.append("images", newProduct.images);
+
+      newProduct.images.forEach((image, index) => {
+        formData.append('images', image);
+      });
+      formData.append("stocks", newProduct.stocks);
+      formData.append("discountedPrice", newProduct.discountedPrice);
+      formData.append("discount", newProduct.discount);
+      formData.append("description", newProduct.description);
+      formData.append("specifications", JSON.stringify(newProduct.specifications));
+
+
+       await addProduct(formData,token)
+       dispatch(resetProduct())
+       navigate("/profile/products");
+
   }
   
   return (
@@ -49,7 +86,8 @@ const ProductImages = ({setStep}) => {
               thumbnail ? (
                 <div className='w-[300px] h-[180px] mt-3 rounded-md relative group'>
                    <img
-                     src={URL.createObjectURL(thumbnail)}
+                    //  src={URL.createObjectURL(thumbnail)}
+                    src={thumbnail}
                      alt='thumbnail'
                      loading='lazy'
                      className='w-full h-full  rounded-md object-cover'

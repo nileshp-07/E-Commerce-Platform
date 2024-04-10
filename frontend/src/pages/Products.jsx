@@ -14,14 +14,15 @@ const Products = () => {
   const [searchParams] = useSearchParams();
   const searchQuery = decodeURIComponent(searchParams.get("query"));
   const [loading , setLoading] = useState(false);
+  const [filtersData, setFiltersData] = useState("");
   const [page ,setPage] = useState(1);
   const productPage = 18;
   const totalProducts = 250;
   const [sortBy , setSortBy] = useState("");
   const [filters , setFilters] = useState({
       brands : [],
-      minPrice : "1",
-      maxPrice : "10000",
+      minPrice : filtersData?.minPrice || "1",
+      maxPrice : filtersData?.maxPrice || "10000",
       discount : "",
       cusRating: "",
       location : []
@@ -37,9 +38,12 @@ const Products = () => {
       console.log("Queries :  ",searchQuery, "  ",sortBy , "  ",filters);
       const response = await searchProducts(searchQuery, filters, sortBy);
 
-      if(response)
+      if(response.products)
       {
-        setProducts(response);
+        setProducts(response.products);
+
+        if(response.filtersData)
+        setFiltersData(response.filtersData);
       }
       setLoading(false);
   }
@@ -47,6 +51,17 @@ const Products = () => {
   useEffect(() => {
        searchProductsHandler();
   },[searchQuery, sortBy, filters])
+
+  useEffect(() => {
+    // Set initial filters state using filtersData
+    if (filtersData) {
+        setFilters(prevFilters => ({
+            ...prevFilters,
+            minPrice: filtersData.minPrice,
+            maxPrice: filtersData.maxPrice 
+            }));
+        }
+    }, []);
 
 
   return (
@@ -59,6 +74,7 @@ const Products = () => {
             {/* filters  */}
             <Filters
                 filters={filters}
+                filtersData = {filtersData}
                 setFilters ={setFilters}
             />
 

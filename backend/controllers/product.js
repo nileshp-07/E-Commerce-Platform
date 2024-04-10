@@ -9,25 +9,32 @@ const { default: mongoose } = require("mongoose");
 
 exports.addProduct = async (req , res) => {
     try{
-        const {title , price, categoryId , tags ,stocks, brand , discountPercentage, productDetails } = req.body;
+        const {title , price, categories ,stocks, brand , discount,discountedPrice,specifications, description} = req.body;
+        const {thumbnail , images} = req.files;
         const {id} = req.user;
-        const thumbnail = req.files.image;
 
-
-        if(!title || !price || !categoryId || !stocks || !id  || !thumbnail)
+        if(!title || !price || !categories || !stocks || !id  || !thumbnail ||!discountedPrice)
         {
             return res.status(404).json({
                 success : false,
                 message : "All fields are required"
             })
         }
-
-
+        console.log(specifications);
         // productDetails should be jsonObject 
-        const productDetailsJson = JSON.parse(productDetails);
+        const specificationJSON = JSON.parse(specifications);
 
         // now upload thumbnail image to cloudinary 
         const thumbnailUploadResponse = await uploadImageToCloudinary(thumbnail , process.env.FOLDER_NAME);
+
+        const imagesUrls = [];
+
+        for(const image of images)
+        {
+            const imageUploadResponse = await uploadImageToCloudinary(image , process.env.FOLDER_NAME);
+            imagesUrls.push(imageUploadResponse.secure_url);
+        }
+
 
         if(!thumbnailUploadResponse)
         {
@@ -37,18 +44,21 @@ exports.addProduct = async (req , res) => {
             })
         }
         
+        const objIdCategory = new mongoose.Types.ObjectId(categories);
+
         const product = await Product.create({
                                         title,
                                         price,
-                                        category : categoryId,
-                                        tags,
+                                        categories : objIdCategory,
                                         stocks,
                                         brand,
                                         seller : id,
-                                        discountPercentage,
-                                        discountedPrice : price - (price*discountPercentage/100),
-                                        productDetails : productDetailsJson,
-                                        thumbnail : thumbnailUploadResponse.secure_url
+                                        discount,
+                                        description,
+                                        discountedPrice,
+                                        specifications : specificationJSON,
+                                        thumbnail : thumbnailUploadResponse.secure_url,
+                                        images : imagesUrls
                                     })
 
 
@@ -61,7 +71,7 @@ exports.addProduct = async (req , res) => {
        }
 
 
-       //    now add the newProduct id in the sellers collection 
+        //   now add the newProduct id in the sellers collection 
        const user =  await User.findByIdAndUpdate(id,{
            $push : {
               products : product._id
@@ -577,10 +587,38 @@ exports.searchProducts = async (req , res) => {
             })
         }
 
+        let filtersData = {};
+
+        // if(!filters && !sortOption)
+        // {
+            let brands = [];
+            let minPrice = products?.[0]?.discountedPrice;
+            let maxPrice = products?.[0]?.price;
+            // let locations = [];
+            products.forEach((product) => {
+                if(!brands.includes(product.brand))
+                {
+                    brands.push(product.brand);
+                }
+                // if(!locations.includes(product.seller.profileDetails.addresses[0]))
+                // {
+                //     locations.push(product.seller.profileDetails.addresses[0]);
+                // }
+                minPrice = Math.min(minPrice , product.discountedPrice)
+                maxPrice = Math.max(maxPrice , product.price)
+            })
+
+            filtersData["minPrice"]= minPrice;
+            filtersData["maxPrice"]  = maxPrice;
+            filtersData["brands"] = brands;
+            // filtersData["locations"] = locations;
+        // }
+
         return res.status(200).json({
             success : true,
             message : "products has been returned based on the search options",
             products,
+            filtersData
         })
     }
     catch(error)

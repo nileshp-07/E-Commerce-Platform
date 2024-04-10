@@ -13,6 +13,9 @@ const productSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : "SubSubCategory"
     }],
+    description : {
+        type : String,
+    },
     seller : {
         type: mongoose.Schema.Types.ObjectId,
         ref : "User",
