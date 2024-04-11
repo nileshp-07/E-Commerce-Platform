@@ -8,10 +8,12 @@ import ProductDescription from '../components/core/Profile/addProduct/ProductDes
 import Categories from '../components/core/Profile/addProduct/Categories';
 import ProductImages from '../components/core/Profile/addProduct/ProductImages';
 import {useSelector} from "react-redux"
+import { useSearchParams } from 'react-router-dom';
 
 const AddProducts = () => {
     const [step , setStep] = useState(1);
     const {isEdit} = useSelector((state) => state.product);
+   
   return (
     <div className='w-full pt-10'>
 

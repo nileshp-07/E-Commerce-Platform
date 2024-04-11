@@ -3,8 +3,8 @@ import { FiUpload } from "react-icons/fi";
 import { toast } from 'sonner';
 import { RiDeleteBin5Line } from "react-icons/ri";
 import {useSelector, useDispatch} from "react-redux"
-import { addProduct } from '../../../../services/operations/productAPI';
-import { useNavigate } from 'react-router-dom'
+import { addProduct, editProductDetails } from '../../../../services/operations/productAPI';
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { resetProduct } from '../../../../redux/slices/productSlice';
 
 
@@ -16,7 +16,7 @@ const ProductImages = ({setStep}) => {
   const [thumbnail, setThumbnail] = useState("");
   const [images , setImages] = useState([]);
   const {product, isEdit} = useSelector((state) => state.product);
-  const {token} = useSelector((state) => state.user);
+  const {token} = useSelector((state) => state.user)
 
 
   console.log("product : ",product);
@@ -29,7 +29,9 @@ const ProductImages = ({setStep}) => {
     if(isEdit)
     {
        setThumbnail(product.thumbnail);
-       console.log("product :  : ",product);
+       setImages(product.images)
+
+       console.log("Edited product :  : ",product);
       //  setImages(product.images);
     }
   }, [])
@@ -76,6 +78,33 @@ const ProductImages = ({setStep}) => {
        navigate("/profile/products");
 
   }
+
+
+  const handleSaveChanges = async () => {
+    const formData = new FormData();
+
+    formData.append("productId", product._id);
+    formData.append("title", product.title);
+    formData.append("price", product.price);
+    formData.append("brand", product.brand);
+    formData.append("categories", product.categories);
+    // formData.append("thumbnail", product.thumbnail);
+
+    // product.images.forEach((image, index) => {
+    //   formData.append('images', image);
+    // });
+    formData.append("stocks", product.stocks);
+    formData.append("discountedPrice", product.discountedPrice);
+    formData.append("discount", product.discount);
+    formData.append("description", product.description);
+    formData.append("specifications", JSON.stringify(product.specifications));
+
+
+     await editProductDetails(formData,token)
+     dispatch(resetProduct())
+
+     navigate("/profile/products");
+  }
   
   return (
     <div>
@@ -86,11 +115,10 @@ const ProductImages = ({setStep}) => {
               thumbnail ? (
                 <div className='w-[300px] h-[180px] mt-3 rounded-md relative group'>
                    <img
-                    //  src={URL.createObjectURL(thumbnail)}
-                    src={thumbnail}
+                    src = {isEdit ? thumbnail  : URL.createObjectURL(thumbnail)}
                      alt='thumbnail'
                      loading='lazy'
-                     className='w-full h-full  rounded-md object-cover'
+                     className='w-full h-full  rounded-md object-contain p-2'
                    />
                    <div 
                        onClick={() => setThumbnail("")}
@@ -144,10 +172,11 @@ const ProductImages = ({setStep}) => {
                images.map((image , index) => (
                 <div className='w-[300px] h-[180px] rounded-md relative group' key={index}>
                    <img
-                     src={URL.createObjectURL(image)}
+                    //  src = {isEdit ? image : URL.createObjectURL(image)}
+                    src={image}
                      alt='productImage'
                      loading='lazy'
-                     className='w-full h-full rounded-md'
+                     className='w-full h-full rounded-md object-contain p-2'
                    />
                    <div className=' hidden group-hover:flex hover:scale-105 text-pink-200 cursor-pointer absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] transition-all duration-200 p-4 bg-pink-25 rounded-full'
                         onClick={() => {
@@ -166,13 +195,25 @@ const ProductImages = ({setStep}) => {
 
         </div>
 
-        <div className='my-9 mx-auto flex justify-end px-16'>
-            <button 
-               onClick={handleAddProduct}
-               className=' flex items-center gap-2 py-1 pt-2 px-5 bg-royal-blue-500 rounded-md text-white'>
-                <p className='mb-1'>Add Product</p>
-            </button>
-        </div>
+        {
+          isEdit ? ( 
+            <div className='my-9 mx-auto flex justify-end px-16'>
+                <button 
+                  onClick={handleSaveChanges}
+                  className=' flex items-center gap-2 py-1 pt-2 px-5 bg-royal-blue-500 rounded-md text-white'>
+                    <p className='mb-1'>Save Changes</p>
+                </button>
+            </div>
+          ) : (
+            <div className='my-9 mx-auto flex justify-end px-16'>
+                <button 
+                  onClick={handleAddProduct}
+                  className=' flex items-center gap-2 py-1 pt-2 px-5 bg-royal-blue-500 rounded-md text-white'>
+                    <p className='mb-1'>Add Product</p>
+                </button>
+            </div>
+          )
+        }
     </div>
   )
 }

@@ -55,7 +55,6 @@ const ProductDescription = ({setStep}) => {
 
 
 
-
     const addSpecification = () => {
         const key = watch("key");
         const value = watch("value");
@@ -90,6 +89,27 @@ const ProductDescription = ({setStep}) => {
     productDetails.specifications = specifications;
 
     dispatch(setProduct(productDetails));
+
+    setStep(2);
+  }
+
+
+  const handleEditProduct = (e) => {
+    e.preventDefault();
+    const values = getValues();
+
+    const editedProduct = {...product};
+
+    editedProduct.title = values.title
+    editedProduct.discount = parseInt(values.discount);
+    editedProduct.description = values.description;
+    editedProduct.price = parseInt(values.price);
+    editedProduct.discountedPrice = parseInt(values.discountedPrice);
+    editedProduct.stocks = parseInt(values.stocks);
+    editedProduct.brand = values.brand;
+    editedProduct.specifications = specifications;
+
+    dispatch(setProduct(editedProduct))
 
     setStep(2);
   }
@@ -313,13 +333,25 @@ const ProductDescription = ({setStep}) => {
                    }
                 </div>
 
-                <div className='my-14 mx-auto flex justify-end px-10'>
-                    <button type='submit'
-                            className=' flex items-center gap-2 py-1 pt-2 px-5 bg-royal-blue-500 rounded-md text-white'>
-                        <p className='mb-1'>Next</p>
-                        <FaArrowRightLong/>
-                    </button>
-                </div>
+                {
+                    isEdit ? (
+                        <div className='my-14 mx-auto flex justify-end px-10'>
+                            <button onClick={handleEditProduct}
+                                    className=' flex items-center gap-2 py-1 pt-2 px-5 bg-royal-blue-500 rounded-md text-white'>
+                                <p className='mb-1'>Save</p>
+                                <FaArrowRightLong/>
+                            </button>
+                        </div>
+                    ) : (
+                        <div className='my-14 mx-auto flex justify-end px-10'>
+                            <button  onClick={onSubmit}
+                                    className=' flex items-center gap-2 py-1 pt-2 px-5 bg-royal-blue-500 rounded-md text-white'>
+                                <p className='mb-1'>Next</p>
+                                <FaArrowRightLong/>
+                            </button>
+                        </div>
+                    )
+                }
             </form>
     </div>
   )

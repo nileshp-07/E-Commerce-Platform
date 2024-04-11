@@ -6,11 +6,30 @@ import RatingStars from '../../common/RatingStars';
 import {useDispatch} from "react-redux"
 import { setIsEdit, setProduct } from '../../../redux/slices/productSlice';
 import {useNavigate} from "react-router-dom"
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import { deleteProduct } from '../../../services/operations/productAPI';
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "white",
+  borderRadius: 2,
+  boxShadow: 24,
+  p: 4,
+};
+
+
 
 const description = "This will help you identify if any of these values are null or undefined, or if the structure of your data is different from what you expect. Once you identify the issue, you can adjust your code accordingly."
 const SellerProducts = () => {
   const [products , setProducts] = useState([]);
+  const [productId, setProductId] = useState("");
   const [loading , setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const {token} = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate()
@@ -28,11 +47,21 @@ const SellerProducts = () => {
      setLoading(false);
   }
 
-
   useEffect(() => {
       fetchSellerProducts();
   },[])
 
+
+  const handleDeleteProduct = async () => {
+    console.log("id : ",productId);
+     await deleteProduct(productId, token);
+
+     setOpen(false);
+     setProductId("");
+  }
+
+
+   
   if(loading)
   {
      return (
@@ -84,11 +113,18 @@ const SellerProducts = () => {
                              onClick={() => {
                               dispatch(setProduct(product))
                               dispatch(setIsEdit(true))
-                              navigate("/profile/add-product")
+                              navigate(`/profile/edit-product/${product._id}`)
                            }}>
                              Edit
                            </p>
-                           <p className='cursor-pointer'>
+                           <p 
+                             onClick={() =>{ 
+                                  setOpen(true)
+                                  console.log("ADFADF",product._id)
+                                  setProductId(product._id)
+                                }
+                              }
+                             className='cursor-pointer'>
                              delete
                            </p>
                         </div>
@@ -107,6 +143,28 @@ const SellerProducts = () => {
              )
           }
         </div>
+
+
+        <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        >
+            <Box sx={style}>
+              <h2 className='text-xl font-semibold mb-1'>Are you sure??</h2>
+              <p>Do you really want to delete this product?</p>
+              <div className='flex justify-around mt-8'>
+                 <button
+                    onClick={handleDeleteProduct} 
+                    className='py-2 px-4 bg-royal-blue-600 text-white rounded-md hover:bg-royal-blue-500 transition-all duration-200'>Delete</button>
+
+                 <button 
+                    onClick={() => setOpen(false)}
+                    className='py-2 px-4 border border-black rounded-md hover:bg-gray-100 transition-all duration-200'>Cancel</button>
+              </div>
+            </Box>
+        </Modal>
     </div>
   )
 }

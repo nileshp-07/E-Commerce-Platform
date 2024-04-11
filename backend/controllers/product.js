@@ -94,6 +94,74 @@ exports.addProduct = async (req , res) => {
     }
 }
 
+
+exports.editProductDetails = async (req , res) => {
+    try{
+        const updatedDetails = req.body;
+        const {productId} = updatedDetails;
+        console.log(updatedDetails);
+
+        console.log(productId);
+
+        // fetch the product  
+        const product = await Product.findById(productId);
+
+
+        if(!product )
+        {
+            return res.status(404).json({
+                success : false,
+                message : "Product not found"
+            })
+        }
+
+        console.log("testing");
+
+        // // upload image to cloudinary if exist 
+        // if(req.files)
+        // {
+        //     const thumbnail = req.files.image;
+        //     const uploadResponse = await uploadImageToCloudinary(thumbnail , process.env.FOLDER_NAME);
+        //     product.thumbnail = uploadResponse.secure_url;
+        // }
+
+        // now ittrate to all the properties of productDetails and update accordingly 
+        for(const key in updatedDetails)
+        {
+            if(key === "specifications")
+            {
+                product[key] = JSON.parse(updatedDetails[key]);
+            }
+            else
+            product[key] = updatedDetails[key];
+        }
+
+        const updatedProductDetails =  await product.save();
+
+        if(!updatedProductDetails)
+        {
+            return res.status(402).json({
+                success : false,
+                message : "Product details could not be updated"
+            })
+        }
+
+        return res.status(200).json({
+            success : true,
+            message : "Product details updated"
+        })
+    }
+    catch(error)
+    {
+        console.log(error);
+        return res.status(401).json({
+            success : false,
+            message : error.message
+        })
+    }
+}
+
+
 exports.uploadProduct = async (req , res) => {
     try{
         const {title , price, categories,sellerId,thumbnail,images,stocks, brand , discountPercentage,discountedPrice, specifications } = req.body;
@@ -328,67 +396,6 @@ exports.getProductFullDetails = async (req, res) => {
 
 
 
-exports.editProductDetails = async (req , res) => {
-    try{
-        const updatedDetails = req.body;
-        const {productId} = updatedDetails;
-
-        // fetch the product  
-        const product = await Product.findById(productId);
-
-
-        if(!product )
-        {
-            return res.status(404).json({
-                success : false,
-                message : "Product not found"
-            })
-        }
-
-        // upload image to cloudinary if exist 
-        if(req.files)
-        {
-            const thumbnail = req.files.image;
-            const uploadResponse = await uploadImageToCloudinary(thumbnail , process.env.FOLDER_NAME);
-            product.thumbnail = uploadResponse.secure_url;
-        }
-
-        // now ittrate to all the properties of productDetails and update accordingly 
-        for(const key in updatedDetails)
-        {
-            if(key === "productDetails" || key === "tags")
-            {
-                product[key] = JSON.parse(updatedDetails[key]);
-            }
-            else
-            product[key] = updatedDetails[key];
-        }
-
-        const updatedProductDetails =  await product.save();
-
-        if(!updatedProductDetails)
-        {
-            return res.status(402).json({
-                success : false,
-                message : "Product details could not be updated"
-            })
-        }
-
-        return res.status(200).json({
-            success : true,
-            message : "Product details updated"
-        })
-    }
-    catch(error)
-    {
-        console.log(error);
-        return res.status(401).json({
-            success : false,
-            message : error.message
-        })
-    }
-}
-
 
 exports.deleteProduct = async (req , res) => {
     try{
@@ -403,16 +410,26 @@ exports.deleteProduct = async (req , res) => {
             })
         }
 
+
         // before deleting the product first unlink the product from the schema it is linked to 
         // rating and review 
         const deletedReviews = await RatingAndReview.deleteMany({product : productId});
 
         // wishlists 
-        const deletedWishlists = await User.updateMany({
-                                                $pull : {
-                                                    wishlists : productId
-                                                }
-                                           })
+        const deletedWishlists = await User.updateMany(
+                                                { wishlists: productId }, // Only update documents where productId exists in the wishlists array
+                                                { $pull: { wishlists: productId } }, // Pull the productId from the wishlists array
+                                                { new: true }
+                                            )
+                                           .populate({
+                                            path : "wishlists",
+                                            populate : {
+                                                path : "categories"
+                                             }
+                                           }).exec();
+
+
+        
         // products from seller
         const updateSeller = await User.findByIdAndUpdate(id,{
                                                             $pull : {
@@ -422,11 +439,11 @@ exports.deleteProduct = async (req , res) => {
                                                         {new : true})
 
         // cart 
-        const updatedCart = await Cart.updateMany({
-            $pull : {
-                products : productId
-            }
-        })
+        const cart = await Cart.updateMany(
+                                            { "products.productId": productId }, // Update documents where productId exists in the products array
+                                            { $pull: { products: { productId: productId } } }, // Pull the productId from the products array
+                                            { new: true }
+                                        ).populate("products.productId").exec();
 
         
         // now delete the product  
@@ -441,9 +458,22 @@ exports.deleteProduct = async (req , res) => {
         }
 
 
+        const updatedCart = await Cart.findOne({user : id})
+                                                .populate("products.productId").exec();
+
+        const user = await User.findById(id)
+                                        .populate({
+                                            path : "wishlists",
+                                            populate : {
+                                                path : "categories"
+                                            }
+                                        }).exec();
+
         return res.status(200).json({
             success : true,
-            message : "Product deleted successfully"
+            message : "Product deleted successfully",
+            updatedCart,
+            updatedWishlists:user.wishlists
         })
     }
     catch(error)

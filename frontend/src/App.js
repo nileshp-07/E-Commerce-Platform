@@ -43,6 +43,8 @@ function App() {
               <Route path='/profile/setting' element={<Settings/>}/>
               <Route path='/profile/wishlists' element={<Wishlist/>}/>
               <Route path='/profile/add-product' element={<AddProducts/>}/>
+              <Route path='/profile/edit-product/:id' element={<AddProducts/>}/>
+              <Route path='/profile/add-product' element={<AddProducts/>}/>
               <Route path='/profile/products' element={<SellerProducts/>}/>
               <Route path='/profile/dashboard' element={<Dashboard/>}/>
           </Route> 

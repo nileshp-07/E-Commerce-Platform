@@ -33,5 +33,7 @@ export const productEndPoints = {
     GET_HOMEPAGE_PRODUCTS_API : BASE_URL + "/product/home-page-products",
     SEARCH_PRODUCTS_API : BASE_URL + "/product/search-products",
     GET_ALL_CATEGORIES : BASE_URL +  "/product/get-all-categories",
-    GET_PRODUCT_LIST : BASE_URL +  "/product/productlist"
+    GET_PRODUCT_LIST : BASE_URL +  "/product/productlist",
+    EDIT_PRODUCT_DETAILS_API : BASE_URL + "/product/edit-product-details",
+    DELETE_PRODUCT_API : BASE_URL + "/product/delete-product"
 }

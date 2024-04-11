@@ -10,7 +10,9 @@ const {
     GET_HOMEPAGE_PRODUCTS_API,
     SEARCH_PRODUCTS_API,
     GET_PRODUCT_LIST,
-    GET_ALL_CATEGORIES
+    GET_ALL_CATEGORIES,
+    EDIT_PRODUCT_DETAILS_API,
+    DELETE_PRODUCT_API
 } = productEndPoints;
 
 
@@ -41,6 +43,68 @@ export const addProduct = async (formData, token) => {
     toast.dismiss(toastId);
 }
 
+
+export const editProductDetails = async (formData , token) => {
+    const toastId = toast.loading("loading...");
+    try{
+        const response = await apiConnector("PUT", EDIT_PRODUCT_DETAILS_API, formData, {
+            "Content-Type": "multipart/form-data",
+            Authorization : `Bearer ${token}`
+        });
+
+        console.log("EDIT PRODUCT DETAILS API RESPONSE : ",response);
+
+        if(!response.data.success)
+        {
+            throw new Error(response.data.message);
+        }
+
+        toast.success("Product updated successfully");
+    }
+    catch(error)
+    {
+        console.log("EDIT PRODUCT DETAILS API ERROR : ",error);
+        console.error(error.message);
+        toast.error(error.response.data.message);
+    }
+    toast.dismiss(toastId);
+}
+
+
+export const deleteProduct = async (productId, token) => {
+    const toastId = toast.loading("loading...");
+    console.log("product id : ",productId);
+    console.log(productId)
+    try{
+        const response = await apiConnector("DELETE", DELETE_PRODUCT_API, {productId}, {
+            Authorization : `Bearer ${token}`
+        });
+
+        console.log("DELETE PRODUCT API RESPONSE : ", response);
+
+        if(!response.data.success)
+        {
+            throw new Error(response.data.message);
+        }
+
+        console.log(response.data.updatedCart);
+        console.log(response.data.updatedWishlists);
+
+        if(response.data.updatedWishlists)
+        localStorage.setItem("wishlists", JSON.stringify(response.data.updatedWishlists));
+        if(response.data.updatedCart)
+        localStorage.setItem("cartItems", JSON.stringify(response.data.updatedCart));
+
+        toast.success("Product Deleted Successfullly");
+    }
+    catch(error)
+    {
+        console.log("EDIT PRODUCT DETAILS API ERROR : ",error);
+        console.error(error.message);
+        toast.error(error.response.data.message);
+    }
+    toast.dismiss(toastId);
+}
 
 
 export const fetchAllProducts = async () => {
