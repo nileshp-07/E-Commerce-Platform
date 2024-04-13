@@ -9,6 +9,7 @@ const cors = require("cors")
 const authRoutes = require("./routes/auth");
 const profileRoutes = require("./routes/profile");
 const productRoutes = require("./routes/product");
+const paymentRoutes = require("./routes/payment");
 
 require("dotenv").config();
 const PORT = process.env.PORT || 4000;
@@ -40,7 +41,7 @@ app.use(
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/profile",profileRoutes);
 app.use("/api/v1/product",productRoutes );
-// app.use("/api/v1/payment")
+app.use("/api/v1/payment", paymentRoutes)
 
 
 

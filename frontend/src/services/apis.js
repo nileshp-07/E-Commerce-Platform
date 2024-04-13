@@ -37,3 +37,8 @@ export const productEndPoints = {
     EDIT_PRODUCT_DETAILS_API : BASE_URL + "/product/edit-product-details",
     DELETE_PRODUCT_API : BASE_URL + "/product/delete-product"
 }
+
+
+export const paymentEndPoints = {
+    BUY_PRODUCT_API : BASE_URL + "/payment/buy-products"
+}

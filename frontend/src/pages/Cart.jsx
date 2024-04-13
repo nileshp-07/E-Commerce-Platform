@@ -4,6 +4,7 @@ import ProductCards from '../components/core/homePage/ProductCards';
 import { removeFromCart } from '../services/operations/profileAPI';
 import {useSelector} from "react-redux"
 import { Link } from 'react-router-dom';
+import { buyProducts } from '../services/operations/PaymentAPI';
 
 
 const Cart = () => {
@@ -67,6 +68,15 @@ const Cart = () => {
     const removeFromCartHandler = async (productId) => {
         setLoading(true);
         await removeFromCart(productId , token);
+        setLoading(false);
+    }
+
+
+    const handleBuyProducts = async () => {
+        setLoading(true);
+
+        await buyProducts(products, token)
+
         setLoading(false);
     }
 
@@ -164,7 +174,9 @@ const Cart = () => {
                                 <p className='text-caribbeangreen-600 font-medium'>Rs. {totalPrice}</p>
                             </div>
 
-                            <button className='mt-8 mb-3 bg-royal-blue-500 py-2 px-5 w-full text-white font-medium rounded-md'>
+                            <button
+                              onClick={handleBuyProducts} 
+                              className='mt-8 mb-3 bg-royal-blue-500 py-2 px-5 w-full text-white font-medium rounded-md'>
                                 Process to checkout
                             </button>
                         </div>
