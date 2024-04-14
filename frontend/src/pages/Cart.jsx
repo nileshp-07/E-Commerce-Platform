@@ -73,9 +73,20 @@ const Cart = () => {
 
 
     const handleBuyProducts = async () => {
+         const address = {
+            //  name : "Nilesh Patidar",
+            street : "viswas nagar",
+            //  line2 : "viswas nagar",
+            city : "pithampur",
+            postalCode : "573238",
+            state : "m.p.",
+            country : "India"
+        }
+
+        const isCOD = true;
         setLoading(true);
 
-        await buyProducts(products, token)
+        await buyProducts(products,isCOD,JSON.stringify(address), token);
 
         setLoading(false);
     }

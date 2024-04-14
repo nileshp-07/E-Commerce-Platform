@@ -40,5 +40,6 @@ export const productEndPoints = {
 
 
 export const paymentEndPoints = {
-    BUY_PRODUCT_API : BASE_URL + "/payment/buy-products"
+    BUY_PRODUCT_API : BASE_URL + "/payment/buy-products",
+    CREATE_ORDER_API : BASE_URL + "/payment/create-order"
 }

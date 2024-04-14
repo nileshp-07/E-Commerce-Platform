@@ -11,24 +11,36 @@ const orderSchema = new mongoose.Schema({
         ref : "User",
         required : [true , "Please provide the seller id"]
     },
-    orderItems : [{
-        name : String,
-        qty : Number,
-        price : Number,
-        image : String,
-        productId : {
-            type : mongoose.Schema.Types.ObjectId,
-            ref : "Product"
-        }
-    }],
+    product : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref: "Product",
+    },
+    qty : {
+        type: Number,
+        default : 1
+    },
     totalPrice : {
-        type : Number
+        type : Number,
     },
-    totalItems : {
-        type : Number
-    },
+    // orderItems : [{
+    //     name : String,
+    //     qty : Number,
+    //     price : Number,
+    //     image : String,
+    //     productId : {
+    //         type : mongoose.Schema.Types.ObjectId,
+    //         ref : "Product"
+    //     }
+    // }],
+    // totalPrice : {
+    //     type : Number
+    // },
+    // totalItems : {
+    //     type : Number
+    // },
     coinUsed : {
-        type : Number
+        type : Number,
+        default: 0
     },
     paymentMethod : {
         type : String,
@@ -46,10 +58,9 @@ const orderSchema = new mongoose.Schema({
             default : Date.now()
         }
     },
-    shippingInfo : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : "Address"
-    }
+    // shippingAddress : {   we have to handle it better
+    //     type : String,
+    // }
 },
 {
     timestamps : true
