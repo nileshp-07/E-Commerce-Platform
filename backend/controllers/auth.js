@@ -274,7 +274,7 @@ exports.generateResetPasswordToken = async (req , res) => {
 
 
         // now generate a frontend url and send it to the mail 
-        const url = `http://localhost:3000/reset-password/${token}`;
+        const url = `https://ecommerce-platform-nileshp07.vercel.app/reset-password/${token}`;
 
 
         const mailResponse = await mailSender(user.email , "Reset Password Link", `click on the link belowed to reset your password\n Reset password link - ${url}`);

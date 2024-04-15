@@ -11,6 +11,8 @@ exports.buyProducts = async (req, res) => {
       const {products} = req.body;
       const {email} = req.user;
 
+      console.log("testing11");
+
       // const address = {
       //    name : "Nilesh Patidar",
       //    line1 : "viswas nagar",
@@ -48,7 +50,7 @@ exports.buyProducts = async (req, res) => {
          payment_method_types : ["card"],
          line_items : lineItems,
          mode : "payment",
-        //  success_url : "http://localhost:3000/payment-success",
+         success_url : "http://localhost:3000/payment-success",
          cancel_url : "http://localhost:3000/payment-fail",
          customer_email : email,
          billing_address_collection: 'required', // Require billing address

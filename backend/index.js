@@ -15,6 +15,31 @@ require("dotenv").config();
 const PORT = process.env.PORT || 4000;
 
 
+// const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
+
+// app.post("/webhook", async(req , res) => {
+//     const sig = request.headers['stripe-signature'];
+
+//     let event;
+
+//     try {
+//         event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+//     } catch (err) {
+//         res.status(400).send(`Webhook Error: ${err.message}`);
+//         return;
+//     }
+
+//     // Handle the event
+//     console.log(`Unhandled event type ${event.type}`);
+
+//     // Return a 200 response to acknowledge receipt of the event
+//     res.status(200).json({
+//         success : true,
+//     })
+// })
+
+
 // connect to database 
 connectDB();
 // connect to clodinary 
