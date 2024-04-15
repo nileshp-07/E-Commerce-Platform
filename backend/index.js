@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 4000;
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 
-app.post("/webhook", async(req , res) => {
+app.post("/v1/webhook_endpoints", async(req , res) => {
     const sig = request.headers['stripe-signature'];
 
     let event;
