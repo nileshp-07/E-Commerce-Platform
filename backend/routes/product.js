@@ -17,6 +17,7 @@ const {
     getProductFullDetails,
     getHomePageProducts,
     searchProducts,
+    getRelatedProducts
 } = require("../controllers/product")
 
 const {
@@ -40,13 +41,14 @@ router.get("/get-product-details", getProductFullDetails);
 // router.post("/add-product", uploadProduct);
 router.get("/home-page-products", getHomePageProducts);
 router.post("/search-products", searchProducts);
+router.get("/related-products", getRelatedProducts);
 
 
 
 // #################################### Reviews Routes ###################################
-router.post("/create-review" , auth , isBuyer , writeReview);
-router.delete("/delete-review" , auth , isBuyer , deleteReview);
-router.get("/all-reviews" , auth , showAllReviews);
+router.post("/create-review" , auth , writeReview);
+router.delete("/delete-review" , auth , deleteReview);
+router.post("/all-reviews" , showAllReviews);
 
 
 module.exports = router;

@@ -1,5 +1,6 @@
 const Product = require("../models/product");
 const RatingAndReview = require("../models/ratingAndReviews")
+const {User} = require("../models/user")
 
 
 exports.writeReview = async  (req , res) => {
@@ -15,6 +16,18 @@ exports.writeReview = async  (req , res) => {
                 message : "All fields are required"
             })
         }
+
+
+        const user = await User.findById(id);
+
+        if(!user.products.includes(productId))
+        {
+            return res.status(404).json({
+                success : false,
+                message : "You have to Buy this product first to review"
+            })
+        }
+
 
         // create a rating 
         const newReview = await RatingAndReview.create({
@@ -32,7 +45,12 @@ exports.writeReview = async  (req , res) => {
                                                                 }
                                                             },
                                                             {new : true})
-                                                            .populate("ratingAndReviews");
+                                                            .populate({
+                                                                path : "ratingAndReviews",
+                                                                populate : {
+                                                                    path : "user"
+                                                                }
+                                                            }).exec();
        
         // now calculate the avg rating 
         const ratings = product.ratingAndReviews;
@@ -41,11 +59,14 @@ exports.writeReview = async  (req , res) => {
 
         product.avgRating = avgRating;
         await product.save();
+
+
+        
         
         return res.status(200).json({
             success: true,
             message : "Review created succesfully",
-            newReview,
+            allReviews: product.ratingAndReviews,
             product
         })
     }
@@ -98,19 +119,24 @@ exports.deleteReview = async (req , res) => {
 exports.showAllReviews = async (req , res) => {
     try{
         const {productId} = req.body;
+
         
         // find product and show all its review 
-        const product = await Product.findById(productId).populate("ratingAndReviews").exec();
+        const product = await Product.findById(productId)
+                                                    .populate({
+                                                        path : "ratingAndReviews",
+                                                        populate : {
+                                                            path : "user"
+                                                        }
+                                                    }).exec();
                                                 
         
-        console.log("product" , product);
 
-        const reviews = product.ratingAndReviews;
 
         return res.status(200).json({
             success : true,
             message : "all reviews fetched successfully",
-            product
+            reviews: product.ratingAndReviews,
         })
 
     }

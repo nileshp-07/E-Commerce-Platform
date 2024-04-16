@@ -35,11 +35,19 @@ export const productEndPoints = {
     GET_ALL_CATEGORIES : BASE_URL +  "/product/get-all-categories",
     GET_PRODUCT_LIST : BASE_URL +  "/product/productlist",
     EDIT_PRODUCT_DETAILS_API : BASE_URL + "/product/edit-product-details",
-    DELETE_PRODUCT_API : BASE_URL + "/product/delete-product"
+    DELETE_PRODUCT_API : BASE_URL + "/product/delete-product",
+    GET_RELATED_PRODUCTS : BASE_URL + "/product/related-products"
 }
 
 
 export const paymentEndPoints = {
     BUY_PRODUCT_API : BASE_URL + "/payment/buy-products",
     CREATE_ORDER_API : BASE_URL + "/payment/create-order"
+}
+
+
+export const ratingAndReviewsEndPoints= {
+     CREATE_REVIEW_API : BASE_URL + "/product/create-review",
+     DELETE_REVIEW_API : BASE_URL + "/product/delete-review",
+     GET_ALL_REVIEWS_API : BASE_URL + "/product/all-reviews"
 }

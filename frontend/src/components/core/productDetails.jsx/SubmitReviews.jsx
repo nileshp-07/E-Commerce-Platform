@@ -3,6 +3,10 @@ import Rating from "@mui/material/Rating";
 import Box from "@mui/material/Box";
 import { FaRegStar } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa6";
+import { createReview } from '../../../services/operations/productAPI';
+import { useSelector } from 'react-redux';
+import {toast} from "sonner"
+import { useParams } from 'react-router-dom';
 
 const labels = {
   0 : "",
@@ -17,12 +21,30 @@ function getLabelText(value) {
   return `${value} Star${value !== 1 ? "s" : ""}, ${labels[value]}`;
 }
 
-const SubmitReviews = () => {
+const SubmitReviews = ({setReviews}) => {
     const [value, setValue] = useState(0);
     const [hover, setHover] = useState(-1);
     const [review , setReview] = useState("");
+    const {token} = useSelector((state) => state.user);
+    const {id} = useParams();
 
-   console.log(value ,"  " , review);
+
+
+    const createReviewHandler = async () => {
+        if(value===0 || !review)
+        {
+            toast.error("Please write the review first");
+            return;
+        }
+        const response = await createReview(value, review, id, token);
+
+        if(response)
+        setReviews(response);
+
+        setValue(0);
+        setReview("");
+    }
+
   return (
     <div className='mt-20 mb-10 border-b  border-gray-500 pb-10'>
         <h2 className='text-2xl font-semibold'>Submit your review</h2>
@@ -71,7 +93,9 @@ const SubmitReviews = () => {
                 />
             </div>
 
-            <button className='mt-10 bg-royal-blue-600 py-2 px-7 rounded-md text-white font-medium hover:bg-royal-blue-500 trasition-all duration-200'> 
+            <button 
+               onClick={createReviewHandler}
+               className='mt-10 bg-royal-blue-600 py-2 px-7 rounded-md text-white font-medium hover:bg-royal-blue-500 trasition-all duration-200'> 
                 Submit
             </button>
         </div>

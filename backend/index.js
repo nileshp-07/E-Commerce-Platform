@@ -18,26 +18,62 @@ const PORT = process.env.PORT || 4000;
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 
-app.post("/v1/webhook_endpoints", async(req , res) => {
-    const sig = request.headers['stripe-signature'];
+// app.post("/webhook",express.raw({type: 'application/json'}) ,async(req , res) => {
 
-    let event;
+//     console.log("Testing");
+//     const sig = request.headers['stripe-signature'];
 
-    try {
-        event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
-    } catch (err) {
-        res.status(400).send(`Webhook Error: ${err.message}`);
-        return;
-    }
+//     let event;
 
-    // Handle the event
-    console.log(`Unhandled event type ${event.type}`);
+//     try {
+//         event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+//     } catch (err) {
+//         console.log(err.message);
+//         return res.status(400).send(`Webhook Error: ${err.message}`);
+//     }
 
-    // Return a 200 response to acknowledge receipt of the event
-    res.status(200).json({
-        success : true,
-    })
-})
+//     // Handle the event
+//     console.log(`Unhandled event type ${event.type}`);
+//     console.log(`Unhandled event data ${event.data.object}`);
+//     console.log(`Unhandled event object id ${event.data.object.id}`);
+
+//     // Return a 200 response to acknowledge receipt of the event
+//     res.status(200).json({
+//         success : true,
+//     })
+// })
+
+
+
+// This is your Stripe CLI webhook secret for testing your endpoint locally.
+
+app.post('/webhook', (request, response) => {
+  console.log("Testing...")
+  const sig = request.headers['stripe-signature'];
+
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(request.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+  } catch (err) {
+    response.status(400).send(`Webhook Error: ${err.message}`);
+    return;
+  }
+
+  // Handle the event
+  switch (event.type) {
+    case 'payment_intent.succeeded':
+      const paymentIntentSucceeded = event.data.object;
+      // Then define and call a function to handle the event payment_intent.succeeded
+      break;
+    // ... handle other event types
+    default:
+      console.log(`Unhandled event type ${event.type}`);
+  }
+
+  // Return a 200 response to acknowledge receipt of the event
+  response.send();
+});
 
 
 // connect to database 

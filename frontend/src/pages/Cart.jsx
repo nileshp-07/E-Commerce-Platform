@@ -83,7 +83,7 @@ const Cart = () => {
             country : "India"
         }
 
-        const isCOD = false;
+        const isCOD = true;
         setLoading(true);
 
         await buyProducts(products,isCOD,JSON.stringify(address), token);

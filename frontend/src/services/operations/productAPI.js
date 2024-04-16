@@ -1,6 +1,7 @@
 import {apiConnector} from "../apiConnector"
 import {toast} from "sonner"
 import { productEndPoints } from "../apis";
+import { ratingAndReviewsEndPoints } from "../apis";
 
 
 const {
@@ -12,8 +13,16 @@ const {
     GET_PRODUCT_LIST,
     GET_ALL_CATEGORIES,
     EDIT_PRODUCT_DETAILS_API,
-    DELETE_PRODUCT_API
+    DELETE_PRODUCT_API,
+    GET_RELATED_PRODUCTS,
+    
 } = productEndPoints;
+
+const {
+    CREATE_REVIEW_API,
+    DELETE_REVIEW_API,
+    GET_ALL_REVIEWS_API
+} = ratingAndReviewsEndPoints;
 
 
 export const addProduct = async (formData, token) => {
@@ -245,3 +254,86 @@ export const getAllCategories = async () => {
     return result;
 }
 
+
+export const getRelatedProducts  = async (cateogryId) => {
+    const toastId = toast.loading("loading...");
+    let result;
+    try{
+        const response = await apiConnector("GET", GET_RELATED_PRODUCTS ,{cateogryId});
+
+        console.log("GET RELATED PRODUCT API RESPONSE : ",response);
+
+        if(!response.data.success)
+        {
+            throw new Error(response.data.message);
+        }
+
+        result = response.data.relatedProducts;
+
+    }
+    catch(error)
+    {
+        console.log("GET RELATED PRODUCTS API ERROR : ",error);
+        console.error(error.message);
+        toast.error(error.response.data.message);
+    }
+    toast.dismiss(toastId);
+    return result;
+}
+
+
+
+export const createReview = async (rating, review , productId, token) => {
+    const toastId = toast.loading("loading...");
+    let result;
+    try{
+        console.log("testing..");
+        const response = await apiConnector("POST", CREATE_REVIEW_API, {rating, review, productId},{
+            Authorization : `Bearer ${token}`
+        });
+
+        console.log("CREATE REVIEW API RESPONSE : ",response);
+
+        if(!response.data.success)
+        {
+            throw new Error(response.data.message);
+        }
+
+        result = response.data.allReviews;
+
+        toast.success("product has been successfully reviewed");
+
+    }
+    catch(error)
+    {
+        console.log("CREATE REVIEW API ERROR : ",error);
+        console.error(error.message);
+        toast.error(error.response.data.message);
+    }
+    toast.dismiss(toastId);
+    return result;
+}
+
+
+export const getAllReviews = async (productId) => {
+    let result;
+    console.log("productId", productId);
+    try{
+        const response = await apiConnector("POST", GET_ALL_REVIEWS_API, {productId});
+
+        console.log("GET ALL REVIEWS API RESPONSE : ",response);
+
+        if(!response.data.success)
+        {
+            throw new Error(response.data.message);
+        }
+
+        result = response.data.reviews;
+    }
+    catch(error){
+        console.log("GET ALL REVIEWS API ERROR : ",error);
+        console.error(error.message);
+        toast.error(error.response.data.message);
+    }
+    return result;
+}

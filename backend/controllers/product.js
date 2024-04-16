@@ -495,6 +495,7 @@ exports.getHomePageProducts = async (req , res) => {
                                                 .limit(10)
                                                 .exec();
 
+
         const bestSellingProducts = await Product.find()
                                                 .populate("categories")
                                                 .sort({ sold: -1 })
@@ -649,6 +650,44 @@ exports.searchProducts = async (req , res) => {
             message : "products has been returned based on the search options",
             products,
             filtersData
+        })
+    }
+    catch(error)
+    {
+        console.log(error)
+        return res.status(500).json({
+            success  : false,
+            message : "Error while searching the products"
+        })
+    }
+}
+
+
+exports.getRelatedProducts = async (req, res) =>{
+    try{
+        // const {categoryId, brand} = req.body;
+
+        // const query = {};
+        // if (brand && categoryId) {
+        //     query.$or = [{ brand }, { categories: { $in: [categoryId] } }];
+        // } else if (brand) {
+        //     query.brand = brand;
+        // } else if (categoryId) {
+        //     query.categories = { $in: [categoryId] };
+        // }
+
+        // const relatedProducts = await Product.find(query);
+
+        const {categoryId} = req.body;
+
+        const relatedProducts = await Product.find({
+            categories: { $in: [categoryId] }
+        });
+
+        return res.status(200).json({
+            success : true,
+            message : "Related Product returned",
+            relatedProducts
         })
     }
     catch(error)
