@@ -20,6 +20,7 @@ import ProductUploader from "./util/ProductUploader"
 import Cart from './pages/Cart';
 import Dashboard from './components/core/Profile/Dashboard';
 import SellerProducts from './components/core/Profile/SellerProducts';
+import BecomeSeller from './pages/BecomeSeller';
 function App() {
   return (
     <div className='min-h-screen'>
@@ -36,6 +37,7 @@ function App() {
           <Route path='/product/:id' element={<ProductDetails/>}/>
           <Route path='/product-uploader' element={<ProductUploader/>}/>
           <Route path='/cart' element={<Cart/>}/>
+          <Route path="/become-seller" element={<BecomeSeller/>}/>
 
           <Route element={<Profile/>}>
               <Route path='/profile/info' element={<ProfileInfo/>}/>

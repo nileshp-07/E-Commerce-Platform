@@ -23,7 +23,9 @@ export const profileEndPoints = {
     REMOVE_FROM_CART_API : BASE_URL + "/profile/remove-from-cart",
     ADD_TO_WISHLISTS_API : BASE_URL + "/profile/add-to-wishlists",
     REMOVE_FROM_WISHLISTS_API : BASE_URL +  "/profile/remove-from-wishlists",
-    GET_SELLER_PRODUCTS_API : BASE_URL + "/profile/get-seller-products"
+    GET_SELLER_PRODUCTS_API : BASE_URL + "/profile/get-seller-products",
+    DELETE_ACCOUNT_API : BASE_URL  +  "/profile/delete-account",
+    WANT_TO_BECOME_SELLER_API : BASE_URL + "/profile/become-seller"
 }
 
 export const productEndPoints = {

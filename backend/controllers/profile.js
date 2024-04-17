@@ -2,7 +2,8 @@ const Profile = require("../models/profile");
 const {User, Address} = require("../models/user");
 const bcrypt = require("bcrypt")
 const mailSender = require("../utils/mailSender")
-const {uploadImageToCloudinary} = require("../utils/imageUploader")
+const {uploadImageToCloudinary} = require("../utils/imageUploader");
+const Cart = require("../models/cart");
 
 exports.changePassword = async (req , res) => {
     try{
@@ -235,6 +236,108 @@ exports.getSellerProducts = async (req ,res) => {
             message : "seller products successfully fetched",
             products
         })
+    }
+    catch(error)
+    {
+        console.log(error);
+        return res.status(401).json({
+            success : false,
+            message : error.message
+        })
+    }
+}
+
+
+exports.deleteAccount = async (req, res) => {
+    try{
+        const {id} = req.user;
+
+        const user = await User.findById(id);
+
+        if(!user) {
+            return res.status(404).json({
+                success : false,
+                message : "User not found",
+            })
+        }
+
+        // 1 -> delete the associated cart of the user first
+        const cart = await Cart.findOneAndDelete({
+                                                    user : id
+                                                })
+
+        // 2 -> after then delete the profile of the user
+        const profile = await Profile.findByIdAndDelete({_id : user.profileDetails});
+
+        // 3 -> now delete the address of the user
+        for(const addressId of user.addresses)
+        {
+            await Address.findByIdAndDelete(addressId);
+        }
+
+
+        // now finally delete the user 
+        await User.findByIdAndDelete(id);
+
+        return res.status(200).json({
+            success : true,
+            message : "User has been delete successfully"
+        })
+    }
+    catch(error)
+    {
+        console.log(error);
+        return res.status(401).json({
+            success : false,
+            message : error.message
+        })
+    }
+}
+
+
+exports.wantToBecomeSeller = async (req, res) => {
+    try{
+        const {id} = req.user;
+        const {formData} = req.body;
+
+        const mailResponse = await mailSender("patidarnilesh7223@gmail.com" , "New Seller Registration - Pending Approval" , 
+          `<html>
+          <body>
+          Hello Admin,<br><br>
+          
+          A user has requested to become a seller on the platform. Below are the details provided:<br><br>
+          
+          userId : ${id}<br>
+          Name: ${formData.name}<br>
+          Email: ${formData.email}<br>
+          Contact Number: ${formData.contactNumber}<br>
+          Address:<br>
+            Street Address: ${formData.address.street}<br>
+            City: ${formData.address.city}<br>
+            Postal Code: ${formData.address.postalCode}<br>
+            State: ${formData.address.state}<br>
+            Country: ${formData.address.country}<br>
+          Product Type: ${formData.productCategories}<br><br>
+          
+          Please review the seller's information and take appropriate action to complete the registration process.<br><br>
+          
+          Thank you.
+          </body>
+          </html>`
+       );
+
+       if(!mailResponse)
+       {
+        return res.status(401).json({
+            success : false,
+            message : "Mail could not be send"
+        })
+       }
+
+       return res.status(200).json({
+        success : true,
+        message : "Mail has been sent to the Admin"
+       })
     }
     catch(error)
     {

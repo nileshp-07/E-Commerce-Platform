@@ -7,7 +7,9 @@ const {
     editProfileDetails,
     changeProfileImage,
     getUserFullDetails,
-    getSellerProducts
+    getSellerProducts,
+    deleteAccount,
+    wantToBecomeSeller
 } = require("../controllers/profile");
 
 const {
@@ -37,6 +39,8 @@ router.put("/edit-profile-details",auth, editProfileDetails);
 router.put("/change-profile-image",auth, changeProfileImage);
 router.get("/get-user-details", auth , getUserFullDetails);
 router.get("/get-seller-products", auth, isSeller, getSellerProducts);
+router.delete("/delete-account", auth, isBuyer , deleteAccount)
+router.post("/become-seller", auth, isBuyer , wantToBecomeSeller)
 
 
 

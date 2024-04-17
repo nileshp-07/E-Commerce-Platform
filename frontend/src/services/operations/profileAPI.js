@@ -15,7 +15,9 @@ const {
         REMOVE_FROM_CART_API,
         ADD_TO_WISHLISTS_API,
         REMOVE_FROM_WISHLISTS_API,
-        GET_SELLER_PRODUCTS_API
+        GET_SELLER_PRODUCTS_API,
+        DELETE_ACCOUNT_API,
+        WANT_TO_BECOME_SELLER_API
     } = profileEndPoints;
 
 
@@ -365,4 +367,59 @@ export const getSellerProducts = async (token) => {
     }
     toast.dismiss(toastId);
     return  result;
+}
+
+
+export const deleteUserAccount = async (token) => {
+    const toastId = toast.loading("loading...");
+
+    try{
+        const response = await apiConnector("DELETE", DELETE_ACCOUNT_API, null , {
+            Authorization : `Bearer ${token}`
+        })
+
+        console.log("DELETE ACCOUNT API RESPONSE : " , response);
+
+        if(!response.data.success)
+        {
+            throw new Error(response.data.message);
+        }
+
+        toast.success("Account has been deleted successfully")
+    }
+    catch(error)
+    {
+        console.log("DELETE USER ACCOUNT API ERROR : ",error);
+        console.error(error.message);
+        toast.error(error.response.data.message);
+    }
+    toast.dismiss(toastId);
+}
+
+
+export const becomeSeller = async (formData, token) => {
+    const toastId = toast.loading("loading...");
+
+    try{
+        const response  = await apiConnector("POST",WANT_TO_BECOME_SELLER_API, {formData} ,{
+            Authorization : `Bearer ${token}`
+        });
+
+        console.log("WANT TO BECOME SELLER API RESPONSE : ",response);
+
+        if(!response.data.success)
+        {
+            throw new Error(response.data.message);
+        }
+        
+        toast.success("Your request to become seller has been sent to the admin");
+
+    }
+    catch(error)
+    {
+        console.log("BECOME SELLER API ERROR : ",error);
+        console.error(error.message);
+        toast.error(error.response.data.message);
+    }
+    toast.dismiss(toastId);
 }
