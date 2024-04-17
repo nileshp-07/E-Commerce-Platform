@@ -58,6 +58,10 @@ const orderSchema = new mongoose.Schema({
             default : Date.now()
         }
     },
+    createdAt : {
+        type :  Date,
+        default : Date.now()
+    },
     // shippingAddress : {   we have to handle it better
     //     type : String,
     // }

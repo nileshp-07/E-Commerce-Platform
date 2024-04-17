@@ -9,7 +9,10 @@ const {
     getUserFullDetails,
     getSellerProducts,
     deleteAccount,
-    wantToBecomeSeller
+    wantToBecomeSeller,
+    getOrderFullDetails,
+    getBuyersAllOrders,
+    getSellersAllOrders,
 } = require("../controllers/profile");
 
 const {
@@ -41,6 +44,9 @@ router.get("/get-user-details", auth , getUserFullDetails);
 router.get("/get-seller-products", auth, isSeller, getSellerProducts);
 router.delete("/delete-account", auth, isBuyer , deleteAccount)
 router.post("/become-seller", auth, isBuyer , wantToBecomeSeller)
+router.post("/buyers-orders", auth,isBuyer, getBuyersAllOrders)
+router.post("/sellers-orders", auth,isBuyer, getSellersAllOrders)
+router.post("/get-orders-full-details", auth, getOrderFullDetails)
 
 
 

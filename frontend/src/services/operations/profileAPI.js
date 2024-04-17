@@ -17,7 +17,10 @@ const {
         REMOVE_FROM_WISHLISTS_API,
         GET_SELLER_PRODUCTS_API,
         DELETE_ACCOUNT_API,
-        WANT_TO_BECOME_SELLER_API
+        WANT_TO_BECOME_SELLER_API,
+        GET_BUYERS_ALL_ORDERS_API, 
+        GET_SELLERS_ALL_ORDERS_API,
+        GET_ORDERS_FULL_DETAILS 
     } = profileEndPoints;
 
 
@@ -423,3 +426,94 @@ export const becomeSeller = async (formData, token) => {
     }
     toast.dismiss(toastId);
 }
+
+
+export const getBuyersOrders = async  (token) => {
+    const toastId = toast.loading("loading...");
+    let result;
+
+    try{
+       const response = await apiConnector("POST",GET_BUYERS_ALL_ORDERS_API , null, {
+           Authorization : `Bearer ${token}`
+       } )
+
+
+       console.log("GET BUYERS ALL ORDERS API RESPONSE : ",response);
+
+       if(!response.data.success)
+       {
+           throw new Error(response.data.message);
+       }
+
+       result = response.data.orders;
+    }
+    catch(error)
+    {
+        console.log("GET BUYER ALL ORDERS API ERROR : ",error);
+        console.error(error.message);
+        toast.error(error.response.data.message);
+    }
+    toast.dismiss(toastId);
+    return result;
+}
+
+
+export const getSellersOrders = async  (token) => {
+    const toastId = toast.loading("loading...");
+    let result;
+
+    try{
+       const response = await apiConnector("POST",GET_SELLERS_ALL_ORDERS_API , null, {
+           Authorization : `Bearer ${token}`
+       } )
+
+
+       console.log("GET SELLER ALL ORDERS API RESPONSE : ",response);
+
+       if(!response.data.success)
+       {
+           throw new Error(response.data.message);
+       }
+
+       result = response.data.orders;
+    }
+    catch(error)
+    {
+        console.log("GET SELLERS ALL ORDERS API ERROR : ",error);
+        console.error(error.message);
+        toast.error(error.response.data.message);
+    }
+    toast.dismiss(toastId);
+    return result;
+}
+
+
+export const getOrderFullDetails = async (orderId, token) => {
+    const toastId = toast.loading("loading...");
+
+    let result;
+    try{
+        const response = await apiConnector("POST", GET_ORDERS_FULL_DETAILS, {orderId}, {
+            Authorization : `Bearer ${token}`
+        });
+
+        console.log("GET ORDERS FULL DETAILS API RESPONSE : ",response);
+
+        if(!response.data.success)
+        {
+            throw new Error(response.data.message);
+        }
+
+        result = response.data.orderDetails;
+
+        toast.success("Order details fetched!!");
+    }
+    catch(error)
+    {
+        console.log("GET ORDER FULL DETAILS API ERROR : ",error);
+        console.error(error.message);
+        toast.error(error.response.data.message);
+    }
+    toast.dismiss(toastId);
+    return result;
+} 

@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt")
 const mailSender = require("../utils/mailSender")
 const {uploadImageToCloudinary} = require("../utils/imageUploader");
 const Cart = require("../models/cart");
+const Order = require("../models/order");
 
 exports.changePassword = async (req , res) => {
     try{
@@ -338,6 +339,141 @@ exports.wantToBecomeSeller = async (req, res) => {
         success : true,
         message : "Mail has been sent to the Admin"
        })
+    }
+    catch(error)
+    {
+        console.log(error);
+        return res.status(401).json({
+            success : false,
+            message : error.message
+        })
+    }
+}
+
+
+exports.getBuyersAllOrders = async (req, res) => {
+    try{
+        const {id} = req.user;
+
+        const orders = await Order.find({buyer: id})
+                                                .populate("seller")
+                                                .populate({
+                                                    path : "product",
+                                                    populate : {
+                                                        path : "categories"
+                                                    }
+                                                })
+                                                .exec();
+
+
+        if(!orders)
+        {
+            return res.status(404).json({
+                success : false,
+                message : "Orders does not found"
+            })
+        }
+
+        return res.status(200).json({
+            success : true,
+            message : "Orders has been returned",
+            orders,
+        })
+    }
+    catch(error)
+    {
+        console.log(error);
+        return res.status(401).json({
+            success : false,
+            message : error.message
+        })
+    }
+}
+
+
+
+exports.getSellersAllOrders = async (req, res) => {
+    try{
+        const {id} = req.user;
+
+        const orders = await Order.find({seller: id})
+                                                .populate("buyer")
+                                                .populate({
+                                                    path : "product",
+                                                    populate : {
+                                                        path : "categories"
+                                                    }
+                                                })
+                                                .exec();
+
+
+        if(!orders)
+        {
+            return res.status(404).json({
+                success : false,
+                message : "Orders does not found"
+            })
+        }
+
+        return res.status(200).json({
+            success : true,
+            message : "Orders has been returned",
+            orders,
+        })
+    }
+    catch(error)
+    {
+        console.log(error);
+        return res.status(401).json({
+            success : false,
+            message : error.message
+        })
+    }
+}
+
+
+exports.getOrderFullDetails = async (req,res) => {
+    try{
+        const {orderId} = req.body;
+
+        const order = await Order.findById(orderId)
+                                                .populate({
+                                                    path : "buyer",
+                                                    populate : {
+                                                        path : "profileDetails"
+                                                    }
+                                                })
+                                                .populate({
+                                                    path : "seller",
+                                                    populate : {
+                                                        path : "profileDetails"
+                                                    }
+                                                })
+                                                .populate({
+                                                    path : "product",
+                                                    populate : {
+                                                        path : "categories"
+                                                    }
+                                                })
+                                                .exec();
+
+
+        if(!order)
+        {
+            return res.status(404).json({
+                success : false,
+                message : "Order does not found"
+            })
+        }
+
+
+        return res.status(200).json({
+            success : true,
+            message : "Order details has been returned",
+            orderDetails : order
+        })
+
+
     }
     catch(error)
     {
