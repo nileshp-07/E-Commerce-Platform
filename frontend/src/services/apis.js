@@ -27,7 +27,7 @@ export const profileEndPoints = {
     DELETE_ACCOUNT_API : BASE_URL  +  "/profile/delete-account",
     WANT_TO_BECOME_SELLER_API : BASE_URL + "/profile/become-seller",
     GET_BUYERS_ALL_ORDERS_API : BASE_URL + "/profile/buyers-orders",
-    GET_SELLERS_ALL_ORDERS_API : BASE_URL + "/profile/seller-orders",
+    GET_SELLERS_ALL_ORDERS_API : BASE_URL + "/profile/sellers-orders",
     GET_ORDERS_FULL_DETAILS : BASE_URL + "/profile/get-orders-full-details"
 }
 

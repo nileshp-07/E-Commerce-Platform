@@ -57,16 +57,16 @@ const Sidebar = () => {
             </div>
         </Link>
 
-        {
-          !user.isSeller && (
+        {/* {
+          !user.isSeller && ( */}
             <Link to="/profile/orders">
                 <div className={`flex gap-2 items-center font-medium transition-all duration-200 px-5 py-2 ${matchRoute("/profile/orders") ? "border-l-[5px] bg-royal-blue-50 text-royal-blue-700 border-royal-blue-500" : "border-l-[5px] border-white hover:bg-gray-100"}  mr-3 rounded-r-full`}>
                     <GoGear/>
                     <p>Orders</p>
                 </div>
             </Link>
-          )
-        }
+          {/* )
+        } */}
 
         {
           user.isSeller && (

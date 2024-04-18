@@ -21,6 +21,7 @@ import Cart from './pages/Cart';
 import Dashboard from './components/core/Profile/Dashboard';
 import SellerProducts from './components/core/Profile/SellerProducts';
 import BecomeSeller from './pages/BecomeSeller';
+import OrderDetails from './components/core/Profile/orders/OrderDetails';
 function App() {
   return (
     <div className='min-h-screen'>
@@ -38,6 +39,7 @@ function App() {
           <Route path='/product-uploader' element={<ProductUploader/>}/>
           <Route path='/cart' element={<Cart/>}/>
           <Route path="/become-seller" element={<BecomeSeller/>}/>
+          <Route path="/order/:id" element={<OrderDetails/>}/>
 
           <Route element={<Profile/>}>
               <Route path='/profile/info' element={<ProfileInfo/>}/>

@@ -1,16 +1,42 @@
 import React, { useEffect, useState } from 'react'
-import { getBuyersOrders } from '../../../../services/operations/profileAPI';
+import { getBuyersOrders, getSellersOrders } from '../../../../services/operations/profileAPI';
 import {useSelector} from "react-redux"
 import dateFormatter  from "../../../../util/dateFormatter"
+import { useNavigate } from 'react-router-dom'
 
+const deliveryStatus = ["Processing", "Shipped" , "Delivered" , "Cancelled" , "Cancel Request"];
 const Orders = () => {
   const [orders, setOrders] = useState();
   const [loading, setLoading] = useState(false);
   const {token} = useSelector((state) => state.user);
+  const {user} = useSelector((state) => state.user);
+  const navigate  = useNavigate() 
 
-  const getBuyesAllOrdersHandler = async () => {
+
+  const sortOrdersByStatus = (e) => {
+     const status = e.target.value;
+
+     if (status !== "Select Status") {
+       const ordersWithStatus = orders.filter(order => order.deliveryStatus.status === status);
+       const ordersWithoutStatus = orders.filter(order => order.deliveryStatus.status !== status);
+  
+      setOrders([...ordersWithoutStatus, ...ordersWithStatus]);
+    } else {
+      getAllOrdersHandler();
+    }
+  }
+
+  const getAllOrdersHandler = async () => {
      setLoading(true);
-     const response = await getBuyersOrders(token);
+     let response;
+
+     if(user.isSeller)
+     {
+        response = await getSellersOrders(token);
+     }
+     else{
+       response = await getBuyersOrders(token);
+     }
 
      if(response)
      {
@@ -20,7 +46,7 @@ const Orders = () => {
      setLoading(false);
   }
   useEffect(() => {
-    getBuyesAllOrdersHandler();
+    getAllOrdersHandler();
   }, [])
 
   if(loading)
@@ -28,20 +54,38 @@ const Orders = () => {
     return (
       <div className='h-[calc(100vh-3.5rem)] w-full grid place-items-center'>
         <div className='spinner'></div>
-      </div>
+      </div> 
     )
   }
   return (
     <div className='my-10'>
        <h2 className='text-2xl font-semibold '>Orders</h2>
+       {
+         user.isSeller && (
+           <div className='flex justify-end mt-4'>
+              <select name='deliveryStatus'
+                      className='flex outline-none rounded-md py-2 px-4 bg-[#EEEEEE]'
+                      onChange={sortOrdersByStatus} >
+                  <option value="Select Status">Select Status</option>
+                  {
+                     deliveryStatus.map((item, index) => (
+                       <option key={index} value={item}>{item}</option>
+                     ))
+                  }
+              </select>
+           </div>
+         )
+       }
        <div className='mt-8 flex flex-col gap-3'>
         {
            orders?.length > 0 ? (
-              orders?.map((order) => (
+              orders?.reverse()?.map((order) => (
                 <div key={order._id} 
-                     className='flex justify-between border'>
-                  <div className='flex gap-3'>
-                      <div className='p-6 bg-gray-200 w-fit rounded-md'>
+                     className='flex justify-between border-b pb-3'>
+                  <div 
+                    onClick={() => navigate(`/order/${order._id}`)}
+                    className='flex gap-3 w-[70%] cursor-pointer'>
+                      <div className='p-6 bg-gray-200 w-fit rounded-md '>
                         <img
                           src={order?.product?.thumbnail}
                           alt ="ProductThumbnail"
@@ -49,12 +93,23 @@ const Orders = () => {
                           style={{ mixBlendMode: 'multiply' }}
                         />
                       </div>
-                      <div>
+                      <div className='py-1'>
                         <p className='text-lg font-medium'>{order?.product?.title}</p>
-                        <div className='flex gap-1'>
-                          <p className='font-medium'>Seller: </p>
-                          <p className='text-[17px]'>{order?.seller?.name}</p>
-                        </div>
+                       
+                           {
+                             user.isSeller ? (
+                              <div className='flex gap-1'>
+                                <p className='font-medium'>Buyer: </p>
+                                <p className='text-[17px]'>{order?.buyer?.name}</p>
+                              </div>
+                             ) : (
+                              <div className='flex gap-1'>
+                                <p className='font-medium'>Seller: </p>
+                                <p className='text-[17px]'>{order?.seller?.name}</p>
+                              </div>
+                             )
+                           }
+                       
                         <div className='flex gap-1'>
                           <p className='font-medium'>Quantity : </p>
                           <p>{order?.qty}</p>
@@ -63,13 +118,13 @@ const Orders = () => {
                       </div>
                   </div>
 
-                  <div className='mr-4 mt-2'>
-                      <div className={`pb-[3px] px-5${order?.deliveryStatus?.status === "Processing" ? "bg-[#fbffe7]" : order?.deliveryStatus?.status === "Shipped" ? "bg-[#fff5c5]" : "bg-[#e9f5e3]" } rounded-full w-fit`}>
-                       <p className={`${order?.deliveryStatus?.status === "Processing" ? "text-[#FFD700]" : order?.deliveryStatus?.status === "Shipped" ? "text-[#FFA500]" : " text-[#61a146]" }`}>{order?.deliveryStatus?.status}</p>
+                  <div className='mr-4 mt-2 flex flex-col items-center'>
+                      <div className={`pb-[3px] px-5 ${order?.deliveryStatus?.status === "Processing" ? "bg-[#FCFFC1]" : order?.deliveryStatus?.status === "Shipped" ? "bg-[#fff5c5]" : order?.deliveryStatus?.status === "Cancel Request" ? "" : order?.deliveryStatus?.status === "Cancelled" ? "bg-[#ffdddd]" : "bg-[#e9f5e3]" } rounded-full w-fit`}>
+                       <p className={`${order?.deliveryStatus?.status === "Processing" ? "text-[#FFD500]" : order?.deliveryStatus?.status === "Shipped" ? "text-[#FFA500]" : order?.deliveryStatus?.status === "Cancel Request" ? "text-[#ff2323]" : order?.deliveryStatus?.status === "Cancelled" ? "text-[#ff2323]" : " text-[#61a146]" }`}>{order?.deliveryStatus?.status}</p>
                       </div>
-                      <div className='flex flex-col mt-3'>
+                      <div className='flex flex-col mt-3 w-fit'>
                         <p className='font-medium'>Ordered At:</p>
-                        <p>{dateFormatter(Date.now())}</p>
+                        <p className='bg-royal-blue-400'>{dateFormatter(Date.now())}</p>
                       </div>
                   </div>
                 </div>

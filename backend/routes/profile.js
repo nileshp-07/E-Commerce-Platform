@@ -45,7 +45,7 @@ router.get("/get-seller-products", auth, isSeller, getSellerProducts);
 router.delete("/delete-account", auth, isBuyer , deleteAccount)
 router.post("/become-seller", auth, isBuyer , wantToBecomeSeller)
 router.post("/buyers-orders", auth,isBuyer, getBuyersAllOrders)
-router.post("/sellers-orders", auth,isBuyer, getSellersAllOrders)
+router.post("/sellers-orders", auth,isSeller , getSellersAllOrders)
 router.post("/get-orders-full-details", auth, getOrderFullDetails)
 
 
