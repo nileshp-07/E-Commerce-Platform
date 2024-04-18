@@ -62,7 +62,8 @@ const Orders = () => {
        <h2 className='text-2xl font-semibold '>Orders</h2>
        {
          user.isSeller && (
-           <div className='flex justify-end mt-4'>
+           <div className='flex items-center gap-2 justify-end mt-4'>
+              <p className='font-medium'>Sort Orders By:</p>
               <select name='deliveryStatus'
                       className='flex outline-none rounded-md py-2 px-4 bg-[#EEEEEE]'
                       onChange={sortOrdersByStatus} >

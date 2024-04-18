@@ -42,6 +42,9 @@ const orderSchema = new mongoose.Schema({
         type : Number,
         default: 0
     },
+    buyersContactNumber: {
+        type: String,
+    },
     paymentMethod : {
         type : String,
         required: [true , "please define the payment method"],
