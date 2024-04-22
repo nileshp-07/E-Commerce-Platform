@@ -28,7 +28,8 @@ export const profileEndPoints = {
     WANT_TO_BECOME_SELLER_API : BASE_URL + "/profile/become-seller",
     GET_BUYERS_ALL_ORDERS_API : BASE_URL + "/profile/buyers-orders",
     GET_SELLERS_ALL_ORDERS_API : BASE_URL + "/profile/sellers-orders",
-    GET_ORDERS_FULL_DETAILS : BASE_URL + "/profile/get-orders-full-details"
+    GET_ORDERS_FULL_DETAILS : BASE_URL + "/profile/get-orders-full-details",
+    UPDATE_DELIVERY_STATUS_API : BASE_URL + "/profile/update-delivery-status",
 }
 
 export const productEndPoints = {

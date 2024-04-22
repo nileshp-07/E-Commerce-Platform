@@ -484,3 +484,41 @@ exports.getOrderFullDetails = async (req,res) => {
         })
     }
 }
+
+
+exports.updateDeliveryStatus = async (req, res) => {
+    try{
+        const {updatedStatus, orderId} = req.body;
+
+
+        const order = await Order.findByIdAndUpdate(orderId, {
+                                                    $set : {
+                                                        "deliveryStatus.status" : updatedStatus,
+                                                        "deliveryStatus.updateAt" : Date.now() 
+                                                    }
+                                                },
+                                                {new : true});
+
+
+        if(!order){
+            return res.status(404).json({
+                success : false,
+                message : "Order does not found"
+            })
+        }
+
+
+        return res.status(200).json({
+            success : true,
+            message : "Delivery Status updated"
+        })
+    }
+    catch(error)
+    {
+        console.log(error);
+        return res.status(401).json({
+            success : false,
+            message : error.message
+        })
+    }
+}

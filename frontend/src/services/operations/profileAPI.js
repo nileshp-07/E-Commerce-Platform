@@ -20,7 +20,8 @@ const {
         WANT_TO_BECOME_SELLER_API,
         GET_BUYERS_ALL_ORDERS_API, 
         GET_SELLERS_ALL_ORDERS_API,
-        GET_ORDERS_FULL_DETAILS 
+        GET_ORDERS_FULL_DETAILS ,
+        UPDATE_DELIVERY_STATUS_API
     } = profileEndPoints;
 
 
@@ -517,3 +518,30 @@ export const getOrderFullDetails = async (orderId, token) => {
     toast.dismiss(toastId);
     return result;
 } 
+
+
+export const changeOrdersDeliveryStatus = async (orderId, updatedStatus , token) => {
+    const toastId = toast.loading("loading...");
+
+    try{
+        const response = await apiConnector("POST", UPDATE_DELIVERY_STATUS_API, {orderId, updatedStatus}, {
+            Authorization : `Bearer ${token}`
+        })
+
+        console.log("UPDATE DELIVERY STATUS API RESPONSE : ",response);
+
+        if(!response.data.success)
+        {
+            throw new Error(response.data.message);
+        }
+
+        toast.success("Delivery Status Updated")
+    }   
+    catch(error)
+    {
+        console.log("UPDATE DELIVERY STATUS API  ERROR : ",error);
+        console.error(error.message);
+        toast.error(error.response.data.message);
+    }
+    toast.dismiss(toastId);
+}

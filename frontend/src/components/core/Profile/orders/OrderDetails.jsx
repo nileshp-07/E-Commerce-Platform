@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { getOrderFullDetails } from '../../../../services/operations/profileAPI';
+import { changeOrdersDeliveryStatus, getOrderFullDetails } from '../../../../services/operations/profileAPI';
 import { useSelector } from 'react-redux';
 import formatDate from '../../../../util/dateFormatter';
 import timeFormatter from '../../../../util/timeFormatter';
 import RatingStars from '../../../common/RatingStars';
 import { IoMdAlert } from "react-icons/io";
+import { toast } from 'sonner';
 
 
 const Address = {
@@ -38,6 +39,20 @@ const OrderDetails = () => {
       setLoading(false);
   }  
 
+  const deliveryStatusChangeHandler = async () => {
+    console.log(selectedStatus)
+      if(order?.deliveryStatus?.status === selectedStatus)
+      {
+         toast.error("Please select another status")
+         return;
+      }
+
+      setLoading(true);
+
+      await changeOrdersDeliveryStatus(order._id, selectedStatus, token);
+
+      setLoading(false);
+  }
 
   useEffect(() => {
        getOrdersFullDetailsHandler();
@@ -111,7 +126,7 @@ const OrderDetails = () => {
                        <select
                           name='deliveryStatus'
                           className='flex outline-none rounded-md py-2 px-4 bg-[#EEEEEE] w-full mt-2'
-                          // value={selectedStatus} // Set the value to the current status
+                          value={selectedStatus} // Set the value to the current status
                           onChange={(e) => setSelectedStatus(e.target.value)} // Update the current status when a different option is selected
                           >
                           {/* Map through delivery statuses to create options */}
@@ -119,7 +134,9 @@ const OrderDetails = () => {
                             <option key={index} value={status} selected={status === order?.deliveryStatus?.status}>{status}</option>
                           ))}
                         </select>
-                          <button className='py-2 w-fit px-4 rounded-md bg-royal-blue-500 text-white'>
+                          <button 
+                            onClick={deliveryStatusChangeHandler}
+                            className='py-2 w-fit px-4 rounded-md bg-royal-blue-500 text-white'>
                             Change
                           </button>
                        </div>

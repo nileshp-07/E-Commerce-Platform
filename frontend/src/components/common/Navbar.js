@@ -102,7 +102,9 @@ const Navbar = () => {
                       <div className='flex relative hover:scale-110 duration-200 transition-all'>
                           <GrCart size={22}/>
                           <p className='flex items-center justify-center absolute -top-[5px] left-[10px] h-[10px] p-[8px] w-[10px] rounded-full bg-caribbeangreen-200 text-xs'>
-                            2
+                            {
+                              JSON.parse(localStorage.getItem("cartItems"))?.length > 0 ? JSON.parse(localStorage.getItem("cartItems"))?.length : 0
+                            }
                           </p>
                       </div>
                     </Link>

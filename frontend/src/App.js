@@ -22,36 +22,121 @@ import Dashboard from './components/core/Profile/Dashboard';
 import SellerProducts from './components/core/Profile/SellerProducts';
 import BecomeSeller from './pages/BecomeSeller';
 import OrderDetails from './components/core/Profile/orders/OrderDetails';
+import OpenRoute from './components/core/auth/OpenRoute';
+import PrivateRoute from './components/core/auth/PrivateRoute';
+import { useSelector } from 'react-redux';
+
 function App() {
+  const {user} = useSelector((state) => state.user);
   return (
     <div className='min-h-screen'>
       <Navbar/>
 
       <Routes>
           <Route path='/' element={<HomePage/>}/>
-          <Route path='/signup' element={<SignUp/>}/>
-          <Route path='/verify-otp' element={<VerifyOtp/>}/>
-          <Route path='/login' element={<Login/>}/>
-          <Route path='/forgot-password' element={<ForgotPassword/>}/>
-          <Route path='/reset-password/:token' element={<ResetPassword/>}/>
+          <Route path='/signup' element={
+                                        <OpenRoute>
+                                          <SignUp/>
+                                        </OpenRoute>
+                                      }/>
+          <Route path='/verify-otp' element={
+                                            <OpenRoute>
+                                              <VerifyOtp/>
+                                            </OpenRoute>
+                                          }/>
+          <Route path='/login' element={
+                                      <OpenRoute>
+                                        <Login/>
+                                      </OpenRoute>
+                                    }/>
+          <Route path='/forgot-password' element={
+                                                <OpenRoute>
+                                                  <ForgotPassword/>
+                                                </OpenRoute>
+                                              }/>
+          <Route path='/reset-password/:token' element={
+                                                  <OpenRoute>
+                                                    <ResetPassword/>
+                                                  </OpenRoute>
+                                                }/>
+
           <Route path='/search' element={<Products/>}/>
           <Route path='/product/:id' element={<ProductDetails/>}/>
           <Route path='/product-uploader' element={<ProductUploader/>}/>
-          <Route path='/cart' element={<Cart/>}/>
-          <Route path="/become-seller" element={<BecomeSeller/>}/>
-          <Route path="/order/:id" element={<OrderDetails/>}/>
+          <Route path='/cart' element={
+                                      <PrivateRoute>
+                                        <Cart/>
+                                      </PrivateRoute>
+                                    }/>
+
+          <Route path="/order/:id" element={
+                                      <PrivateRoute>
+                                        <OrderDetails/>
+                                      </PrivateRoute>
+                                    }/>
+
+          
+
+          {
+             user  && !user?.isSeller  && (
+              <Route path="/become-seller" element={
+                                                <PrivateRoute>
+                                                  <BecomeSeller/>
+                                                </PrivateRoute>
+                                              }/>
+             )
+          }
+
 
           <Route element={<Profile/>}>
-              <Route path='/profile/info' element={<ProfileInfo/>}/>
-              <Route path='/profile/orders' element={<Orders/>}/>
-              <Route path='/profile/setting' element={<Settings/>}/>
-              <Route path='/profile/wishlists' element={<Wishlist/>}/>
-              <Route path='/profile/add-product' element={<AddProducts/>}/>
-              <Route path='/profile/edit-product/:id' element={<AddProducts/>}/>
-              <Route path='/profile/add-product' element={<AddProducts/>}/>
-              <Route path='/profile/products' element={<SellerProducts/>}/>
-              <Route path='/profile/dashboard' element={<Dashboard/>}/>
+              <Route path='/profile/info' element={
+                                                <PrivateRoute>
+                                                  <ProfileInfo/>
+                                                </PrivateRoute>
+                                              }/>
+              <Route path='/profile/orders' element={
+                                                  <PrivateRoute>
+                                                    <Orders/>
+                                                  </PrivateRoute>
+                                                }/>
+              <Route path='/profile/setting' element={
+                                                <PrivateRoute>
+                                                  <Settings/>
+                                                </PrivateRoute>
+                                              }/>
+              <Route path='/profile/wishlists' element={
+                                              <PrivateRoute>
+                                                <Wishlist/>
+                                              </PrivateRoute>
+                                            }/>
+
+
+              {
+                 user?.isSeller && (
+                    <>
+                      <Route path='/profile/add-product' element={<PrivateRoute>
+                                                            <AddProducts/>
+                                                          </PrivateRoute>}/>
+                      <Route path='/profile/edit-product/:id' element={
+                                                                  <PrivateRoute>
+                                                                    <AddProducts/>
+                                                                  </PrivateRoute>
+                                                                }/>
+                      <Route path='/profile/products' element={
+                                                              <PrivateRoute>
+                                                                <SellerProducts/>
+                                                              </PrivateRoute>
+                                                            }/>
+                      <Route path='/profile/dashboard' element={
+                                                                <PrivateRoute>
+                                                                  <Dashboard/>
+                                                                </PrivateRoute>
+                                                              }/>
+                    </>
+                 )
+              }
           </Route> 
+
 
           <Route path='*' element={<Error/>}/> 
       </Routes>
