@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 
 const orderSchema = new mongoose.Schema({
+  
     buyer : {
         type : mongoose.Schema.Types.ObjectId,
         ref : "User",
@@ -65,9 +66,13 @@ const orderSchema = new mongoose.Schema({
         type :  Date,
         default : Date.now()
     },
-    // shippingAddress : {   we have to handle it better
-    //     type : String,
-    // }
+    shippingAddress : {   
+        street :  String,
+        city : String,
+        postalCode : Number,
+        state : String,
+        country  : String
+    }
 },
 {
     timestamps : true

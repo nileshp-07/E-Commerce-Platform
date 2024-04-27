@@ -12,6 +12,7 @@ import { GrPowerCycle } from "react-icons/gr";
 import { GoHeartFill } from "react-icons/go";
 import { addToCart, addToWishlists, removeFromWishlists } from '../../../services/operations/profileAPI';
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom';
 
 
 const ProductInfo = ({product}) => {
@@ -163,10 +164,12 @@ const ProductInfo = ({product}) => {
                 </div>
 
                 {/* buy now  */}
-                <div 
-                  className='flex bg-royal-blue-600 rounded-md py-3 px-14 text-[18px] font-medium text-white w-fit cursor-pointer  hover:bg-royal-blue-500 transition-all duration-200'>
-                    Buy Now
-                </div>
+                <Link to="/checkout">
+                    <button 
+                    className='flex bg-royal-blue-600 rounded-md py-3 px-14 text-[18px] font-medium text-white w-fit cursor-pointer  hover:bg-royal-blue-500 transition-all duration-200'>
+                        Buy Now
+                    </button>
+                </Link>
 
                 {/* cart  */}
                 {

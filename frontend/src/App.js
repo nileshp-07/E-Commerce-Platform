@@ -25,6 +25,7 @@ import OrderDetails from './components/core/Profile/orders/OrderDetails';
 import OpenRoute from './components/core/auth/OpenRoute';
 import PrivateRoute from './components/core/auth/PrivateRoute';
 import { useSelector } from 'react-redux';
+import Checkout from './pages/Checkout';
 
 function App() {
   const {user} = useSelector((state) => state.user);
@@ -72,6 +73,13 @@ function App() {
           <Route path="/order/:id" element={
                                       <PrivateRoute>
                                         <OrderDetails/>
+                                      </PrivateRoute>
+                                    }/>
+
+
+          <Route path ="/checkout"  element={
+                                      <PrivateRoute>
+                                        <Checkout/>
                                       </PrivateRoute>
                                     }/>
 

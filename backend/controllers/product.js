@@ -576,7 +576,7 @@ exports.searchProducts = async (req , res) => {
         {
             const searchTerms = searchQuery.split(" ").map(term => `(?=.*${term})`).join("");
             query.title = { $regex: `^${searchTerms}`, $options: 'i' };
-            // query.title = { $regex: searchQuery, $options: 'i'}
+            // query.brand = { $regex: `^${searchTerms}`, $options: 'i' };
         }
         // console.log("query :", query);
 

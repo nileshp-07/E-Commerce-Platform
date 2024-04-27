@@ -15,7 +15,12 @@ const SubSubCategorySchema = new mongoose.Schema({
 
 const SubCategorySchema = new mongoose.Schema({
     name : String,
-    subSubCategories : [SubSubCategorySchema],
+    subSubCategories : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref  : "SubSubCategory"
+        }
+    ],
     parentCategory : {
         type : mongoose.Schema.Types.ObjectId,
         ref : "Category"
@@ -24,7 +29,12 @@ const SubCategorySchema = new mongoose.Schema({
 
 const CategorySchema = new mongoose.Schema({
     name : String,
-    subCategories : [SubCategorySchema]
+    subCategories : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref  : "SubCategory"
+        }
+    ]
 })
 
 
