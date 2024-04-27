@@ -11,8 +11,9 @@ import { FaTruckFast } from "react-icons/fa6";
 import { GrPowerCycle } from "react-icons/gr";
 import { GoHeartFill } from "react-icons/go";
 import { addToCart, addToWishlists, removeFromWishlists } from '../../../services/operations/profileAPI';
-import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom';
+import { setOrder } from '../../../redux/slices/orderSlice';
 
 
 const ProductInfo = ({product}) => {
@@ -21,6 +22,8 @@ const ProductInfo = ({product}) => {
     const [loading, setLoading] = useState(false);
     const [wishlists, setWishlists] = useState([]);
     const [cartItems, setCartItems] = useState([]);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const addToWishlistsHandler = async ()  => {
         setLoading(true);
@@ -39,6 +42,20 @@ const ProductInfo = ({product}) => {
         setLoading(true);
         await addToCart(product._id , stock, token)
         setLoading(false);
+    }
+
+
+    const handleBuyProduct = () => {
+        const order= [
+            {
+                productId : product,
+                qty : stock
+            }
+        ]
+
+        dispatch(setOrder(order));
+
+        navigate("/checkout")
     }
 
 
@@ -164,12 +181,13 @@ const ProductInfo = ({product}) => {
                 </div>
 
                 {/* buy now  */}
-                <Link to="/checkout">
-                    <button 
-                    className='flex bg-royal-blue-600 rounded-md py-3 px-14 text-[18px] font-medium text-white w-fit cursor-pointer  hover:bg-royal-blue-500 transition-all duration-200'>
-                        Buy Now
-                    </button>
-                </Link>
+                
+                <button 
+                onClick={handleBuyProduct}
+                className='flex bg-royal-blue-600 rounded-md py-3 px-14 text-[18px] font-medium text-white w-fit cursor-pointer  hover:bg-royal-blue-500 transition-all duration-200'>
+                    Buy Now
+                </button>
+               
 
                 {/* cart  */}
                 {

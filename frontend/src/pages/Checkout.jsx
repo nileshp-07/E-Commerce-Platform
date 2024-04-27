@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { getAllAddresses } from '../services/operations/profileAPI';
+import { buyProducts } from '../services/operations/PaymentAPI';
+import { toast } from 'sonner';
 
 const Checkout = () => {
   const {user} = useSelector((state) => state.user);
@@ -8,6 +10,8 @@ const Checkout = () => {
   const [addreses , setAddresses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [contactNumber , setContactNumber] = useState(user?.contactNumber)
+  const {order} = useSelector((state)  => state.order);
+  const [paymentMethod , setPaymentMethod] = useState("");
   const [selectedAddress, setSelectedAddress] = useState({
                                                         street : "",
                                                         city : "",
@@ -28,15 +32,40 @@ const Checkout = () => {
     }
 
     setLoading(false);
+  }
+
+
+  useEffect(() => {
+
+    fetchAllAddresses();
+
+  },[])
+
+
+  const handleBuyProducts = async () => {
+  //   const address = {
+  //      //  name : "Nilesh Patidar",
+  //      street : "viswas nagar",
+  //      //  line2 : "viswas nagar",
+  //      city : "pithampur",
+  //      postalCode : "573238",
+  //      state : "m.p.",
+  //      country : "India"
+  //  }
+
+  if(!paymentMethod)
+  {
+    toast.error("Select Payment method first")
+    return;
+  }
+
+  const isCOD = paymentMethod === "Cash" ? true :  false;
+ setLoading(true);
+
+ await buyProducts(order,isCOD,JSON.stringify(selectedAddress), token);
+
+ setLoading(false);
 }
-
-
-useEffect(() => {
-
-  fetchAllAddresses();
-
-},[])
-
   
   return ( 
     <div className='h-full w-full'>
@@ -172,10 +201,64 @@ useEffect(() => {
                ))
             }
           </div>
-
         </div>
-        <div className='w-[450px] h-[500px] bg-royal-blue-300 rounded-md'>
 
+        <div className='w-[550px] h-fit max-h-[500px] border rounded-md p-3  flex flex-col justify-between'>
+            <div className=' overflow-y-scroll'>
+              {
+                 order.map((product, index) => (
+                  <div key={index}
+                     className={`flex ${index !== order.length-1 && "border-b pb-2"}`}>
+                     <div className='p-4 max-h-[100px] max-w-[100px] flex items-center justify-center'>
+                        <img
+                          src={product?.productId?.thumbnail}
+                          className='h-full w-full object-contain'
+                        />
+                     </div>
+                     <div className='py-2'>
+                        <div>
+                          <p className='text-[14px] pr-2'>{product?.productId?.title}</p>
+                          <p className='text-gray-500 text-[14px]'>Qty. {product?.qty}</p>
+                        </div>
+
+                        <p className='flex text-caribbeangreen-600 text-[14px]'>Rs. {product?.productId?.discountedPrice}</p>
+                     </div>
+                     
+                  </div>
+                 ))
+              }
+            </div>
+            <div>
+               <p className='font-medium text-[17px] mb-2 mt-5'>Payment Method</p>
+               <div>
+                  <div className='flex gap-2 cursor-pointer'>
+                      <input
+                        type='radio'
+                        name='paymentMethod'
+                        value="Cash"
+                        onChange={() => setPaymentMethod("Cash")}
+                        id='cash'
+                      />
+                      <label htmlFor='cash' className='cursor-pointer'>Cash on delivery</label>
+                  </div>
+                  <div className='flex gap-2 cursor-pointer'>
+                      <input
+                        type='radio'
+                        name='paymentMethod'
+                        value="Online"
+                        onChange={() => setPaymentMethod("Online")}
+                        id='online'
+                      />
+                      <label htmlFor='online' className='cursor-pointer'>Online</label>
+                  </div>
+               </div>
+
+               <button 
+                 onClick={handleBuyProducts}
+                 className='py-2 px-5 w-full rounded-md bg-royal-blue-500 text-white font-medium mt-5'>
+                 Proceed to Checkout
+               </button>
+            </div> 
         </div>
       </div>
     </div>

@@ -2,15 +2,18 @@ import React, { useEffect, useState } from 'react'
 import { MdDelete } from "react-icons/md";
 import ProductCards from '../components/core/homePage/ProductCards';
 import { removeFromCart } from '../services/operations/profileAPI';
-import {useSelector} from "react-redux"
-import { Link } from 'react-router-dom';
+import {useDispatch, useSelector} from "react-redux"
+import { Link, useNavigate } from 'react-router-dom';
 import { buyProducts } from '../services/operations/PaymentAPI';
+import { setOrder } from '../redux/slices/orderSlice';
 
 
 const Cart = () => {
     const {token} = useSelector((state) => state.user);
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [recentlyViewedProducts, setRecentlyViewedProducts] = useState([]);
     useEffect(() => {
         const cartItems = JSON.parse(localStorage.getItem("cartItems"));
@@ -72,24 +75,24 @@ const Cart = () => {
     }
 
 
-    const handleBuyProducts = async () => {
-         const address = {
-            //  name : "Nilesh Patidar",
-            street : "viswas nagar",
-            //  line2 : "viswas nagar",
-            city : "pithampur",
-            postalCode : "573238",
-            state : "m.p.",
-            country : "India"
-        }
+    // const handleBuyProducts = async () => {
+    //      const address = {
+    //         //  name : "Nilesh Patidar",
+    //         street : "viswas nagar",
+    //         //  line2 : "viswas nagar",
+    //         city : "pithampur",
+    //         postalCode : "573238",
+    //         state : "m.p.",
+    //         country : "India"
+    //     }
 
-        const isCOD = false;
-        setLoading(true);
+    //     const isCOD = false;
+    //     setLoading(true);
 
-        await buyProducts(products,isCOD,JSON.stringify(address), token);
+    //     await buyProducts(products,isCOD,JSON.stringify(address), token);
 
-        setLoading(false);
-    }
+    //     setLoading(false);
+    // }
 
     if(loading)
     {
@@ -186,7 +189,10 @@ const Cart = () => {
                             </div>
 
                             <button
-                              onClick={handleBuyProducts} 
+                              onClick={() => {
+                                 dispatch(setOrder(products))
+                                 navigate("/checkout")
+                              }} 
                               className='mt-8 mb-3 bg-royal-blue-500 py-2 px-5 w-full text-white font-medium rounded-md'>
                                 Process to checkout
                             </button>
