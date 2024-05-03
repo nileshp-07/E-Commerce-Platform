@@ -41,7 +41,7 @@ router.get("/get-product-details", getProductFullDetails);
 // router.post("/add-product", uploadProduct);
 router.get("/home-page-products", getHomePageProducts);
 router.post("/search-products", searchProducts);
-router.get("/related-products", getRelatedProducts);
+router.post("/related-products", getRelatedProducts);
 
 
 

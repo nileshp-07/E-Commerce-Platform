@@ -19,6 +19,7 @@ const Products = () => {
   const productPage = 18;
   const totalProducts = 250;
   const [sortBy , setSortBy] = useState("");
+  const [firstRender, setFirstRender] = useState(true);
   const [filters , setFilters] = useState({
       brands : [],
       minPrice : filtersData?.minPrice || "1",
@@ -28,29 +29,27 @@ const Products = () => {
       location : []
   });
 
-  console.log("#  Filters : ", filters);
-  console.log("#  sortOption : ", sortBy);
-  console.log("#  searchQuery : ", searchQuery);
 
   const searchProductsHandler = async () => {
       setLoading(true);
       
-      console.log("Queries :  ",searchQuery, "  ",sortBy , "  ",filters);
+      // console.log("Queries :  ",searchQuery, "  ",sortBy , "  ",filters);
       const response = await searchProducts(searchQuery, filters, sortBy);
 
       if(response.products)
       {
         setProducts(response.products);
 
-        if(response.filtersData)
+        if(response.filtersData && firstRender)
         setFiltersData(response.filtersData);
+        setFirstRender(false);
       }
       setLoading(false);
   }
 
   useEffect(() => {
        searchProductsHandler();
-  },[searchQuery, sortBy, filters])
+  },[sortBy, filters])
 
   useEffect(() => {
     // Set initial filters state using filtersData
@@ -62,7 +61,15 @@ const Products = () => {
             }));
         }
     }, []);
-
+    
+    useEffect(() => {
+      
+        if(!firstRender)
+        {
+           setFirstRender(true);
+           searchProductsHandler();
+        }
+    }, [searchQuery])
 
   return (
     <div>

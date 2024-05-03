@@ -255,11 +255,11 @@ export const getAllCategories = async () => {
 }
 
 
-export const getRelatedProducts  = async (cateogryId) => {
+export const getRelatedProducts  = async (categoryId) => {
     const toastId = toast.loading("loading...");
     let result;
     try{
-        const response = await apiConnector("GET", GET_RELATED_PRODUCTS ,{cateogryId});
+        const response = await apiConnector("POST", GET_RELATED_PRODUCTS ,{categoryId});
 
         console.log("GET RELATED PRODUCT API RESPONSE : ",response);
 

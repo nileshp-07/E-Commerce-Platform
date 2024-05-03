@@ -680,9 +680,7 @@ exports.getRelatedProducts = async (req, res) =>{
 
         const {categoryId} = req.body;
 
-        const relatedProducts = await Product.find({
-            categories: { $in: [categoryId] }
-        });
+        const relatedProducts =await Product.find({ categories: categoryId });
 
         return res.status(200).json({
             success : true,

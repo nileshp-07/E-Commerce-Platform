@@ -20,6 +20,7 @@ const ProductDetails = () => {
     const [isReview ,setIsReviews] = useState(false);
     const [relatedProducts, setRelatedProducts] = useState([]);
 
+    console.log(product);
 
     const addProductToRecentlyViewed = (product) => {
         let recentlyViewedProducts = JSON.parse(localStorage.getItem("recentlyViewedProducts")) || [];
@@ -66,10 +67,14 @@ const ProductDetails = () => {
         return;
        setLoading(true);
 
-       const response = await getRelatedProducts(product.categories[0]._id);
+       const response = await getRelatedProducts(product?.categories[0]._id);
 
        if(response)
-       setRelatedProducts(response);
+       {
+          const products = response.filter((item) => item._id !== product._id);
+          setRelatedProducts(products);
+       }
+       
 
        setLoading(false);
     }
@@ -78,9 +83,9 @@ const ProductDetails = () => {
        fetchProductDetails();
     }, [id])
 
-    // useEffect(() => {
-    //   fetchRelatedProducts();
-    // }, [product])
+    useEffect(() => {
+      fetchRelatedProducts();
+    }, [product])
 
     if(loading)
     {
@@ -166,7 +171,11 @@ const ProductDetails = () => {
             </div>
 
 
-            {/* <ProductCards products ={relatedProducts} heading={"Related Products"}/> */}
+            {
+                relatedProducts.length > 0 && (
+                   <ProductCards products ={relatedProducts} heading={"Related Products"}/>
+                )
+            }
         </div>
 
         <Footer/>
