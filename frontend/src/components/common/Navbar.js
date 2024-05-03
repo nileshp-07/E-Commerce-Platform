@@ -26,14 +26,14 @@ const Navbar = () => {
 
 
   return (
-    <div className='h-[3.5rem] bg-royal-blue-500 text-white'>
+    <div className='h-[3.5rem] bg-royal-blue-500 text-white relative'>
         <div className='w-11/12 max-w-[1200px] mx-auto flex justify-between items-center h-full '>
            <Link to="/">
              {/* <h2 className='text-4xl font-bold'>LOGO</h2> */}
-             <div className='-ml-10'>
+             <div className='lg:-ml-10 -ml-3'>
                <img
                   src={Logo}
-                  className='h-[60px]'
+                  className='h-[50px] w-[120px] md:h-[60px] md:w-full'
                   // style={{ mixBlendMode: 'multiply' }}
                />
              </div>
@@ -43,12 +43,12 @@ const Navbar = () => {
            <div className='flex gap-10 items-center'>
 
               <div className='flex gap-3'>
-                  <div className='flex items-center gap-1 group'>
+                  <div className='lg:flex hidden items-center gap-1 group'>
                     <p>Categories</p>
                     <MdKeyboardArrowDown className='group-hover:rotate-180'/>
                   </div>
 
-                  <div className='flex relative'>
+                  <div className='lg:flex hidden  absolute lg:relative top-12 left-0 px-5'>
                     
                     <form
                       onSubmit={searchHandler}>
@@ -59,7 +59,7 @@ const Navbar = () => {
                         placeholder='what are you looking for?'
                         value={searchInput}
                         onChange={(e) => setSearchInput(e.target.value)}
-                        className='w-[500px] h-[40px] rounded-md px-5 text-black focus:outline-gray-500'
+                        className='w-[500px] h-[40px] rounded-md px-5 text-black focus:outline-gray-500 bg-royal-blue-50'
                       />
                       <button
                         type='submit'
@@ -71,6 +71,7 @@ const Navbar = () => {
                   </div>
               </div>
 
+            <div className='md:block hidden'>
             {
                 token && (
                    user?.isSeller ? (
@@ -90,6 +91,7 @@ const Navbar = () => {
                    )
                 )
             }
+            </div>
 
             {
               token ? (
@@ -110,7 +112,7 @@ const Navbar = () => {
                     </Link>
 
                     <Link to="/profile/info">
-                      <div className='flex items-center justify-center p-[10px] bg-[#DB4444] rounded-full '>
+                      <div className='flex items-center justify-center lg:p-[10px] p-[8px] bg-[#DB4444] rounded-full '>
                           <FaRegUser size={18}/>
                       </div>
                     </Link>
