@@ -63,48 +63,48 @@ const ProductCard = ({product, isBestDeal}) => {
   return (
      <>
         <Link to={`/product/${product?._id}`}>
-            <div className='p-3 w-[280px] min-h-[410px] custom-shadow rounded-md hover:scale-105 duration-200 transition-all relative group'>
+            <div className='lg:p-3 p-2 lg:w-[280px] w-[170px] lg:min-h-[410px] min-h-[355px] custom-shadow rounded-lg hover:scale-105 duration-200 transition-all relative group'>
                 <div>
                     {
                         wishlists?.some(item => item._id === product._id) ? (
                             <div 
                                 onClick={removeFromWishlistsHandler}
-                                className='absolute right-4 top-4 p-2 bg-white rounded-full flex items-center justify-center hover:scale-105 transition-all duration-200'>
-                                    <GoHeartFill size={20} fill='#DE3163'/>
+                                className='absolute lg:right-4 right-[11px] lg:top-4 top-[11px] lg:p-2 p-[6px] bg-white rounded-full flex items-center justify-center hover:scale-105 transition-all duration-200'>
+                                    <GoHeartFill fill='#DE3163' className='lg:text-[20px] text-[17px]'/>
                             </div>
                         ) : (
                             <div
                                 onClick={addToWislistsHandler}
-                                className='absolute right-4 top-4 p-2 bg-white rounded-full flex items-center justify-center hover:scale-105 transition-all duration-200'>
-                                    <GoHeart size={20}/>
+                                className='absolute lg:right-4 right-[11px] lg:top-4 top-[11px] lg:p-2 p-[6px] bg-white rounded-full flex items-center justify-center hover:scale-105 transition-all duration-200'>
+                                    <GoHeart  className='lg:text-[20px] text-[17px] '/>
                             </div>
                         )
                     }
                 </div>
                 {
                     isBestDeal && (
-                        <div className='absolute top-4 left-4 w-[55px] bg-[#AFE1AF] text-[#008000] font-medium px-[7px] py-[1px] rounded-3xl'>
+                        <div className='absolute top-4 left-4 lg:w-[55px] w-fit bg-[#AFE1AF] text-[#008000] lg:text-[16px] text-[12px] font-medium px-[7px] py-[1px] rounded-3xl'>
                            -{product?.discount}%
                         </div>
                     )
                 }
-                <div className='rounded-md bg-gray-200 p-6 flex items-center justify-center'>
+                <div className='rounded-lg bg-gray-200 lg:p-6 p-4 flex items-center justify-center'>
                     <img
                         src={product?.thumbnail}
                         alt='ProductThumbnail'
                         loading='lazy'
-                        className='h-[190px] w-[190px] object-contain'
+                        className='lg:h-[190px] h-[130px] w-[130px] lg:w-[190px] object-contain'
                         style={{ mixBlendMode: 'multiply' }}
                     />
                 </div> 
                 <div className='py-2'>
-                    <p className='text-[17px] font-medium leading-[1.3rem]'>
+                    <p className='lg:text-[17px] text-[15px] font-medium leading-[1.3rem]'>
                        {product?.title?.split("").length > 30 ? `${product?.title?.split("").splice(0,50).join("")}...` : (product.title)}
                     </p>
-                    <p className='font-medium text-gray-500'>{product?.categories?.[0].name}</p>
-                    <div className='flex gap-2 my-1'>
-                        <p className='text-[#DB4444] font-me'>Rs.{product?.discountedPrice}</p>
-                        <p className='flex line-through font-medium text-gray-400'>Rs.{product.price}</p>
+                    <p className='font-medium text-gray-500 lg:text-[16px] text-[15px]'>{product?.categories?.[0].name}</p>
+                    <div className='flex flex-wrap gap-x-2 my-1'>
+                        <p className='text-[#DB4444] font-medium lg:text-[16px] text-[15px]'>Rs.{product?.discountedPrice}</p>
+                        <p className='flex line-through font-medium text-gray-400 lg:text-[16px] text-[15px]'>Rs.{product.price}</p>
                         <p className='font-medium text-[#008000] text-[14px]'>{product?.discount}% off</p>
                     </div>
                     <div className='flex gap-2 items-center'>
@@ -119,8 +119,8 @@ const ProductCard = ({product, isBestDeal}) => {
                         className='absolute right-2 bottom-2  p-[6px] hover:bg-[#c1c1c1] justify-center items-center rounded-full hidden group-hover:flex duration-200 transition-all'
                         onClick={addToCartHandler}>
                             <div 
-                            className='p-3 rounded-full bg-black text-white font-medium flex justify-center items-center'>
-                                <FaCartArrowDown size={23}/>
+                            className='lg:p-3 p-2 rounded-full bg-black text-white font-medium flex justify-center items-center'>
+                                <FaCartArrowDown className='text-[17px] lg:text-[23px]'/>
                             </div>
                         </div>
                     )

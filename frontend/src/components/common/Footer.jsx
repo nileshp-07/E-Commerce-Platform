@@ -86,18 +86,18 @@ const Footer = () => {
   return (
     <div className='pt-10 '>
         <div className='w-11/12 max-[1200px] mx-auto border-t border-gray-700 pt-10 ' >
-            <div className='flex justify-between w-full p-5 pb-10'>
+            <div className='flex lg:flex-row flex-col gap-y-10 justify-between w-full p-5 pb-10'>
                 <div>
                     {/* <h2 className='text-5xl font-bold'>LOGO</h2> */}
                     <div>
                         <img
                             src={Logo}
-                            className='h-[50px]'
+                            className='md:h-[50px] h-[38px]'
                         />
                     </div>
 
                     <a href='tel:'>
-                        <div className='flex items-center gap-2 mt-8 text-gray-700 font-medium'>
+                        <div className='flex items-center gap-2 md:mt-8 mt-5 text-gray-700 font-medium'>
                             <FaPhoneAlt size={18}/>
                             <p>+123 456 7869</p>
                         </div>
@@ -127,7 +127,7 @@ const Footer = () => {
                         </div>
                     </div>
                 </div>
-                <div className='flex gap-28'> 
+                <div className='flex md:gap-28 gap-5'> 
                    <div>
                       <h2 className='text-[17px] font-semibold'>Quick Links</h2>
                       <div className='mt-3'>
@@ -174,11 +174,11 @@ const Footer = () => {
                    </div>
                 </div>
 
-                <div>
+                <div className='flex gap-6 flex-col md:flex-row lg:flex-col'>
                    <div>
                       <h2 className='text-[17px] font-semibold mb-4'>Newsletter</h2>
                       <form 
-                        className='relative'>
+                        className='relative w-fit'>
                         <input
                             type='email'
                             name='email'
@@ -191,7 +191,7 @@ const Footer = () => {
                       </form>
                    </div>
 
-                   <div className='mt-6'>
+                   <div>
                      <h2 className='text-[17px] font-semibold mb-2'>Payments</h2>
                      <div className='flex gap-2'>
                         {
@@ -209,14 +209,14 @@ const Footer = () => {
                 </div>
             </div>
         </div>
-        <div className='flex justify-between bg-black text-white py-4 px-8'>
+        <div className='flex flex-col md:flex-row justify-between bg-black text-white py-4 px-8'>
             <div className='text-[15px] text-gray-200'>
                 Copyright © 2024 All Right Reserved
             </div>
 
-            {/* <div className='text-[15px] text-gray-200'>
+            <div className='text-[15px] text-gray-200'>
                 Made with ❤️ by Nilesh
-            </div> */}
+            </div>
         </div>
     </div>
   )

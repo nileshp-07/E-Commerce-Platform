@@ -56,12 +56,12 @@ const Categories = () => {
             {
                 categories.map((category , index) => (
                     <Link key={index} to={category.link}>
-                        <div className='border rounded-md md:w-[170px] w-[90px] h-[100px] md:h-[145px] flex flex-col items-center justify-between p-4 group hover:bg-royal-blue-500 duration-200 transition-all'>
+                        <div className='border rounded-md lg:w-[170px] w-[110px] h-[100px] lg:h-[145px] flex flex-col items-center justify-between p-4 group hover:bg-royal-blue-500 duration-200 transition-all'>
                             <img 
                                src={category.icon} 
                                alt={category.category}
                                loading='lazy'
-                               className='group-hover:invert duration-200 transition-all md:h-[70px] h-[50px] w-[50px] md:w-[70px]'
+                               className='group-hover:invert duration-200 transition-all lg:h-[70px] h-[50px] w-[50px] lg:w-[70px]'
                                />
                             <p className='font-medium text-[14px] md:text-[16px] mt-1 group-hover:text-white duration-200 transition-all'>{category.category}</p>
                         </div>
