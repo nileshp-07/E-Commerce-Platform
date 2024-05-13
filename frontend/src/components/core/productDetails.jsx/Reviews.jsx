@@ -16,204 +16,204 @@ import Stack from '@mui/material/Stack';
 
 
 
-const reviews1 =[
-  {
-    "rating": 4.5,
-    "review": "Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!",
-    "username": "john_doe",
-    "image": "https://example.com/image1.jpg",
-    "last_modified_date": "2023-07-15"
-  },
-  {
-    "rating": 3.2,
-    "review": "Not bad, but could be better.",
-    "username": "sara_smith",
-    "image": "https://example.com/image2.jpg",
-    "last_modified_date": "2023-08-22"
-  },
-  {
-    "rating": 5,
-    "review": "Excellent service, highly recommended!",
-    "username": "james_williams",
-    "image": "https://example.com/image3.jpg",
-    "last_modified_date": "2023-09-10"
-  },
-  {
-    "rating": 2.8,
-    "review": "Disappointing experience, won't buy again.",
-    "username": "emma_jones",
-    "image": "https://example.com/image4.jpg",
-    "last_modified_date": "2023-10-05"
-  },
-  {
-    "rating": 4.7,
-    "review": "Very satisfied with the quality.",
-    "username": "michael_brown",
-    "image": "https://example.com/image5.jpg",
-    "last_modified_date": "2023-11-12"
-  },
-  {
-    "rating": 3.9,
-    "review": "Decent product, worth the price.",
-    "username": "olivia_taylor",
-    "image": "https://example.com/image6.jpg",
-    "last_modified_date": "2023-12-01"
-  },
-  {
-    "rating": 4.2,
-    "review": "Impressed with the fast delivery.",
-    "username": "william_davis",
-    "image": "https://example.com/image7.jpg",
-    "last_modified_date": "2024-01-18"
-  },
-  {
-    "rating": 4.8,
-    "review": "Fantastic customer service!",
-    "username": "linda_wilson",
-    "image": "https://example.com/image8.jpg",
-    "last_modified_date": "2024-02-09"
-  },
-  {
-    "rating": 3.5,
-    "review": "Average product, nothing special.",
-    "username": "daniel_martin",
-    "image": "https://example.com/image9.jpg",
-    "last_modified_date": "2024-02-28"
-  },
-  {
-    "rating": 4.0,
-    "review": "Good experience overall.",
-    "username": "sophia_anderson",
-    "image": "https://example.com/image10.jpg",
-    "last_modified_date": "2024-03-15"
-  },
-  {
-    "rating": 4.5,
-    "review": "Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!",
-    "username": "john_doe",
-    "image": "https://example.com/image1.jpg",
-    "last_modified_date": "2023-07-15"
-  },
-  {
-    "rating": 3.2,
-    "review": "Not bad, but could be better.",
-    "username": "sara_smith",
-    "image": "https://example.com/image2.jpg",
-    "last_modified_date": "2023-08-22"
-  },
-  {
-    "rating": 5,
-    "review": "Excellent service, highly recommended!",
-    "username": "james_williams",
-    "image": "https://example.com/image3.jpg",
-    "last_modified_date": "2023-09-10"
-  },
-  {
-    "rating": 2.8,
-    "review": "Disappointing experience, won't buy again.",
-    "username": "emma_jones",
-    "image": "https://example.com/image4.jpg",
-    "last_modified_date": "2023-10-05"
-  },
-  {
-    "rating": 4.7,
-    "review": "Very satisfied with the quality.",
-    "username": "michael_brown",
-    "image": "https://example.com/image5.jpg",
-    "last_modified_date": "2023-11-12"
-  },
-  {
-    "rating": 3.9,
-    "review": "Decent product, worth the price.",
-    "username": "olivia_taylor",
-    "image": "https://example.com/image6.jpg",
-    "last_modified_date": "2023-12-01"
-  },
-  {
-    "rating": 4.2,
-    "review": "Impressed with the fast delivery.",
-    "username": "william_davis",
-    "image": "https://example.com/image7.jpg",
-    "last_modified_date": "2024-01-18"
-  },
-  {
-    "rating": 4.8,
-    "review": "Fantastic customer service!",
-    "username": "linda_wilson",
-    "image": "https://example.com/image8.jpg",
-    "last_modified_date": "2024-02-09"
-  },
-  {
-    "rating": 3.5,
-    "review": "Average product, nothing special.",
-    "username": "daniel_martin",
-    "image": "https://example.com/image9.jpg",
-    "last_modified_date": "2024-02-28"
-  },
-  {
-    "rating": 4.0,
-    "review": "Good experience overall.",
-    "username": "sophia_anderson",
-    "image": "https://example.com/image10.jpg",
-    "last_modified_date": "2024-03-15"
-  },
-  {
-    "rating": 4.5,
-    "review": "Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!",
-    "username": "john_doe",
-    "image": "https://example.com/image1.jpg",
-    "last_modified_date": "2023-07-15"
-  },
-  {
-    "rating": 3.2,
-    "review": "Not bad, but could be better.",
-    "username": "sara_smith",
-    "image": "https://example.com/image2.jpg",
-    "last_modified_date": "2023-08-22"
-  },
-  {
-    "rating": 5,
-    "review": "Excellent service, highly recommended!",
-    "username": "james_williams",
-    "image": "https://example.com/image3.jpg",
-    "last_modified_date": "2023-09-10"
-  },
-  {
-    "rating": 2.8,
-    "review": "Disappointing experience, won't buy again.",
-    "username": "emma_jones",
-    "image": "https://example.com/image4.jpg",
-    "last_modified_date": "2023-10-05"
-  },
-  {
-    "rating": 4.7,
-    "review": "Very satisfied with the quality.",
-    "username": "michael_brown",
-    "image": "https://example.com/image5.jpg",
-    "last_modified_date": "2023-11-12"
-  },
-  {
-    "rating": 3.9,
-    "review": "Decent product, worth the price.",
-    "username": "olivia_taylor",
-    "image": "https://example.com/image6.jpg",
-    "last_modified_date": "2023-12-01"
-  },
-  {
-    "rating": 4.2,
-    "review": "Impressed with the fast delivery.",
-    "username": "william_davis",
-    "image": "https://example.com/image7.jpg",
-    "last_modified_date": "2024-01-18"
-  },
-  {
-    "rating": 4.8,
-    "review": "Fantastic customer service!",
-    "username": "linda_wilson",
-    "image": "https://example.com/image8.jpg",
-    "last_modified_date": "2024-02-09"
-  }
-]
+// const reviews1 =[
+//   {
+//     "rating": 4.5,
+//     "review": "Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!",
+//     "username": "john_doe",
+//     "image": "https://example.com/image1.jpg",
+//     "last_modified_date": "2023-07-15"
+//   },
+//   {
+//     "rating": 3.2,
+//     "review": "Not bad, but could be better.",
+//     "username": "sara_smith",
+//     "image": "https://example.com/image2.jpg",
+//     "last_modified_date": "2023-08-22"
+//   },
+//   {
+//     "rating": 5,
+//     "review": "Excellent service, highly recommended!",
+//     "username": "james_williams",
+//     "image": "https://example.com/image3.jpg",
+//     "last_modified_date": "2023-09-10"
+//   },
+//   {
+//     "rating": 2.8,
+//     "review": "Disappointing experience, won't buy again.",
+//     "username": "emma_jones",
+//     "image": "https://example.com/image4.jpg",
+//     "last_modified_date": "2023-10-05"
+//   },
+//   {
+//     "rating": 4.7,
+//     "review": "Very satisfied with the quality.",
+//     "username": "michael_brown",
+//     "image": "https://example.com/image5.jpg",
+//     "last_modified_date": "2023-11-12"
+//   },
+//   {
+//     "rating": 3.9,
+//     "review": "Decent product, worth the price.",
+//     "username": "olivia_taylor",
+//     "image": "https://example.com/image6.jpg",
+//     "last_modified_date": "2023-12-01"
+//   },
+//   {
+//     "rating": 4.2,
+//     "review": "Impressed with the fast delivery.",
+//     "username": "william_davis",
+//     "image": "https://example.com/image7.jpg",
+//     "last_modified_date": "2024-01-18"
+//   },
+//   {
+//     "rating": 4.8,
+//     "review": "Fantastic customer service!",
+//     "username": "linda_wilson",
+//     "image": "https://example.com/image8.jpg",
+//     "last_modified_date": "2024-02-09"
+//   },
+//   {
+//     "rating": 3.5,
+//     "review": "Average product, nothing special.",
+//     "username": "daniel_martin",
+//     "image": "https://example.com/image9.jpg",
+//     "last_modified_date": "2024-02-28"
+//   },
+//   {
+//     "rating": 4.0,
+//     "review": "Good experience overall.",
+//     "username": "sophia_anderson",
+//     "image": "https://example.com/image10.jpg",
+//     "last_modified_date": "2024-03-15"
+//   },
+//   {
+//     "rating": 4.5,
+//     "review": "Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!",
+//     "username": "john_doe",
+//     "image": "https://example.com/image1.jpg",
+//     "last_modified_date": "2023-07-15"
+//   },
+//   {
+//     "rating": 3.2,
+//     "review": "Not bad, but could be better.",
+//     "username": "sara_smith",
+//     "image": "https://example.com/image2.jpg",
+//     "last_modified_date": "2023-08-22"
+//   },
+//   {
+//     "rating": 5,
+//     "review": "Excellent service, highly recommended!",
+//     "username": "james_williams",
+//     "image": "https://example.com/image3.jpg",
+//     "last_modified_date": "2023-09-10"
+//   },
+//   {
+//     "rating": 2.8,
+//     "review": "Disappointing experience, won't buy again.",
+//     "username": "emma_jones",
+//     "image": "https://example.com/image4.jpg",
+//     "last_modified_date": "2023-10-05"
+//   },
+//   {
+//     "rating": 4.7,
+//     "review": "Very satisfied with the quality.",
+//     "username": "michael_brown",
+//     "image": "https://example.com/image5.jpg",
+//     "last_modified_date": "2023-11-12"
+//   },
+//   {
+//     "rating": 3.9,
+//     "review": "Decent product, worth the price.",
+//     "username": "olivia_taylor",
+//     "image": "https://example.com/image6.jpg",
+//     "last_modified_date": "2023-12-01"
+//   },
+//   {
+//     "rating": 4.2,
+//     "review": "Impressed with the fast delivery.",
+//     "username": "william_davis",
+//     "image": "https://example.com/image7.jpg",
+//     "last_modified_date": "2024-01-18"
+//   },
+//   {
+//     "rating": 4.8,
+//     "review": "Fantastic customer service!",
+//     "username": "linda_wilson",
+//     "image": "https://example.com/image8.jpg",
+//     "last_modified_date": "2024-02-09"
+//   },
+//   {
+//     "rating": 3.5,
+//     "review": "Average product, nothing special.",
+//     "username": "daniel_martin",
+//     "image": "https://example.com/image9.jpg",
+//     "last_modified_date": "2024-02-28"
+//   },
+//   {
+//     "rating": 4.0,
+//     "review": "Good experience overall.",
+//     "username": "sophia_anderson",
+//     "image": "https://example.com/image10.jpg",
+//     "last_modified_date": "2024-03-15"
+//   },
+//   {
+//     "rating": 4.5,
+//     "review": "Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!Great product, I loved it!",
+//     "username": "john_doe",
+//     "image": "https://example.com/image1.jpg",
+//     "last_modified_date": "2023-07-15"
+//   },
+//   {
+//     "rating": 3.2,
+//     "review": "Not bad, but could be better.",
+//     "username": "sara_smith",
+//     "image": "https://example.com/image2.jpg",
+//     "last_modified_date": "2023-08-22"
+//   },
+//   {
+//     "rating": 5,
+//     "review": "Excellent service, highly recommended!",
+//     "username": "james_williams",
+//     "image": "https://example.com/image3.jpg",
+//     "last_modified_date": "2023-09-10"
+//   },
+//   {
+//     "rating": 2.8,
+//     "review": "Disappointing experience, won't buy again.",
+//     "username": "emma_jones",
+//     "image": "https://example.com/image4.jpg",
+//     "last_modified_date": "2023-10-05"
+//   },
+//   {
+//     "rating": 4.7,
+//     "review": "Very satisfied with the quality.",
+//     "username": "michael_brown",
+//     "image": "https://example.com/image5.jpg",
+//     "last_modified_date": "2023-11-12"
+//   },
+//   {
+//     "rating": 3.9,
+//     "review": "Decent product, worth the price.",
+//     "username": "olivia_taylor",
+//     "image": "https://example.com/image6.jpg",
+//     "last_modified_date": "2023-12-01"
+//   },
+//   {
+//     "rating": 4.2,
+//     "review": "Impressed with the fast delivery.",
+//     "username": "william_davis",
+//     "image": "https://example.com/image7.jpg",
+//     "last_modified_date": "2024-01-18"
+//   },
+//   {
+//     "rating": 4.8,
+//     "review": "Fantastic customer service!",
+//     "username": "linda_wilson",
+//     "image": "https://example.com/image8.jpg",
+//     "last_modified_date": "2024-02-09"
+//   }
+// ]
 
 
 
@@ -242,6 +242,7 @@ const Reviews = ({avgRating}) => {
      if(response){
      setReviews(response);
      getRatingStarsCount(response);
+     calculateTotalPagesCount(response?.length)
      }
 
   }
@@ -253,6 +254,20 @@ const Reviews = ({avgRating}) => {
   const handleChange = (event, value) => {
     setPage(value);
   };
+
+  const calculateTotalPagesCount = (totalProducts) => {
+       
+    let pages=  Math.floor(totalProducts/10);
+
+    console.log(pages);
+
+    if(totalProducts%10 > 0)
+        pages += 1;
+
+
+    setTotalPages(pages)
+
+}
 
   
   return (
@@ -311,7 +326,7 @@ const Reviews = ({avgRating}) => {
 
       <div>
         {
-           reviews1?.reverse()?.map((review , index) => (
+           reviews?.reverse().slice( (page-1)*10 , (page-1)*10+10)?.map((review , index) => (
              <div key={index} className={`px-4 py-8 w-[80%] ${index != reviews.length-1  && "border-b "}`}>
                 <div className='flex justify-between'>
                     <div className='flex gap-5'>
@@ -339,7 +354,7 @@ const Reviews = ({avgRating}) => {
 
       <div className='mt-14 w-[80%] flex justify-center'>
           <Stack spacing={2}>
-             <Pagination count={10} page={page} onChange={handleChange} size='large' />
+             <Pagination count={totalPages} page={page} onChange={handleChange} size='large' />
           </Stack>
       </div>
 
