@@ -21,7 +21,8 @@ const {
         GET_BUYERS_ALL_ORDERS_API, 
         GET_SELLERS_ALL_ORDERS_API,
         GET_ORDERS_FULL_DETAILS ,
-        UPDATE_DELIVERY_STATUS_API
+        UPDATE_DELIVERY_STATUS_API,
+        GET_SELLER_DASHBOARD_DETAILS
     } = profileEndPoints;
 
 
@@ -544,4 +545,33 @@ export const changeOrdersDeliveryStatus = async (orderId, updatedStatus , token)
         toast.error(error.response.data.message);
     }
     toast.dismiss(toastId);
+}
+
+
+export const getSellerDashboardData = async (token) => {
+    const toastId = toast.loading("loading...");
+    let result;
+
+    try{
+       const response = await apiConnector("GET" , GET_SELLER_DASHBOARD_DETAILS, null, {
+          Authorization : `Bearer ${token}`
+       });
+
+        console.log("GET SELLER DASHBOARD DETAILS API RESPONSE : ",response);
+
+        if(!response.data.success)
+        {
+            throw new Error(response.data.message);
+        }
+
+        result = response.data.data;
+    }
+    catch(error)
+    {
+        console.log("GET SELLER DASHBOARD DETAILS API ERROR : ",error);
+        console.error(error.message);
+        toast.error(error.response.data.message);
+    }
+    toast.dismiss(toastId);
+    return result;
 }

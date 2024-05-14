@@ -14,6 +14,7 @@ const {
     getBuyersAllOrders,
     getSellersAllOrders,
     updateDeliveryStatus,
+    getSellerDashboardInfo
 } = require("../controllers/profile");
 
 const {
@@ -49,6 +50,7 @@ router.post("/buyers-orders", auth,isBuyer, getBuyersAllOrders)
 router.post("/sellers-orders", auth,isSeller , getSellersAllOrders)
 router.post("/get-orders-full-details", auth, getOrderFullDetails)
 router.post("/update-delivery-status", auth, isSeller , updateDeliveryStatus);
+router.get("/seller-dashboard-info", auth, isSeller, getSellerDashboardInfo)
 
 
 

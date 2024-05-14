@@ -5,6 +5,7 @@ const mailSender = require("../utils/mailSender")
 const {uploadImageToCloudinary} = require("../utils/imageUploader");
 const Cart = require("../models/cart");
 const Order = require("../models/order");
+const Product  = require("../models/product")
 
 exports.changePassword = async (req , res) => {
     try{
@@ -511,6 +512,74 @@ exports.updateDeliveryStatus = async (req, res) => {
         return res.status(200).json({
             success : true,
             message : "Delivery Status updated"
+        })
+    }
+    catch(error)
+    {
+        console.log(error);
+        return res.status(401).json({
+            success : false,
+            message : error.message
+        })
+    }
+}
+
+
+exports.getSellerDashboardInfo = async (req , res) => {
+    try{
+        const {id} = req.user;
+
+        const products = await Product.find({
+                                            seller: id
+                                        });
+
+        const orders = await Order.find({
+                                            seller: id
+                                        })
+
+
+
+        let productsRevenue=[];
+        let totalRevenue= 0;
+        for(item of products){
+            let product = {
+                id : item._id,
+                label : item.title,
+                value : item.discountedPrice*item.sold
+            }
+            productsRevenue.push(product);
+            totalRevenue += item.discountedPrice*item.sold
+        }
+
+        productsRevenue = productsRevenue.sort((a, b) => b.value - a.value).slice(0, 10);
+        
+
+        let orderDelivered=0 ;
+        let orderShipped=0;
+        let newOrders=0;
+        orders.forEach(item => {
+            if (item.deliveryStatus.status === "Delivered") {
+                orderDelivered++;
+            } else if (item.deliveryStatus.status === "Shipped") {
+                orderShipped++;
+            } else if (item.deliveryStatus.status === "Processing") {
+                newOrders++;
+            }
+        });
+
+
+        return res.status(200).json({
+            success : true,
+            message : "Seller Dashboard detailed fetched",
+            data : {
+                productsRevenue,
+                orderDetails: {
+                    orderDelivered,
+                    orderShipped,
+                    newOrders
+                },
+                totalRevenue
+            }
         })
     }
     catch(error)

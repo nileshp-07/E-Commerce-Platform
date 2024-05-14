@@ -30,6 +30,7 @@ export const profileEndPoints = {
     GET_SELLERS_ALL_ORDERS_API : BASE_URL + "/profile/sellers-orders",
     GET_ORDERS_FULL_DETAILS : BASE_URL + "/profile/get-orders-full-details",
     UPDATE_DELIVERY_STATUS_API : BASE_URL + "/profile/update-delivery-status",
+    GET_SELLER_DASHBOARD_DETAILS : BASE_URL + "/profile/seller-dashboard-info"
 }
 
 export const productEndPoints = {
