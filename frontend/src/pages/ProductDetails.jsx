@@ -104,8 +104,8 @@ const ProductDetails = () => {
             <p className='text-xl font-medium'> Back</p>
         </div>
 
-        <div className='mt-10 mx-20 '>
-            <div className='flex gap-10'>
+        <div className='mt-10 lg:mx-20 md:mx-10 mx-5 '>
+            <div className='flex flex-col lg:flex-row gap-10'>
                 <ProductImages images={product?.images}/>
 
                 <ProductInfo
@@ -116,8 +116,8 @@ const ProductDetails = () => {
 
             <div className='w-fit my-24'>
                 <h2 className='text-2xl font-semibold'>Seller Information</h2>
-                <div className='flex items-center gap-5 bg-royal-blue-50 mt-4 p-6 border border-black rounded-md'>
-                    <div className='h-[100px] w-[100px] rounded-full border border-black'>
+                <div className='flex items-center w-[350px] md:w-full md:gap-5 gap-2 bg-royal-blue-50 mt-4 md:p-6 p-4 border border-black rounded-md'>
+                    <div className='md:h-[100px] md:w-[100px] min-h-[70px] min-w-[70px] rounded-full border border-black'>
                         <img
                             src={product?.seller?.profileImage}
                             alt='sellerImage'

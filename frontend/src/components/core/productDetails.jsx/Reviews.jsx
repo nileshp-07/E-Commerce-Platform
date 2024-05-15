@@ -273,9 +273,9 @@ const Reviews = ({avgRating}) => {
   return (
     <div className='my-10'>
       
-      <div className='profile-shadow rounded-md px-10 py-8 flex justify-between'>
+      <div className='relative profile-shadow rounded-md md:px-10 md:py-8 px-6 py-4 flex flex-col lg:flex-row gap-5 justify-between'>
 
-         <div className='flex items-center gap-5'>
+         <div className='flex flex-col lg:flex-row items-center gap-5'>
             <div className='h-[130px] w-[130px] flex items-center justify-center'>
               <CircularProgressbar
                 value={(avgRating/5)*100}
@@ -295,7 +295,7 @@ const Reviews = ({avgRating}) => {
             </div>
          </div>
 
-         <div className='w-[70%] '>
+         <div className=''>
               {
                  ratingCount?.reverse()?.map((count , index) => (
                     <div key={index} className='flex w-full justify-end'>
@@ -303,18 +303,35 @@ const Reviews = ({avgRating}) => {
                            <p className='text-lg font-medium'>{5 - index}</p>
                            <TiStarFullOutline size={25} fill='#FFAD33'/>
                         </div>
-                        <ProgressBar
-                            completed={percentages[4-index]}
-                            height="15px"
-                            width="700px"
-                            bgColor="#1D9E34"
-                            labelAlignment="outside"
-                            baseBgColor="#E4E9EE"
-                            labelColor="#000000"
-                            margin="15px"
-                            maxCompleted={100}
-                            customLabel={count === 0 ? "0" : count}
-                        />
+                        <div className='hidden md:block'>
+                          <ProgressBar
+                              completed={percentages[4-index]}
+                              height="15px"
+                              width="600px"
+                              bgColor="#1D9E34"
+                              labelAlignment="outside"
+                              baseBgColor="#E4E9EE"
+                              labelColor="#000000"
+                              margin="15px"
+                              maxCompleted={100}
+                              customLabel={count === 0 ? "0" : count}
+                          />
+                        </div>
+
+                        <div className='block md:hidden'>
+                          <ProgressBar
+                              completed={percentages[4-index]}
+                              height="15px"
+                              width="250px"
+                              bgColor="#1D9E34"
+                              labelAlignment="outside"
+                              baseBgColor="#E4E9EE"
+                              labelColor="#000000"
+                              margin="7px"
+                              maxCompleted={100}
+                              customLabel={count === 0 ? "0" : count}
+                          />
+                        </div>
                     </div>
                  ))
               }
@@ -352,11 +369,15 @@ const Reviews = ({avgRating}) => {
         }
       </div>
 
-      <div className='mt-14 w-[80%] flex justify-center'>
-          <Stack spacing={2}>
-             <Pagination count={totalPages} page={page} onChange={handleChange} size='large' />
-          </Stack>
-      </div>
+      {
+         reviews?.length > 0 && (
+          <div className='mt-14 w-[80%] flex justify-center'>
+              <Stack spacing={2}>
+                <Pagination count={totalPages} page={page} onChange={handleChange} size='large' />
+              </Stack>
+          </div>
+         )
+      }
 
     </div>
   )

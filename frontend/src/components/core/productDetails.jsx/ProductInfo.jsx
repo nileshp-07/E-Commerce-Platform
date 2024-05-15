@@ -84,7 +84,7 @@ const ProductInfo = ({product}) => {
     }
   return (
     <div className='w-full'>
-        <div className='px-5 pb-3 border-b border-gray-400'>
+        <div className='md:px-5 pb-3 border-b border-gray-400'>
             <div className='flex justify-between w-full'>
                 {
                     product?.stocks > 1 ? (
@@ -120,7 +120,7 @@ const ProductInfo = ({product}) => {
                 </div>
             </div>
 
-            <h2 className='text-3xl font-semibold w-[90%]'>
+            <h2 className='md:text-3xl text-2xl font-semibold w-[90%]'>
                 {
                     product?.title
                 }
@@ -132,8 +132,8 @@ const ProductInfo = ({product}) => {
             </div>
         </div>
 
-        <div className='px-5'>
-            <div className='flex  gap-14 my-3 '>
+        <div className='md:px-5'>
+            <div className='flex  md:gap-14 gap-5 my-3 '>
                 <div className='flex gap-5'>
                     <div className='flex gap-1 items-center'>
                         <p>{parseFloat(product?.avgRating).toFixed(1)}</p>
@@ -152,26 +152,26 @@ const ProductInfo = ({product}) => {
 
 
             <div className='flex gap-4 items-end select-none'>
-                <p className='text-3xl font-bold text-caribbeangreen-500'>Rs.{product?.discountedPrice}</p>
+                <p className='md:text-3xl text-2xl font-bold text-caribbeangreen-500'>Rs.{product?.discountedPrice}</p>
                 <p className=' line-through font-medium text-gray-600 ' >Rs.{product?.price}</p>
-                <p className='py-[1px] px-[5px] bg-caribbeangreen-300 rounded-md text-white select-none'>{product?.discount}%</p>
+                <p className='py-[1px] md:px-[5px] px-[4px] bg-caribbeangreen-300 rounded-md text-white select-none'>{product?.discount}%</p>
             </div>
 
 
-            <div className='flex items-center  mt-8 gap-5'>
+            <div className='flex items-center mt-8 gap-5'>
                 {/* stock  */}
-                <div className='h-[50px] flex items-center'>
-                    <div className='w-[45px] h-full flex items-center justify-center border border-black rounded-l-md cursor-pointer'
+                <div className='md:h-[50px] h-[43px] flex items-center'>
+                    <div className='md:w-[45px] w-[35px] h-full flex items-center justify-center border border-black rounded-l-md cursor-pointer'
                          onClick={() => {
                             if(stock > 1)
                             setStock(stock-1)
                          }}>
                         <BsDash size={30}/>
                     </div>
-                    <div className='w-[90px] h-full flex items-center justify-center border-y border-black text-xl font-medium select-none' >
+                    <div className='md:w-[90px] w-[50px] h-full flex items-center justify-center border-y border-black text-xl font-medium select-none' >
                         {stock}
                     </div>
-                    <div className={`w-[45px] h-full flex items-center justify-center rounded-r-md text-white cursor-pointer ${stock === product?.stocks ? "bg-gray-300 " : "bg-royal-blue-500"}`}
+                    <div className={`md:w-[45px] w-[35px] h-full flex items-center justify-center rounded-r-md text-white cursor-pointer ${stock === product?.stocks ? "bg-gray-300 " : "bg-royal-blue-500"}`}
                          onClick={() => {
                             if(stock < product?.stocks)
                             setStock(stock+1)
@@ -184,7 +184,7 @@ const ProductInfo = ({product}) => {
                 
                 <button 
                 onClick={handleBuyProduct}
-                className='flex bg-royal-blue-600 rounded-md py-3 px-14 text-[18px] font-medium text-white w-fit cursor-pointer  hover:bg-royal-blue-500 transition-all duration-200'>
+                className='bg-royal-blue-600 rounded-md md:py-3 py-2 md:px-14 px-[68px] text-[18px] font-medium text-white w-fit cursor-pointer  hover:bg-royal-blue-500 transition-all duration-200'>
                     Buy Now
                 </button>
                
@@ -193,17 +193,26 @@ const ProductInfo = ({product}) => {
                 {
                     !cartItems?.some(item => item.productId._id === product._id) && (
                         <div 
-                          className='border rounded-md p-2 cursor-pointer border-black'
+                          className='hidden md:block border rounded-md p-2 cursor-pointer border-black'
                           onClick={addToCartHandler}>
                            <FaCartArrowDown size={34}/>
                         </div>
                     )
                 }
             </div>
-
+            {
+                !cartItems?.some(item => item.productId._id === product._id) && (
+                    <div 
+                      className='md:hidden mt-5 flex border rounded-md p-2 cursor-pointer bg-royal-blue-600 text-white justify-center gap-4 text-lg font-semibold items-center'
+                      onClick={addToCartHandler}>
+                       Add to Cart
+                       <FaCartArrowDown size={24}/>
+                    </div>
+                )
+            }
 
             <div className='border border-black rounded-md mt-10'>
-                <div className='flex items-center gap-5 border-b border-black py-4 px-5'>
+                <div className='flex items-center gap-5 border-b border-black md:py-4 py-2 px-5'>
                     <div>
                         <FaTruckFast size={35}/>
                     </div>
@@ -212,7 +221,7 @@ const ProductInfo = ({product}) => {
                         <p className='text-[16px] font-medium'>Free delivery for the product more than 500rs</p>
                     </div>
                 </div>
-                <div className='flex items-center gap-5 py-4 px-5'>
+                <div className='flex items-center gap-5 md:py-4 py-2 px-5'>
                     <div>
                         <GrPowerCycle size={35}/>
                     </div>

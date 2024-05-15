@@ -47,9 +47,9 @@ const SubmitReviews = ({setReviews}) => {
 
   return (
     <div className='mt-20 mb-10 border-b  border-gray-500 pb-10'>
-        <h2 className='text-2xl font-semibold'>Submit your review</h2>
+        <h2 className='md:text-2xl text-xl font-semibold'>Submit your review</h2>
 
-        <div className='mt-10 mx-5'>
+        <div className='md:mt-10 mt-5 md:mx-5'>
             <div >
                 <p className='mb-2 text-[17px] font-medium'>Rate this product</p>
                 <Box
@@ -89,13 +89,13 @@ const SubmitReviews = ({setReviews}) => {
                     cols={10}
                     onChange={(e) => setReview(e.target.value)}
                     placeholder='write your review for the product'
-                    className='field-style w-[600px] h-[150px]'
+                    className='field-style md:w-[600px] w-[320px] h-[150px]'
                 />
             </div>
 
             <button 
                onClick={createReviewHandler}
-               className='mt-10 bg-royal-blue-600 py-2 px-7 rounded-md text-white font-medium hover:bg-royal-blue-500 trasition-all duration-200'> 
+               className='md:mt-10 mt-5 bg-royal-blue-600 md:py-2 py-[6px] md:px-7 px-5 rounded-md text-white font-medium hover:bg-royal-blue-500 trasition-all duration-200'> 
                 Submit
             </button>
         </div>

@@ -5,6 +5,11 @@ import { GoGear } from "react-icons/go";
 import { IoIosLogOut } from "react-icons/io";
 import { setToken, setUser } from '../../../redux/slices/userSlice';
 import { toast } from 'sonner';
+import { FaRegUser } from "react-icons/fa";
+import { RiDashboardLine } from "react-icons/ri"
+import { FaRegHeart } from "react-icons/fa";
+import { BsBoxSeam } from "react-icons/bs";
+import { BsFillHandbagFill } from "react-icons/bs";
 
 
 import Box from "@mui/material/Box";
@@ -52,35 +57,33 @@ const Sidebar = () => {
     <div className='min-w-[250px] sidebar-shadow min-h-[calc(100vh-3.5rem)] py-10 flex flex-col'>
         <Link to="/profile/info">
             <div className={`flex gap-2 items-center font-medium transition-all duration-200  px-5 py-2 ${matchRoute("/profile/info") ? "border-l-[5px] bg-royal-blue-50 text-royal-blue-700 border-royal-blue-500" : "border-l-[5px] border-white hover:bg-gray-100"} mr-3 rounded-r-full`}>
-                <GoGear/>
+                <FaRegUser/>
                 <p>General Information</p>
             </div>
         </Link>
 
-        {/* {
-          !user.isSeller && ( */}
-            <Link to="/profile/orders">
-                <div className={`flex gap-2 items-center font-medium transition-all duration-200 px-5 py-2 ${matchRoute("/profile/orders") ? "border-l-[5px] bg-royal-blue-50 text-royal-blue-700 border-royal-blue-500" : "border-l-[5px] border-white hover:bg-gray-100"}  mr-3 rounded-r-full`}>
-                    <GoGear/>
-                    <p>Orders</p>
-                </div>
-            </Link>
-          {/* )
-        } */}
+       
+        <Link to="/profile/orders">
+            <div className={`flex gap-2 items-center font-medium transition-all duration-200 px-5 py-2 ${matchRoute("/profile/orders") ? "border-l-[5px] bg-royal-blue-50 text-royal-blue-700 border-royal-blue-500" : "border-l-[5px] border-white hover:bg-gray-100"}  mr-3 rounded-r-full`}>
+                <BsBoxSeam/>
+                <p>Orders</p>
+            </div>
+        </Link>
+         
 
         {
           user.isSeller && (
              <div>
                 <Link to="/profile/products" >
                     <div className={`flex gap-2 items-center font-medium transition-all duration-200 px-5 py-2 ${matchRoute("/profile/products") ? "border-l-[5px] bg-royal-blue-50 text-royal-blue-700 border-royal-blue-500" : "border-l-[5px] border-white hover:bg-gray-100"}  mr-3 rounded-r-full`}>
-                      <GoGear/>
+                      <BsFillHandbagFill/>
                       <p>Products</p>
                     </div>
                 </Link>
                 
                 <Link to="/profile/dashboard" >
                     <div className={`flex gap-2 items-center font-medium transition-all duration-200 px-5 py-2 ${matchRoute("/profile/dashboard") ? "border-l-[5px] bg-royal-blue-50 text-royal-blue-700 border-royal-blue-500" : "border-l-[5px] border-white hover:bg-gray-100"}  mr-3 rounded-r-full`}>
-                      <GoGear/>
+                      <RiDashboardLine/>
                       <p>Dashboard</p>
                     </div>
                 </Link>
@@ -90,7 +93,7 @@ const Sidebar = () => {
         
         <Link to="/profile/wishlists">
             <div className={`flex gap-2 items-center font-medium transition-all duration-200 px-5 py-2 ${matchRoute("/profile/wishlists") ? "border-l-[5px] bg-royal-blue-50 text-royal-blue-700 border-royal-blue-500" : "border-l-[5px] border-white hover:bg-gray-100"}  mr-3 rounded-r-full`}>
-                <GoGear/>
+                <FaRegHeart/>
                 <p>Wishlist</p>
             </div>
         </Link>
