@@ -111,8 +111,13 @@ exports.createOrder = async (req , res) => {
                                                             $inc: { sold: 1 }  //increment the sold by 1
                                                           },
                                                           {new: true}); 
-        
-        // 2. insert the product id into userSchema
+        // 2. decreament the stock
+        const updatedProducte = await Product.findByIdAndUpdate(product._id,{
+                                                          $dec: { stocks: item.qty }  //increment the sold by 1
+                                                        },
+                                                        {new: true}); 
+
+        // 3. insert the product id into userSchema
         const user = await User.findByIdAndUpdate(id,{
                                                 $push : {
                                                   products : product._id
@@ -121,7 +126,7 @@ exports.createOrder = async (req , res) => {
                                               {new: true});
 
 
-        // 3. create an order for each product;
+        // 4. create an order for each product;
         const paymentMethod = isCOD ? "Cash" : "Card";
         const order = await Order.create({
            buyer: id,

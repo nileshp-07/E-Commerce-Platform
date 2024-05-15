@@ -321,7 +321,7 @@ const Reviews = ({avgRating}) => {
                         <div className='block md:hidden'>
                           <ProgressBar
                               completed={percentages[4-index]}
-                              height="15px"
+                              height="10px"
                               width="250px"
                               bgColor="#1D9E34"
                               labelAlignment="outside"
@@ -344,14 +344,14 @@ const Reviews = ({avgRating}) => {
       <div>
         {
            reviews?.reverse().slice( (page-1)*10 , (page-1)*10+10)?.map((review , index) => (
-             <div key={index} className={`px-4 py-8 w-[80%] ${index != reviews.length-1  && "border-b "}`}>
+             <div key={index} className={`px-4 md:py-8 py-5 md:w-[80%] ${index != reviews.length-1  && "border-b "}`}>
                 <div className='flex justify-between'>
                     <div className='flex gap-5'>
                       <img
                         src={review?.user?.profileImage}
                         alt='userImage'
                         loading='lazy'
-                        className='h-[80px] w-[80px] rounded-full'
+                        className='md:h-[80px] md:w-[80px] h-[65px] w-[65px] rounded-full'
                       />
 
                       <div className='mt-2'>
@@ -360,7 +360,7 @@ const Reviews = ({avgRating}) => {
                       </div>
                     </div>
                      
-                    <p className='font-medium text-[14px]'>{formatDate(review?.createdAt)}</p>
+                    <p className='font-medium text-[14px] mt-[10px]'>{formatDate(review?.createdAt)}</p>
                 </div>
 
                 <p className='max-w-[80%] text-gray-950 mt-2'>{review.review}</p>
@@ -371,7 +371,7 @@ const Reviews = ({avgRating}) => {
 
       {
          reviews?.length > 0 && (
-          <div className='mt-14 w-[80%] flex justify-center'>
+          <div className='mt-14 md:w-[80%] flex justify-center'>
               <Stack spacing={2}>
                 <Pagination count={totalPages} page={page} onChange={handleChange} size='large' />
               </Stack>
