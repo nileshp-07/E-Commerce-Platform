@@ -25,7 +25,7 @@ const sortOptions = [
 
 const SortOption = ({sortBy ,setSortBy}) => {
   return (
-    <div className='flex gap-2 items-center'>
+    <div className='lg:flex gap-2 items-center hidden'>
         <p className='font-medium'>Sort By: </p>
         <div className='flex gap-3'>
             {

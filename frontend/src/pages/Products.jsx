@@ -8,8 +8,32 @@ import Footer from '../components/common/Footer';
 import { searchProducts } from '../services/operations/productAPI';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 
 
+
+const sortOptions = [
+    {
+        name : "Highest Rated",
+        value : "highest_rated"
+    },
+    {
+        name : "Price: Low to High",
+        value : "lowest_price"
+    },
+    {
+        name : "Price: High to Low",
+        value : "highest_price"
+    },
+    {
+        name : "Newest First",
+        value : "newest_first"
+    },
+    {
+        name : "Most Discount",
+        value : "most_discounted"
+    }
+]
 
 const Products = () => {
   const [products, setProducts] = useState([])
@@ -31,6 +55,7 @@ const Products = () => {
       cusRating: "",
       location : []
   });
+  const [showFilter , setShowFilter] = useState(false);
 
 
   const searchProductsHandler = async () => {
@@ -97,21 +122,57 @@ const Products = () => {
 
   return (
     <div>
-        <div className='mx-10 mt-10'>
-            <h2 className='text-3xl font-semibold'>{`Showing products for "${searchQuery}"`}</h2>
-            <p className='text-[17px] text-gray-800'>{`Showing ${(page - 1)*productPerPage + 1}-${Math.min(page*productPerPage, products.length)} products of ${products.length} products`}</p>
+        <div className='md:mx-10 mx-5 md:mt-10 mt-5'>
+            <h2 className='md:text-3xl text-xl font-semibold'>{`Showing products for "${searchQuery}"`}</h2>
+            <p className='md:text-[17px] text-[16px] text-gray-800'>{`Showing ${(page - 1)*productPerPage + 1}-${Math.min(page*productPerPage, products.length)} products of ${products.length} products`}</p>
         </div>
-        <div className='mt-10 flex gap-12 px-5 pl-14 w-fit'>
-            {/* filters  */}
-            <Filters
-                filters={filters}
-                filtersData = {filtersData}
-                setFilters ={setFilters}
-            />
+        <div className='md:mt-10 mt-5 flex gap-12 px-5 md:pl-14 md:w-fit relative w-full'>
 
+            {/* filters  */}
+            <div className={`${showFilter ? "block" : "hidden"} absolute z-10 left-3 md:left-12 top-20`}>
+                <Filters
+                    filters={filters}
+                    filtersData = {filtersData}
+                    setFilters ={setFilters}
+                />
+            </div>
+
+            <div className='hidden lg:block'>
+                <Filters
+                    filters={filters}
+                    filtersData = {filtersData}
+                    setFilters ={setFilters}
+                />
+            </div>
             {/* products and sortBy  */}
-            <div>
-               <h2 className='text-2xl font-semibold mb-1'>Products</h2>
+            <div className='w-full'>
+               <h2 className='md:text-2xl text-lg font-semibold mb-1 '>Products</h2>
+               <div className='flex gap-5 lg:hidden '>
+                    <div 
+                        className={`flex gap-1 items-center py-[2px] px-3 rounded-full text-[15px] h-fit w-fit ${showFilter ? "text-royal-blue-500 bg-royal-blue-100 border border-transparent" : "border"}`}
+                        onClick={() => setShowFilter(!showFilter)}>
+                        <span>Filters</span>
+                        <HiOutlineAdjustmentsHorizontal/>
+                    </div>
+                    <div className='flex gap-2 lg:items-center overflow-scroll'>
+                        <select
+                            name="sortBy"
+                            className='flex outline-none rounded-md py-[2px] px-2 bg-[#EEEEEE] w-full h-fit'
+                            value={sortBy}
+                            onChange={(e) => setSortBy(e.target.value)}
+                            >
+                            {
+                                sortOptions.map((sort, index) => (
+                                    <option className={`text-[17px] py-1 px-3 rounded-full cursor-pointer ${sortBy === sort.value && "text-royal-blue-500 bg-royal-blue-100"}`} 
+                                        key={index}>
+                                        {sort.name}
+                                    </option>
+                                ) )
+                            }
+                        </select>
+                    </div>
+                   
+               </div>
 
                <SortOption sortBy={sortBy} setSortBy={setSortBy}/>
 
@@ -119,7 +180,7 @@ const Products = () => {
 
                {
                  products.length > 0 && (
-                    <div className='mt-14 flex justify-center'>
+                    <div className='md:mt-14 mt-8 flex justify-center'>
                         <Stack spacing={2}>
                         <Pagination count={totalPages} page={page} onChange={handleChange} size='large' />
                         </Stack>

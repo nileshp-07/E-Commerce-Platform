@@ -115,7 +115,7 @@ const indianCities = [
 ];
 
 
-const Filters = ({filters ,filtersData, setFilters}) => {
+const Filters = ({filters ,filtersData, setFilters, setShowFilters}) => {
 //   const [priceSliderValue , setPriceSliderValue] = useState([0 , 20]);
   const [filterOpen , setFilterOpen] = useState({
     brands: true,
@@ -184,12 +184,12 @@ const Filters = ({filters ,filtersData, setFilters}) => {
 console.log("Filters : ", filters);
 
   return (
-    <div className='w-[350px]'>
+    <div className='w-[367px] '>
         <div className='flex justify-between items-center px-3'>
-            <h2 className='text-2xl font-semibold'>Filters</h2>
-            <button className='font-medium text-royal-blue-500'>
+            <h2 className='text-2xl font-semibold hidden lg:block'>Filters</h2>
+            {/* <button className='font-medium text-royal-blue-500'>
                 Apply
-            </button>
+            </button> */}
         </div>
 
         <div className='rounded-md bg-gray-200 py-3 px-5'>
