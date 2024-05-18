@@ -10,7 +10,7 @@ import { RiDashboardLine } from "react-icons/ri"
 import { FaRegHeart } from "react-icons/fa";
 import { BsBoxSeam } from "react-icons/bs";
 import { BsFillHandbagFill } from "react-icons/bs";
-
+import { MdOutlineAddCircle } from "react-icons/md";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -54,7 +54,7 @@ const Sidebar = () => {
   }
 
   return (
-    <div className='min-w-[250px] sidebar-shadow min-h-[calc(100vh-3.5rem)] py-10 flex flex-col'>
+    <div className='md:min-w-[250px] w-[230px] sidebar-shadow min-h-[calc(100vh-3.5rem)] py-10 flex flex-col bg-white'>
         <Link to="/profile/info">
             <div className={`flex gap-2 items-center font-medium transition-all duration-200  px-5 py-2 ${matchRoute("/profile/info") ? "border-l-[5px] bg-royal-blue-50 text-royal-blue-700 border-royal-blue-500" : "border-l-[5px] border-white hover:bg-gray-100"} mr-3 rounded-r-full`}>
                 <FaRegUser/>
@@ -78,6 +78,13 @@ const Sidebar = () => {
                     <div className={`flex gap-2 items-center font-medium transition-all duration-200 px-5 py-2 ${matchRoute("/profile/products") ? "border-l-[5px] bg-royal-blue-50 text-royal-blue-700 border-royal-blue-500" : "border-l-[5px] border-white hover:bg-gray-100"}  mr-3 rounded-r-full`}>
                       <BsFillHandbagFill/>
                       <p>Products</p>
+                    </div>
+                </Link>
+
+                <Link to="/profile/add-product" >
+                    <div className={`flex gap-2 items-center font-medium transition-all duration-200 px-5 py-2 ${matchRoute("/profile/add-product") ? "border-l-[5px] bg-royal-blue-50 text-royal-blue-700 border-royal-blue-500" : "border-l-[5px] border-white hover:bg-gray-100"}  mr-3 rounded-r-full`}>
+                      <MdOutlineAddCircle/>
+                      <p>Add Product</p>
                     </div>
                 </Link>
                 

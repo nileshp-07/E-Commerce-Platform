@@ -48,7 +48,7 @@ const Navbar = () => {
                     <MdKeyboardArrowDown className='group-hover:rotate-180'/>
                   </div>
 
-                  <div className='lg:flex hidden  absolute lg:relative top-12 lg:top-0 lg:left-0 lg:px-0 px-5'>
+                  <div className='relative hidden lg:block'>
                     
                     <form
                       onSubmit={searchHandler}>

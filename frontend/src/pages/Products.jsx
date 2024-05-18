@@ -9,6 +9,9 @@ import { searchProducts } from '../services/operations/productAPI';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
+import { RiSearch2Line } from "react-icons/ri";
+import { useNavigate } from 'react-router-dom'
+
 
 
 
@@ -56,6 +59,16 @@ const Products = () => {
       location : []
   });
   const [showFilter , setShowFilter] = useState(false);
+  const [searchInput , setSearchInput] = useState("")
+  const navigate = useNavigate();
+
+  const searchHandler = async (e) => {
+    e.preventDefault();
+
+    console.log(searchInput)
+
+    navigate(`/search?query=${encodeURIComponent(searchInput)}`)
+  }
 
 
   const searchProductsHandler = async () => {
@@ -122,7 +135,26 @@ const Products = () => {
 
   return (
     <div>
-        <div className='md:mx-10 mx-5 md:mt-10 mt-5'>
+        <div className='w-[360px] md:w-[600px] mx-auto relative lg:hidden block my-2 lg:my-0'>  
+            <form
+                onSubmit={searchHandler}>
+                <input
+                type='text'
+                name='search'
+                id='search'
+                placeholder='what are you looking for?'
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                className='w-full h-[40px] rounded-md px-5 text-black focus:outline-gray-500 bg-royal-blue-50'
+                />
+                <button
+                type='submit'
+                className='cursor-pointer text-black absolute right-2 top-[50%] -translate-y-[50%]'>
+                <RiSearch2Line size={24}/>
+                </button>
+            </form>
+            </div>
+        <div className='md:mx-10 mx-5 lg:mt-10 mt-2'>
             <h2 className='md:text-3xl text-xl font-semibold'>{`Showing products for "${searchQuery}"`}</h2>
             <p className='md:text-[17px] text-[16px] text-gray-800'>{`Showing ${(page - 1)*productPerPage + 1}-${Math.min(page*productPerPage, products.length)} products of ${products.length} products`}</p>
         </div>
