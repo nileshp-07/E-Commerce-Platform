@@ -71,8 +71,8 @@ const OrderDetails = () => {
   
   return (
     <div className='w-full h-[calc(100vh-3.5rem)]'>
-       <div className='w-11/12 max-w-[1200px] mx-auto my-10'>
-          <h2 className='text-2xl font-semibold  mb-14'>Order Details</h2>
+       <div className='w-11/12 max-w-[1200px] mx-auto my-10 mb-10'>
+          <h2 className='text-[22px] md:text-2xl font-semibold  md:mb-14 mb-8'>Order Details</h2>
           {
              order?.deliveryStatus?.status === "Cancel Request" && (
                <div className='flex items-center gap-2 justify-end py-2 mb-4'>
@@ -81,7 +81,7 @@ const OrderDetails = () => {
                </div>
              )
           }
-          <div className='flex justify-between'>
+          <div className='flex flex-col md:flex-row gap-5 justify-between'>
               <div className=''>
                   <div className='flex gap-1'>
                     <p className='font-medium'>Order id :</p>
@@ -93,7 +93,7 @@ const OrderDetails = () => {
                     <p>{formatDate(order.createdAt)} at {timeFormatter(order.createdAt)}</p>
                   </div>
 
-                  <div className='mt-8 flex gap-10'>
+                  <div className='md:mt-8 mt-4 flex flex-col md:flex-row md:gap-10 gap-5'>
                       <div className='max-w-[350px]'>
                           <p className='font-medium text-lg'>Delivery Address</p>
                           <p>{order?.buyer?.name}</p>
@@ -114,9 +114,9 @@ const OrderDetails = () => {
                   </div>
               </div>
               <div>
-                 <div>
+                 <div className='flex flex-row md:flex-col items-center md:items-start  gap-2 md:gap-2 '>
                     <div className={`pb-[3px] px-5 ${order?.deliveryStatus?.status === "Processing" ? "bg-[#FCFFC1] text-[#FFD500]" : order?.deliveryStatus?.status === "Shipped" ? "bg-[#fff5c5] text-[#FFA500]" : order?.deliveryStatus?.status === "Cancel Request" ? "text-[#ff2323]" : order?.deliveryStatus?.status === "Cancelled" ? "bg-[#ffdddd] text-[#ff2323]" : "bg-[#e9f5e3] text-[#61a146]" } rounded-full w-fit`}>{order?.deliveryStatus?.status === "Processing" ? "Order Confirmed" : order?.deliveryStatus?.status}</div>
-                    <p className='font-medium mt-2'>at {formatDate(order?.deliveryStatus?.updatedAt)} | {timeFormatter(order?.deliveryStatus?.updatedAt)}</p>
+                    <p className='font-medium md:mt-2'>at {formatDate(order?.deliveryStatus?.updatedAt)} | {timeFormatter(order?.deliveryStatus?.updatedAt)}</p>
                  </div>
                  {
                    user.isSeller  && (
@@ -147,10 +147,10 @@ const OrderDetails = () => {
           </div>
 
           <div 
-              className='flex justify-between profile-shadow p-2 rounded-md max-w-[800px] mt-10'>
+              className='flex justify-between profile-shadow p-2 rounded-md max-w-[800px] my-10'>
               <Link to={`/product/${order?.product?._id}`}>
-                  <div className='flex gap-3 w-full' >
-                      <div className='p-8 bg-[#DCDCDC] min-h-[200px] max-h-[200px] max-w-[300px] min-w-[300px] rounded-md flex items-center justify-center'>
+                  <div className='flex flex-col md:flex-row gap-3 w-full' >
+                      <div className='p-8 bg-[#DCDCDC] min-h-[200px] max-h-[200px] md:max-w-[300px] md:min-w-[300px] rounded-md flex items-center justify-center'>
                         <img
                             src={order?.product?.thumbnail}
                             className='h-[140px] w-[250px] object-contain'
@@ -160,7 +160,7 @@ const OrderDetails = () => {
                       <div className='flex flex-col gap-[2px]'>
                         <p className='text-lg font-medium'>{order?.product?.title}</p>
                         <p className='font-medium text-gray-500 -mt-1'>{order?.product?.categories?.[0].name}</p>
-                        <p className='mt-1'>{description.length > 110 ? `${description.slice(0, 110)}...` : description}</p>
+                        <p className='mt-1 bg-royal-blue-100'>{description.length > 110 ? `${description.slice(0, 110)}...` : description}</p>
                         <div className='flex flex-col my-1'>
                             <div className='flex gap-1'>
                               <p className='font-medium'>Quantity:</p>

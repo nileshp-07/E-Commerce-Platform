@@ -67,12 +67,12 @@ const BecomeSeller = () => {
     <div className=' w-full'>
         <div className='w-11/12 max-w-[1200px] mx-auto my-6'>
             <h2 className='text-xl font-semibold'>Want to become a seller!!</h2>
-            <p className='mt-2 text-lg max-w-[60%]'>
+            <p className='mt-2 text-lg md:max-w-[60%]'>
                Excited to start selling products on our platform? Fill out the form below, 
                and we'll be in touch with you shortly to kickstart your journey as a seller!
             </p>
 
-            <div className='w-[700px] mx-auto px-7 py-3 mt-7 rounded-md border custom-shadow'>
+            <div className='md:w-[700px] mx-auto md:px-7 px-5 py-3 mt-7 rounded-md border custom-shadow'>
                <form onSubmit={submitHandler}>
                 <div className='flex flex-col'>
                     <label htmlFor='name'>Name:</label>
@@ -87,8 +87,8 @@ const BecomeSeller = () => {
                     />
                 </div>
 
-                <div className='flex gap-5 mt-3'>
-                    <div className='flex flex-col w-[48%]'>
+                <div className='flex flex-col md:flex-row gap-3 md:gap-5 mt-3'>
+                    <div className='flex flex-col md:w-[48%]'>
                         <label htmlFor='email'>Email:</label>
                         <input
                             type = "email"
@@ -101,7 +101,7 @@ const BecomeSeller = () => {
                         />
                     </div>
 
-                    <div className='flex flex-col w-[48%]'>
+                    <div className='flex flex-col md:w-[48%]'>
                         <label htmlFor='contactNumber'>Contact Number:</label>
                         <input
                             type = "Number"
@@ -127,7 +127,7 @@ const BecomeSeller = () => {
                     />
                 </div>
 
-                <div className='w-[70%] mt-3'>
+                <div className='md:w-[70%] mt-3'>
                     <div className='flex flex-col'>
                         <label htmlFor='street'>Street Address:</label>
                         <input
@@ -141,7 +141,7 @@ const BecomeSeller = () => {
                         />
                     </div>
 
-                    <div className='flex gap-5 mt-3 w-full'>
+                    <div className='flex md:gap-5 gap-3 mt-3 w-full'>
                         <div className='flex flex-col w-[48%]'>
                             <label htmlFor='city'>City:</label>
                             <input
@@ -168,7 +168,7 @@ const BecomeSeller = () => {
                         </div>
                     </div>
 
-                    <div className='flex gap-5 mt-3 w-full'>
+                    <div className='flex md:gap-5 gap-3 mt-3 w-full'>
                         <div className='flex flex-col w-[48%]'>
                             <label htmlFor='state'>State:</label>
                             <input
@@ -200,7 +200,7 @@ const BecomeSeller = () => {
                         <button
                            onClick={submitHandler}
                            type='submit' 
-                           className='py-2 px-5 text-white bg-royal-blue-500 rounded-md font-medium'>
+                           className='md:py-2 py-1 px-5 text-white bg-royal-blue-500 rounded-md font-medium'>
                             Submit
                         </button>
                     </div>

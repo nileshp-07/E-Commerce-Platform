@@ -133,7 +133,16 @@ exports.getCartItems = async (req,res) => {
 
         // fetch the cart first 
         const cartItems = await Cart.findOne({user : id})
-                                                .populate("products.productId").exec();
+                                                .populate("products.productId")
+                                                .populate({
+                                                    path : "products",
+                                                    populate: {
+                                                        path : "productId",
+                                                        populate : {
+                                                            path : "seller",
+                                                        }
+                                                    }
+                                                }).exec();
 
         if(!cartItems)
         {

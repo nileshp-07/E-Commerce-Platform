@@ -109,13 +109,13 @@ const Cart = () => {
 
             {
                 products.length > 0 ? (
-                    <div className='mt-5 flex gap-10'>
+                    <div className='mt-5 flex lg:flex-row flex-col gap-10'>
                         <div className='rounded-md bg-gray-100 p-4 flex flex-col gap-5 h-fit max-h-[570px] overflow-auto w-full'>
                             {
                                 products?.map((product, index) => (
-                                    <div key={product?.productId?._id} className={`flex justify-between ${index !== products.length - 1 && " border-b-2 border-[#d1d6d9a8]  pb-5"}`}>
-                                        <Link to={`/product/${product?.productId?._id}`} className='w-[70%]'>
-                                            <div className='flex gap-4 min-w-[70%]'>
+                                    <div key={product?.productId?._id} className={`flex flex-col md:flex-row gap-3 justify-between ${index !== products.length - 1 && " border-b-2 border-[#d1d6d9a8]  pb-5"}`}>
+                                        <Link to={`/product/${product?.productId?._id}`} className='md:w-[70%]'>
+                                            <div className='flex flex-col md:flex-row gap-4 min-w-[70%]'>
                                                 <div className='h-[150px] min-w-[150px] max-w-[150px] p-3 bg-white rounded-md'>
                                                     <img
                                                         src={product?.productId?.thumbnail}
@@ -127,7 +127,7 @@ const Cart = () => {
 
 
                                                 <div className='w-full'>
-                                                    <h2 className='text-xl font-semibold'>{product?.productId?.title}</h2>
+                                                    <h2 className='md:text-xl text-lg font-semibold'>{product?.productId?.title}</h2>
                                                     <p className='text-lg text-gray-900'>seller : {product?.productId?.seller?.name}</p>
                                                     <div className=' mt-2 flex items-center gap-2 '>
                                                     <p className='text-caribbeangreen-600 text-lg font-semibold'>Rs.{product.qty*product?.productId?.discountedPrice}</p>
@@ -154,7 +154,7 @@ const Cart = () => {
                                                 }
                                             </select>
 
-                                            <div className='flex items-center gap-1 mt-2 text-[#FF2323] hover:bg-[#FF2323] hover:text-white py-1 px-3 rounded-md border border-[#FF2323] cursor-pointer transition-all duration-200 '
+                                            <div className='flex items-center gap-1 mt-2 w-fit text-[#FF2323] hover:bg-[#FF2323] hover:text-white py-1 px-3 rounded-md border border-[#FF2323] cursor-pointer transition-all duration-200 '
                                             onClick={() => removeFromCartHandler(product?.productId?._id)}>
                                                 <p className='text-lg'>Remove</p>
                                                 <MdDelete size={24}/>
@@ -165,25 +165,25 @@ const Cart = () => {
                             }
                         </div>
                 
-                        <div className='rounded-md bg-gray-100 py-3 px-6 h-fit min-w-[350px]'>
+                        <div className='rounded-md bg-gray-100 py-3 px-6 h-fit min-w-[358px]  w-[350px]'>
                             <h2 className='text-lg font-semibold pb-4 border-b-2 border-[#E4E9EE]'>Products Summary</h2>
 
                             <div className='my-4 flex flex-col gap-1'>
-                                <div className='flex justify-between pr-10'>
+                                <div className='flex justify-between md:pr-10'>
                                     <p className='font-medium'>Total:</p>
                                     <p>Rs. {total}</p>
                                 </div>
-                                <div className='flex justify-between pr-10'>
+                                <div className='flex justify-between md:pr-10'>
                                     <p className='font-medium'>Discount:</p>
                                     <p className='text-caribbeangreen-600'>- Rs. {discount} </p>
                                 </div>
-                                <div className='flex justify-between pr-10'>
+                                <div className='flex justify-between md:pr-10'>
                                     <p className='font-medium'>Tax & Fees:</p>
                                     <p>+ Rs. 0</p>
                                 </div>
                             </div>
 
-                            <div className='pt-4 border-t-2 border-[#E4E9EE] flex justify-between pr-10'>
+                            <div className='pt-4 border-t-2 border-[#E4E9EE] flex justify-between md:pr-10'>
                                 <p className='font-medium'>Total Price:</p>
                                 <p className='text-caribbeangreen-600 font-medium'>Rs. {totalPrice}</p>
                             </div>
