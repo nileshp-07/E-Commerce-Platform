@@ -19,7 +19,7 @@ const ProfileInfo = () => {
   }
   return (
     <div className='pb-10'>
-        <h2 className='text-2xl font-semibold mb-10 py-10 '>General Information</h2>
+        <h2 className='text-2xl font-semibold lg:mb-10 py-10 '>General Information</h2>
         
         <ProfileImage user={user} setLoading = {setLoading}/>
 

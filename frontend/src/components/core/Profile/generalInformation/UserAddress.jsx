@@ -75,18 +75,18 @@ const UserAddress = ({user}) => {
 
 
   return (
-    <div className='my-20'>
+    <div className='md:my-20 my-16'>
         <div className='flex justify-between items-center'>
             <h2 className='text-xl font-semibold'>Addresses</h2>
             <div 
                 onClick={() => setisNewAddress(true)}
-                className='flex py-[6px] px-4 items-center justify-center gap-1 border border-black rounded-full mr-2 cursor-pointer font-medium'
+                className='flex md:py-[6px] py-[5px] px-4 items-center justify-center gap-1 border border-black rounded-full mr-2 cursor-pointer font-medium'
                 >
                   Add New 
                   <MdAddLocationAlt size={20} />
             </div>
         </div>
-        <div className='py-6 px-8 rounded-md border profile-shadow mt-2'>
+        <div className='md:py-6 md:px-8 py-3 px-5 rounded-md border profile-shadow mt-2'>
             {
                (addresses.length < 1 && !isNewAddress) && (
                     <div className='w-full h-[100px] flex items-center justify-center'>

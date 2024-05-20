@@ -90,10 +90,10 @@ const Address = ({addr, isNewAddress, setNewAddress, setLoading}) => {
   }
   
   return (
-    <div className='p-6 rounded-md border mb-7'>
+    <div className='md:p-6 p-4 rounded-md border mb-7'>
         {
             !isNewAddress && (
-                <div className='flex justify-end gap-5 mb-2 -mt-2'>
+                <div className='flex justify-end md:gap-5 gap-2 mb-2 -mt-2'>
                     <button
                     onClick={() => setIsEdit(true)}
                     disabled={isEdit}
@@ -119,12 +119,12 @@ const Address = ({addr, isNewAddress, setNewAddress, setLoading}) => {
                         disabled={!isEdit && !isNewAddress}
                         value={address.street}
                         onChange={changeHandler}
-                        className='px-[10px] py-[13px] border border-gray-400 rounded-md bg-white w-full'
+                        className='px-[10px] py-[10px] border border-gray-400 rounded-md bg-white w-full'
                     />
                 </div>
             </div>
 
-            <div className='flex gap-10 mt-6'>
+            <div className='flex md:gap-10 gap-5 mt-6'>
                 <div className='w-[50%] relative'>
                     <label htmlFor='city' className='absolute left-5 -top-[13px] bg-white'>City</label>
                     <div>
@@ -134,7 +134,7 @@ const Address = ({addr, isNewAddress, setNewAddress, setLoading}) => {
                             disabled={!isEdit && !isNewAddress}
                             value={address.city}
                             onChange={changeHandler}
-                            className='px-[10px] py-[13px] border border-gray-400  rounded-md bg-white w-full'
+                            className='px-[10px] py-[10px] border border-gray-400  rounded-md bg-white w-full'
                         />
                     </div>
                 </div>
@@ -147,13 +147,13 @@ const Address = ({addr, isNewAddress, setNewAddress, setLoading}) => {
                             disabled={!isEdit && !isNewAddress}
                             value={address.postalCode}
                             onChange={changeHandler}
-                            className='px-[10px] py-[13px] border border-gray-400  rounded-md bg-white w-full'
+                            className='px-[10px] py-[10px] border border-gray-400  rounded-md bg-white w-full'
                         />
                     </div>
                 </div>
             </div>
 
-            <div className='flex gap-10 mt-6'>
+            <div className='flex md:gap-10 gap-5 mt-6'>
                 <div className='w-[50%] relative'>
                     <label htmlFor='state' className='absolute left-5 -top-[13px] bg-white'>State</label>
                     <div>
@@ -163,7 +163,7 @@ const Address = ({addr, isNewAddress, setNewAddress, setLoading}) => {
                             value={address.state}
                             onChange={changeHandler}
                             disabled={!isEdit && !isNewAddress}
-                            className='px-[10px] py-[13px] border border-gray-400  rounded-md bg-white w-full'
+                            className='px-[10px] py-[10px] border border-gray-400  rounded-md bg-white w-full'
                         />
                     </div>
                 </div>
@@ -175,7 +175,7 @@ const Address = ({addr, isNewAddress, setNewAddress, setLoading}) => {
                             name='country'
                             value={"India"}
                             disabled
-                            className='px-[10px] py-[13px] border border-gray-400  rounded-md bg-white w-full'
+                            className='px-[10px] py-[10px] border border-gray-400  rounded-md bg-white w-full'
                         />
                     </div>
                 </div>
@@ -183,19 +183,19 @@ const Address = ({addr, isNewAddress, setNewAddress, setLoading}) => {
 
             {
                 isEdit && (
-                    <div className='mt-3 flex justify-end gap-3'>
+                    <div className='mt-5 flex justify-end gap-3'>
                         <button 
                             onClick={() => {
                                 setIsEdit(false);
                                 setAddress(addr)
                             }}
-                            className='py-2 px-4 rounded-md border'>
+                            className='md:py-2 py-1 px-4 rounded-md border'>
                             Cancel
                         </button>
 
                         <button 
                             onClick={updateAddress}
-                            className='py-2 px-4 rounded-md bg-royal-blue-500 text-white'>
+                            className='md:py-2 py-1 px-4 rounded-md bg-royal-blue-500 text-white'>
                             Save Changes
                         </button>
                     </div>

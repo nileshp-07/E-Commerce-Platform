@@ -27,10 +27,10 @@ const ProductLists = ({loading, products, page}) => {
                       <ProductCard product={product} key={product._id}/>
                     ))
                    ) : (
-                     <div className='flex items-center justify-center w-[900px]'>
+                     <div className='flex items-center justify-center lg:w-[900px] md:w-[750px] w-[350px] my-5'>
                         <img
                             src={ProductsNotFound}
-                            className='object-contain h-[650px] w-[650px]'
+                            className='object-contain md:h-[650px] h-[300px] w-[300px] md:w-[650px]'
                         />
                      </div>
                    )

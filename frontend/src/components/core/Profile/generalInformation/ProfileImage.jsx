@@ -31,11 +31,11 @@ const ProfileImage = ({user, setLoading}) => {
   }
 
   return (
-    <div className='py-6 px-8 border rounded-md flex items-center gap-5 profile-shadow' >
+    <div className='md:py-6 py-4 md:px-8 px-5 border rounded-md flex items-center gap-5 profile-shadow' >
         <div>
             <img
                 src={image ? URL.createObjectURL(image) : user.profileImage}
-                className='h-[120px] w-[120px] aspect-square rounded-full border'
+                className='md:h-[120px] md:w-[120px] h-[80px] w-[80px] aspect-square rounded-full border'
             />
         </div>
         <div>
@@ -51,7 +51,7 @@ const ProfileImage = ({user, setLoading}) => {
             <div className='flex gap-5'>
                 <button 
                     onClick={() => inputRef.current.click()}
-                    className='py-[6px] px-4 bg-royal-blue-500 rounded-md text-white mt-3'>
+                    className='md:py-[6px] py-[5px] px-4 bg-royal-blue-500 rounded-md text-white mt-3'>
                     Change
                 </button>
 
@@ -59,7 +59,7 @@ const ProfileImage = ({user, setLoading}) => {
                     image && (
                         <button 
                             onClick={changeProfileImage}
-                            className='py-[6px] px-4 bg-royal-blue-500 rounded-md text-white mt-3'>
+                            className='py-[5px] px-4 bg-royal-blue-500 rounded-md text-white mt-3'>
                             Upload
                         </button>
                     )

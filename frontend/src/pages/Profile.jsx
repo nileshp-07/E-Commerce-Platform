@@ -14,13 +14,15 @@ const Profile = () => {
            showSideBar ? (
             <div 
               onClick={() => setShowSideBar(false)}
-              className='block lg:hidden absolute top-2 left-2 z-[1000]'>
+              className='block lg:hidden absolute p-2 pr-4 pb-4 top-[-1px] left-[-1px] bg-royal-blue-500 text-white z-[1000]'
+              style={{ borderRadius: '0% 100% 100% 0% / 100% 0% 100% 0%'}}>
                <RiMenuFoldLine size={22}/>
             </div>
            ) : (
             <div
             onClick={() => setShowSideBar(true)} 
-            className='block lg:hidden absolute top-2 left-2'>
+            className='block lg:hidden absolute top-[-1px] left-[-1px] p-2 pr-4 pb-4 z-[10] bg-royal-blue-500 text-white'
+            style={{ borderRadius: '0% 100% 100% 0% / 100% 0% 100% 0%'}}>
                 <RiMenuFill size={22}/>
             </div>
            )

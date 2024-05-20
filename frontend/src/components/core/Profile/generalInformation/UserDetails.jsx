@@ -51,22 +51,22 @@ const UserDetails = ({user, setLoading}) => {
     };
 
   return (
-    <div className='mt-20'>
+    <div className='md:mt-20 mt-16'>
         <div className='flex justify-between items-center mb-3'>
             <h2 className='text-xl font-semibold'>Profile Details</h2>
             {
                 !isEdit  && (
                     <button 
                         onClick={() => setIsEdit(true)}    
-                        className='py-[6px] px-4 bg-royal-blue-500 rounded-md text-white'>
+                        className='md:py-[6px] py-[5px] px-5  bg-royal-blue-500 rounded-md text-white'>
                         Edit
                     </button>
                 )
             }
         </div>
-        <div className='py-6 px-10 rounded-md border profile-shadow'>
-            <div className='flex justify-between gap-10'>
-                <div className='flex flex-col w-[50%]'>
+        <div className='md:py-6 py-3 md:px-10 px-6 rounded-md border profile-shadow'>
+            <div className='flex md:flex-row flex-col justify-between md:gap-10 gap-5'>
+                <div className='flex flex-col md:w-[50%]'>
                     <label htmlFor='name'>Name:</label>
                     <input
                         type='text'
@@ -78,7 +78,7 @@ const UserDetails = ({user, setLoading}) => {
                     />
                 </div>
 
-                <div className='flex flex-col w-[50%]'>
+                <div className='flex flex-col md:w-[50%]'>
                     <label htmlFor='email'>Email:</label>
                     <input
                         type='email'
@@ -91,7 +91,7 @@ const UserDetails = ({user, setLoading}) => {
                 </div>
             </div>
 
-            <div className='flex justify-between gap-10 mt-5'>
+            <div className='flex justify-between md:gap-10 gap-5 mt-5'>
                 <div className='flex flex-col w-[50%]'>
                     <label htmlFor='dateOfBirth'>Date of Birth:</label>
                     <input
@@ -121,7 +121,7 @@ const UserDetails = ({user, setLoading}) => {
                 </div>
             </div>
 
-            <div className='flex flex-col w-[48%] mt-5'>
+            <div className='flex flex-col md:w-[48%] mt-5'>
                 <label htmlFor='contactNumber'>Contact Number:</label>
                 <div className='flex gap-2'>
                     <select
@@ -145,7 +145,7 @@ const UserDetails = ({user, setLoading}) => {
                 <label htmlFor='contactNumber'>About:</label>
                 <textarea
                     name='about'
-                    className='w-full h-[130px] field-style'
+                    className='w-full md:h-[130px] h-[100px] field-style'
                     placeholder='Write about yourself..'
                     onChange={changeHandler}
                     value={isEdit ? formData.about : user.profileDetails.bio}
@@ -157,13 +157,13 @@ const UserDetails = ({user, setLoading}) => {
                     <div className='flex justify-end gap-5 mt-4'>
                         <button 
                             onClick={() => setIsEdit(false)}    
-                            className='py-[6px] px-4 border rounded-md text-black'>
+                            className='md:py-[6px] py-[5px] px-4 border rounded-md text-black'>
                             Cancel
                         </button>
 
                         <button 
                             onClick={editProfileDetails}    
-                            className='py-[6px] px-4 bg-royal-blue-500 rounded-md text-white'>
+                            className='md:py-[6px] py-[5px] px-4 bg-royal-blue-500 rounded-md text-white'>
                             Save Changes
                         </button>
             

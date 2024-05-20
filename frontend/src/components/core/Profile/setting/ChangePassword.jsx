@@ -26,10 +26,10 @@ const ChangePassword = () => {
     }
   return (
     <div>
-       <div className='profile-shadow rounded-md py-6 px-10 border'>
+       <div className='profile-shadow rounded-md md:py-6 py-3 md:px-10 px-6 border'>
            <h2 className='text-xl font-semibold mb-5'>Change Password</h2>              
-                <div className='flex gap-5'>
-                    <div className='flex flex-col relative w-[50%]'>
+                <div className='flex md:flex-row flex-col gap-5'>
+                    <div className='flex flex-col relative md:w-[50%]'>
                         <label htmlFor='password'>Current Password:</label>
                         <input
                             type={showPassword ? "text" : "password"}
@@ -50,7 +50,7 @@ const ChangePassword = () => {
                         </span>
                     </div>
 
-                    <div className='flex flex-col relative w-[50%]'>
+                    <div className='flex flex-col relative md:w-[50%]'>
                         <label htmlFor='confirmPassword'>New password:</label>
                         <input
                             type={showNewPassword ? "text" : "password"}
@@ -75,7 +75,7 @@ const ChangePassword = () => {
                 <div className='flex justify-end mt-8'>
                     <button 
                        onClick={handleChangePassword}
-                       className='py-2 px-4 rounded-md bg-royal-blue-500 text-white font-medium'>
+                       className='md:py-2 py-1 px-4 rounded-md bg-royal-blue-500 text-white font-medium'>
                        Update Password
                     </button>
                 </div>
