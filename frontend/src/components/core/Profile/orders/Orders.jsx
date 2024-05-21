@@ -65,7 +65,7 @@ const Orders = () => {
            <div className='flex items-center gap-2 justify-end mt-4'>
               <p className='font-medium'>Sort Orders By:</p>
               <select name='deliveryStatus'
-                      className='flex outline-none rounded-md py-2 px-4 bg-[#EEEEEE]'
+                      className='flex outline-none rounded-md py-2 md:px-4 px-2 bg-[#EEEEEE]'
                       onChange={sortOrdersByStatus} >
                   <option value="Select Status">Select Status</option>
                   {

@@ -35,49 +35,51 @@ const ProductCards = ({products, heading, isBestDeal}) => {
         )
     }
   return (
-    <div className='md:my-20 my-10'>
+    <div className='md:my-20 my-10 w-11/12 max-w-[1200px] mx-auto'>
          <div className='flex items-center gap-2 mb-5'>
             <div className='md:w-[13px] w-[10px] md:h-[35px] h-[28px] bg-royal-blue-500 rounded-[4px]'></div>
             <h2 className='md:text-[26px] text-[22px] font-semibold'>{heading}</h2>
          </div>
 
 
-          <Swiper
-            slidesPerView={4}
-            spaceBetween={-20}
-            autoplay={{
-                delay: 2000,
-                disableOnInteraction: false,
-            }}
-            breakpoints={{
-                300: {
-                    slidesPerView: 2,
-                    // spaceBetween: 10,
-                },
-                768: {
-                    slidesPerView: 3,
-                    // spaceBetween: 20,
-                },
-                1024: {
-                    slidesPerView: 4,
-                    spaceBetween: -50,
-                },
-                }}
-            // loop={true}
-            freeMode = {true}
-            //    modules={[Autoplay,FreeMode]}
-            //    modules={[FreeMode]}
-            >
-                {
-                    products && products.map((product, id) => (
-                     <SwiperSlide key={id}
-                        className='lg:m-4 m-[10px] lg:mr-10'
-                        >
-                        <ProductCard product={product} isBestDeal={isBestDeal}/>
-                    </SwiperSlide>
-                    ))
-                }
-          </Swiper>
+           <div className='mx-[-10px]'>
+                <Swiper
+                    // slidesPerView={4}
+                    // spaceBetween={-20}
+                    autoplay={{
+                        delay: 2000,
+                        disableOnInteraction: false,
+                    }}
+                    breakpoints={{
+                        300: {
+                            slidesPerView: 2,
+                            spaceBetween: -25,
+                        },
+                        768: {
+                            slidesPerView: 4,
+                            spaceBetween: -40,
+                        },
+                        1024: {
+                            slidesPerView: 4,
+                            spaceBetween: -70,
+                        },
+                        }}
+                    // loop={true}
+                    freeMode = {true}
+                    //    modules={[Autoplay,FreeMode]}
+                    //    modules={[FreeMode]}
+                    >
+                        {
+                            products && products.map((product, id) => (
+                            <SwiperSlide key={id}
+                                className='lg:m-4 m-[10px] lg:mr-10 py-[10px]'
+                                >
+                                <ProductCard product={product} isBestDeal={isBestDeal}/>
+                            </SwiperSlide>
+                            ))
+                        }
+                </Swiper>
+           </div>
         </div>
   )
 }

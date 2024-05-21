@@ -69,17 +69,17 @@ const Checkout = () => {
   
   return ( 
     <div className='h-full w-full'>
-      <div className='w-11/12 max-w-[1200px] flex justify-between mx-auto my-10'>
-        <div className='w-full'>
+      <div className='w-11/12 max-w-[1200px] flex flex-col md:flex-row lg:gap-0 gap-10 justify-between mx-auto my-10'>
+        <div className='w-full '>
           <h2 className='text-2xl font-semibold mb-8'>General Information</h2>
           
-          <div className='flex flex-col gap-3'>
+          <div className='flex flex-col gap-3 w-[350px] md:w-[400px] lg:w-[800px]'>
             <div className='flex flex-col gap-[2px]'>
                 <label htmlFor='name' className='font-medium'>Name</label>
                 <input
                   type='text'
                   name='name'
-                  className='field-style w-[70%] text-gray-600'
+                  className='field-style lg:w-[70%] text-gray-600'
                   value={user.name}
                   disabled
                 />
@@ -89,7 +89,7 @@ const Checkout = () => {
                 <input
                   type='email'
                   name='email'
-                  className='field-style w-[70%] text-gray-600'
+                  className='field-style lg:w-[70%] text-gray-600'
                   value={user.email}
                   disabled
                 />
@@ -99,7 +99,7 @@ const Checkout = () => {
                 <input
                   type='Number'
                   name='contactNumber'
-                  className='field-style w-[70%]'
+                  className='field-style lg:w-[70%]'
                   value={contactNumber}
                   onChange={(e) => setContactNumber(e.target.value)}
                 />
@@ -110,7 +110,7 @@ const Checkout = () => {
                   type='text'
                   name='street'
                   value={selectedAddress.street}
-                  className='field-style w-[70%]'
+                  className='field-style lg:w-[70%]'
                 />
             </div>
 
@@ -121,7 +121,7 @@ const Checkout = () => {
                       type='text'
                       name='city'
                       value={selectedAddress.city}
-                      className='field-style'
+                      className='field-style w-full'
                     />
                 </div>
                 <div className='flex flex-col gap-[2px]'>
@@ -130,7 +130,7 @@ const Checkout = () => {
                       type='email'
                       name='postalCode'
                       value={selectedAddress.postalCode}
-                      className='field-style'
+                      className='field-style w-full'
                     />
                 </div>
             </div>
@@ -142,7 +142,7 @@ const Checkout = () => {
                     type='email'
                     name='state'
                     value={selectedAddress.state}
-                    className='field-style'
+                    className='field-style w-full'
                   />
               </div>
               <div className='flex flex-col gap-[2px]'>
@@ -151,7 +151,7 @@ const Checkout = () => {
                     type='email'
                     name='country'
                     value={selectedAddress.country}
-                    className='field-style'
+                    className='field-style w-full'
                   />
               </div>
             </div>
@@ -162,7 +162,7 @@ const Checkout = () => {
           <div className='flex flex-col gap-5 mt-3'>
             {
               addreses?.map((address) => (
-                 <div key={address._id} className={`border rounded-md w-fit min-w-[500px] py-3 px-5 cursor-pointer`}
+                 <div key={address._id} className={`border rounded-md w-fit lg:min-w-[500px] py-3 px-5 cursor-pointer`}
                       onClick={() => 
                       setSelectedAddress({
                         street : address?.street,
@@ -203,7 +203,7 @@ const Checkout = () => {
           </div>
         </div>
 
-        <div className='w-[550px] h-fit max-h-[500px] border rounded-md p-3  flex flex-col justify-between'>
+        <div className='md:w-[550px] md:mt-20 mt-0 h-fit max-h-[500px] border rounded-md p-3  flex flex-col justify-between'>
             <div className=' overflow-y-scroll'>
               {
                  order.map((product, index) => (

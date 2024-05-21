@@ -113,7 +113,7 @@ const ProductImages = ({setStep}) => {
         <div>
             {
               thumbnail ? (
-                <div className='w-[300px] h-[180px] mt-3 rounded-md relative group'>
+                <div className='w-[350px] h-[190px] mt-3 rounded-md relative group'>
                    <img
                     src = {isEdit ? thumbnail  : URL.createObjectURL(thumbnail)}
                      alt='thumbnail'
@@ -129,7 +129,7 @@ const ProductImages = ({setStep}) => {
                ) : (
               <div 
                 onClick={() => thumbnailRef.current.click()}
-                className='w-[300px] h-[180px] mt-3 rounded-md flex flex-col items-center justify-center gap-3 bg-royal-blue-50 text-royal-blue-500 cursor-pointer'>
+                className='w-[350px] h-[190px] mt-3 rounded-md flex flex-col items-center justify-center gap-3 bg-royal-blue-50 text-royal-blue-500 cursor-pointer'>
                   <FiUpload size={30}/>
                   <p className='text-[18px] font-medium '>
                     choose thumbnail
@@ -150,7 +150,7 @@ const ProductImages = ({setStep}) => {
        
 
         <h2 className='font-medium mt-10 mb-3'>Add product photos (max 5)</h2>
-        <div className='border-dashed border-[3px] py-5 px-8 grid grid-cols-3 gap-x-5 gap-y-3'>
+        <div className='border-dashed border-[3px] py-5 px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-3'>
             <input
                 type='file'
                 name='images'
@@ -172,8 +172,7 @@ const ProductImages = ({setStep}) => {
                images.map((image , index) => (
                 <div className='w-[300px] h-[180px] rounded-md relative group' key={index}>
                    <img
-                    //  src = {isEdit ? image : URL.createObjectURL(image)}
-                    src={image}
+                     src = {isEdit ? image : URL.createObjectURL(image)}
                      alt='productImage'
                      loading='lazy'
                      className='w-full h-full rounded-md object-contain p-2'
@@ -197,7 +196,7 @@ const ProductImages = ({setStep}) => {
 
         {
           isEdit ? ( 
-            <div className='my-9 mx-auto flex justify-end px-16'>
+            <div className='my-9 mx-auto flex justify-end md:px-16'>
                 <button 
                   onClick={handleSaveChanges}
                   className=' flex items-center gap-2 py-1 pt-2 px-5 bg-royal-blue-500 rounded-md text-white'>
@@ -205,7 +204,7 @@ const ProductImages = ({setStep}) => {
                 </button>
             </div>
           ) : (
-            <div className='my-9 mx-auto flex justify-end px-16'>
+            <div className='my-9 mx-auto flex justify-end md:px-16'>
                 <button 
                   onClick={handleAddProduct}
                   className=' flex items-center gap-2 py-1 pt-2 px-5 bg-royal-blue-500 rounded-md text-white'>

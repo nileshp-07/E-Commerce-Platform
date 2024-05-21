@@ -28,9 +28,9 @@ const Login = () => {
     }
   return (
     <div className='grid place-items-center h-[calc(100vh-3.5rem)]'>
-        <div className='min-h-[500px] lg:w-[1000px] px-16 py-12 custom-shadow rounded-xl flex justify-between'>
+        <div className='md:min-h-[500px] lg:w-[1000px] md:w-[500px] w-[350px] md:px-16 px-8  md:py-12 py-6 custom-shadow rounded-xl flex justify-between'>
             <div className='flex flex-col gap-4 justify-center'>
-                <div className='text-3xl font-semibold mb-2'>
+                <div className='md:text-3xl text-2xl font-semibold mb-2'>
                     <span className='text-royal-blue-500'>Welcome Back!</span>
                     <p>Login to Access Your World</p>
                 </div>

@@ -84,7 +84,7 @@ const HomePage = () => {
         {/* product swiper  */}
         <ProductImageSlider/>
         
-         <div className='w-11/12 max-w-[1200px] mx-auto'>
+         <div className=''>
             
             <Categories/>
 

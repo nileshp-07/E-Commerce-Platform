@@ -22,32 +22,32 @@ const AddProducts = () => {
                 isEdit ? "Edit Product" : "Add Product"
             }
         </h2>
-        <div className='flex justify-between w-[600px] mx-auto items-center'>
+        <div className='flex justify-between md:w-[600px] w-[350px] mx-auto items-center'>
 
             <div className='flex flex-col items-center'>
                 <div 
-                    className={`p-3 relative rounded-full w-fit  ${step === 1 ? "bg-royal-blue-500 text-white" : "bg-royal-blue-100 text-royal-blue-600"}`}>
-                    <BiEdit size={30}/>
+                    className={`md:p-3 p-2 relative rounded-full w-fit  ${step === 1 ? "bg-royal-blue-500 text-white" : "bg-royal-blue-100 text-royal-blue-600"}`}>
+                    <BiEdit className='md:text-[30px] text-[27px]'/>
                     {
                         step > 1 && (
                             <div  className='absolute  left-[60%] bottom-[-2px]'>
                                 <img
                                     src={doneIcon}
-                                    className='h-[25px] w-[25px] aspect-square'
+                                    className='md:h-[25px] md:w-[25px] h-[20px] w-[20px] aspect-square'
                                 />
                             </div>
                         )
                     }
 
-                    <p className={`w-[250px] border-dashed border-b-[3px]  absolute z-[-10] left-10 bottom-6 ${step > 1 ? "border-royal-blue-600" : "border-royal-blue-300"}`}></p>
+                    <p className={`md:w-[250px] w-[110px] border-dashed border-b-[3px]  absolute z-[-10] left-10 md:bottom-6 bottom-5 ${step > 1 ? "border-royal-blue-600" : "border-royal-blue-300"}`}></p>
                 </div>
                 <p className='font-medium mt-1'>Description</p>
             </div>
 
 
            <div className='flex flex-col items-center'>
-                <div className={`p-3 relative rounded-full w-fit  ${step === 2 ? "bg-royal-blue-500 text-white" : "bg-royal-blue-100 text-royal-blue-600"}`}>
-                    <TbCategoryPlus size={30}/>
+                <div className={`md:p-3 p-2 relative rounded-full w-fit  ${step === 2 ? "bg-royal-blue-500 text-white" : "bg-royal-blue-100 text-royal-blue-600"}`}>
+                    <TbCategoryPlus className='md:text-[30px] text-[27px]'/>
                     {
                         step > 2 && (
                             <div className='absolute  left-[60%] bottom-[-2px]'>
@@ -58,15 +58,15 @@ const AddProducts = () => {
                             </div>
                         )
                     }
-                    <p className={`w-[250px] border-dashed border-b-[3px] border-royal-blue-600 absolute z-[-10] left-10 bottom-6 ${step > 2 ? "border-royal-blue-600" : "border-royal-blue-300"}`}></p>
+                    <p className={`md:w-[250px] w-[110px] border-dashed border-b-[3px] absolute z-[-10] left-10 md:bottom-6 bottom-5 ${step > 2 ? "border-royal-blue-600" : "border-royal-blue-300"}`}></p>
                 </div>
                 <p className='font-medium mt-1'>Categories</p>
            </div>
 
 
             <div className='flex flex-col items-center'>
-                <div className={`p-3 relative rounded-full w-fit ${step === 3 ? "bg-royal-blue-500 text-white" : "bg-royal-blue-100 text-royal-blue-600"}`}>
-                    <MdOutlineAddPhotoAlternate size={30}/>
+                <div className={`md:p-3 p-2 relative rounded-full w-fit ${step === 3 ? "bg-royal-blue-500 text-white" : "bg-royal-blue-100 text-royal-blue-600"}`}>
+                    <MdOutlineAddPhotoAlternate className='md:text-[30px] text-[27px]'/>
                     {
                         step > 3 && (
                             <div className='absolute  left-[60%] bottom-[-2px]'>
@@ -83,7 +83,7 @@ const AddProducts = () => {
 
         </div>
         
-        <div className='mt-14'>
+        <div className='md:mt-14 mt-10'>
             {
                 step == 1 ? (<ProductDescription setStep= {setStep}/>) : 
                             (step == 2 ? (<Categories setStep={setStep}/>) : (<ProductImages setStep={setStep}/>))

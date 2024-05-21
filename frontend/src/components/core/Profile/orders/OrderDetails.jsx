@@ -70,7 +70,7 @@ const OrderDetails = () => {
   }
   
   return (
-    <div className='w-full h-[calc(100vh-3.5rem)]'>
+    <div className='w-full min-h-[calc(100vh-3.5rem)]'>
        <div className='w-11/12 max-w-[1200px] mx-auto my-10 mb-10'>
           <h2 className='text-[22px] md:text-2xl font-semibold  md:mb-14 mb-8'>Order Details</h2>
           {
@@ -120,20 +120,20 @@ const OrderDetails = () => {
                  </div>
                  {
                    user.isSeller  && (
-                     <div className='mt-5'>
-                       <p className='text-lg'>Change Delivery Status</p>
-                       <div className='flex flex-col gap-2 items-end'>
-                       <select
-                          name='deliveryStatus'
-                          className='flex outline-none rounded-md py-2 px-4 bg-[#EEEEEE] w-full mt-2'
-                          value={selectedStatus} // Set the value to the current status
-                          onChange={(e) => setSelectedStatus(e.target.value)} // Update the current status when a different option is selected
-                          >
-                          {/* Map through delivery statuses to create options */}
-                          {deliveryStatus.map((status, index) => (
-                            <option key={index} value={status} selected={status === order?.deliveryStatus?.status}>{status}</option>
-                          ))}
-                        </select>
+                     <div className='mt-10 md:mt-5'>
+                       <p className='text-lg font-medium'>Change Delivery Status</p>
+                       <div className='flex flex-row md:flex-col gap-5 md:gap-2 md:items-end items-start mt-2'>
+                        <select
+                            name='deliveryStatus'
+                            className='outline-none rounded-md py-2 px-4 bg-[#EEEEEE] w-fit md:w-full'
+                            value={selectedStatus} // Set the value to the current status
+                            onChange={(e) => setSelectedStatus(e.target.value)} // Update the current status when a different option is selected
+                            >
+                            {/* Map through delivery statuses to create options */}
+                            {deliveryStatus.map((status, index) => (
+                              <option key={index} value={status} selected={status === order?.deliveryStatus?.status}>{status}</option>
+                            ))}
+                          </select>
                           <button 
                             onClick={deliveryStatusChangeHandler}
                             className='py-2 w-fit px-4 rounded-md bg-royal-blue-500 text-white'>

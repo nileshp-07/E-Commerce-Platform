@@ -78,19 +78,20 @@ const SignUp = () => {
         setTermAndPolicy(false);
     }
   return (
-    <div className='flex justify-center items-center min-h-[calc(100vh-3.5rem)]'>
+    <div className='flex justify-center items-center min-h-[calc(100vh-3.5rem)] my-5'>
 
-        <div className='lg:w-[1000px] lg:min-h-[500px] px-16 py-12 rounded-xl flex justify-between custom-shadow ' >
+        <div className='lg:w-[1000px] md:w-[500px] w-[350px] lg:min-h-[500px]  md:px-16 px-8  md:py-12 py-6 rounded-xl flex justify-between custom-shadow ' >
             <img
                 src={signUpImage}
                 alt='signupImage'
                 loading='lazy'
                 width={340}
                 height={570}
+                className='hidden lg:block'
             />
 
             <div className='flex flex-col items-center'>
-                <h2 className='text-3xl font-semibold mb-5'>
+                <h2 className='md:text-3xl text-2xl font-semibold mb-5'>
                    Fashion Awaits Your Signature <br/>
                    <span className='text-royal-blue-500'>Join Now for Exclusive Offers!</span>
                 </h2>

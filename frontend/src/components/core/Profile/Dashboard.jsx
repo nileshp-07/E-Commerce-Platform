@@ -42,7 +42,7 @@ const Dashboard = () => {
           <h2 className='text-xl font-medium'>Total Revenue</h2>
           <p className='text-2xl text-[#037957] font-bold'>Rs. {totalRevenue}</p>
 
-          <div className='flex gap-5 mt-7'>
+          <div className='flex flex-col md:flex-row gap-5 mt-7'>
               <div className='relative h-[160px] w-[350px] rounded-md bg-[linear-gradient(to_right,#6BAAFC,#305FEC)]  overflow-hidden'>
                   <p className='text-[22px] font-semibold text-white absolute top-5 left-8'>Orders Delivered </p>
                   <img
@@ -71,20 +71,38 @@ const Dashboard = () => {
               </div>
           </div>
 
-          <div className='mt-20'>
+          <div className='mt-20 hidden md:block' >
             <p className='text-2xl font-semibold'>Products Revenue</p>
             <p className=' mb-10 text-[18px]'>revenue from the top 10 highest-earning products</p>
-            <PieChart
-              series={[
-                {
-                  data,
-                  highlightScope: { faded: 'global', highlighted: 'item' },
-                  faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
-                  cx: 250,
-                },
-              ]}
-              height={500}
-            />
+            <div className='lg:block hidden'>
+              <PieChart
+                series={[
+                  {
+                    data,
+                    highlightScope: { faded: 'global', highlighted: 'item' },
+                    faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
+                    cx: 250,
+                  },
+                ]}
+                height={500}
+              />
+            </div>
+            <div className='lg:hidden block overflow-hidden'>
+              <PieChart
+                series={[
+                  {
+                    data,
+                    highlightScope: { faded: 'global', highlighted: 'item' },
+                    faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
+                    cx: 200,
+                  },
+                ]}
+                height={350}
+                width={850}
+
+                
+              />
+            </div>
           </div>
        </div>
     </div>

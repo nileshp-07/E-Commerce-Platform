@@ -45,7 +45,7 @@ const categories = [
 
 const Categories = () => {
   return (
-    <div className='md:my-20 my-10'>
+    <div className='w-11/12 max-w-[1200px] mx-auto md:my-20 my-10'>
 
         <div className='flex items-center gap-2 md:mb-10 mb-5'>
             <div className='md:w-[13px] w-[10px] md:h-[35px] h-[28px] bg-royal-blue-500 rounded-[4px]'></div>

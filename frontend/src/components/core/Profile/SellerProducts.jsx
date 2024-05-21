@@ -9,6 +9,8 @@ import {useNavigate} from "react-router-dom"
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { deleteProduct } from '../../../services/operations/productAPI';
+import { MdMode, MdModeEdit } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 
 const style = {
   position: "absolute",
@@ -73,7 +75,7 @@ const SellerProducts = () => {
 
   return (
     <div className='my-10'>
-       <h2 className='text-2xl font-semibold mb-8'>Products</h2>
+       <h2 className='text-2xl font-semibold md:mb-8 mb-5'>Products</h2>
         
         <div className='flex flex-col gap-5 items-center justify-center'>
           {
@@ -81,20 +83,20 @@ const SellerProducts = () => {
                 (
                    products.map((product) => (
                      <div key={product._id}
-                          className='flex justify-between profile-shadow p-2 rounded-md'>
-                        <Link to={`/product/${product._id}`} className='max-w-[80%]'>
-                            <div className='flex gap-3 w-full' >
-                                <div className='p-8 bg-[#DCDCDC] min-h-[200px] max-h-[200px] max-w-[300px] min-w-[300px] rounded-md flex items-center justify-center'>
+                          className='relative flex justify-between profile-shadow p-2 rounded-md'>
+                        <Link to={`/product/${product._id}`} className='md:max-w-[80%]'>
+                            <div className='flex flex-col md:flex-row gap-3 w-full' >
+                                <div className='p-8 bg-[#DCDCDC] min-h-[200px] max-h-[200px] md:max-w-[300px] md:min-w-[300px] w-full rounded-md flex items-center justify-center'>
                                   <img
                                       src={product?.thumbnail}
-                                      className='h-[140px] w-[250] object-contain'
+                                      className='h-[140px] md:w-[250] w-full object-contain'
                                       style={{ mixBlendMode: 'multiply' }}
                                   />
                                 </div>
                                 <div className='flex flex-col gap-[2px]'>
                                   <p className='text-lg font-medium'>{product?.title}</p>
                                   <p className='font-medium text-gray-500 -mt-1'>{product?.categories?.[0].name}</p>
-                                  <p className='mt-1'>{description.length > 110 ? `${description.slice(0, 110)}...` : description}</p>
+                                  <p className='mt-1 bg-royal-blue-100'>{description.length > 110 ? `${description.slice(0, 110)}...` : description}</p>
                                   <div className='flex gap-2 my-1'>
                                       <p className='text-[#DB4444] font-me'>Rs.{product?.discountedPrice}</p>
                                       <p className='flex line-through font-medium text-gray-400'>Rs.{product.price}</p>
@@ -107,7 +109,7 @@ const SellerProducts = () => {
                                 </div>
                             </div>
                         </Link>
-                        <div className='flex gap-5 font-medium mx-3 '>
+                        <div className='hidden md:flex gap-5 h-fit font-medium mx-3 '>
                            <p 
                              className='cursor-pointer'
                              onClick={() => {
@@ -128,6 +130,30 @@ const SellerProducts = () => {
                              delete
                            </p>
                         </div>
+
+                        <div className='md:hidden absolute right-2 top-4 flex gap-2 font-medium mx-3 '>
+                           <p 
+                             className='cursor-pointer'
+                             onClick={() => {
+                              dispatch(setProduct(product))
+                              dispatch(setIsEdit(true))
+                              navigate(`/profile/edit-product/${product._id}`)
+                           }}>
+                             <MdModeEdit size={22}/>
+                           </p>
+                           <p 
+                             onClick={() =>{ 
+                                  setOpen(true)
+                                  console.log("ADFADF",product._id)
+                                  setProductId(product._id)
+                                }
+                              }
+                             className='cursor-pointer'>
+                             <MdDelete size={22}/>
+                           </p>
+                        </div>
+
+
                      </div>
                    ))
                 )
@@ -135,7 +161,7 @@ const SellerProducts = () => {
                 <div className='h-[300px] flex flex-col justify-center items-center gap-5'>
                    <p className='text-lg font-medium'>You have'nt created Any product yet</p>
                     <Link to="/profile/add-product">
-                        <button className='py-2 px-5 bg-royal-blue-500 font-medium text-white rounded-md'>
+                        <button className='md:py-2 py-1 px-5 bg-royal-blue-500 font-medium text-white rounded-md'>
                           Create now
                         </button>
                     </Link>

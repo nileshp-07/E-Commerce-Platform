@@ -20,7 +20,6 @@ const ProductDescription = ({setStep}) => {
      formState: { errors },
      handleSubmit ,
      watch,
-     control
   } = useForm();
 
 
@@ -115,10 +114,10 @@ const ProductDescription = ({setStep}) => {
   }
   return (
     <div>
-        <h2 className='font-medium mb-10'>Fill in the basic information about your product</h2>
+        <h2 className='font-medium md:mb-8 mb-5'>Fill in the basic information about your product</h2>
 
         <form onSubmit={handleSubmit(onSubmit)}
-           className='w-[700px] '>
+           className='md:w-[700px] '>
                 {/* title  */}
                 <div className='flex flex-col w-full'>
                     <label htmlFor='title' className='font-medium text-[14px]'>Title<sup className='text-pink-200'>*</sup></label>
@@ -146,7 +145,7 @@ const ProductDescription = ({setStep}) => {
                 </div>
 
                 {/* brand and stocks  */}
-                <div className='flex gap-8 mt-8'>
+                <div className='flex gap-8 mt-5'>
     
                     <div className='flex flex-col'>
                         <label htmlFor='brand' className='font-medium text-[14px]'>Brand</label>
@@ -187,7 +186,7 @@ const ProductDescription = ({setStep}) => {
                 </div>
                 
                 {/* description */}
-                <div className='flex flex-col w-full mt-8'>
+                <div className='flex flex-col w-full mt-5'>
                     
                     <label htmlFor='description' className='font-medium text-[14px]'>Description</label>
                     <textarea
@@ -208,8 +207,8 @@ const ProductDescription = ({setStep}) => {
                 </div>
 
                 {/* prices  */}
-                <div className='flex gap-9 mt-8'>
-                    <div className='flex flex-col'>
+                <div className='flex flex-wrap gap-5 md:gap-9 mt-5'>
+                    <div className='flex flex-col w-[160px] md:w-[200px]'>
                         <label htmlFor='price' className='font-medium text-[14px]'>Price<sup className='text-pink-200'>*</sup></label>
                         <input
                             type='text'
@@ -234,7 +233,7 @@ const ProductDescription = ({setStep}) => {
                         }
                     </div>
     
-                    <div className='flex flex-col'>
+                    <div className='flex flex-col w-[160px] md:w-[200px]'>
                         <label htmlFor='discount' className='font-medium text-[14px]'>Discount</label>
                         <input
                             type='text'
@@ -262,45 +261,47 @@ const ProductDescription = ({setStep}) => {
                         )}
                     </div>
     
-                    <div className='flex flex-col'>
+                    <div className='flex flex-col  w-[160px] md:w-[200px]'>
                         <label htmlFor='discountedPrice' className='font-medium text-[14px]'>Selling Price<sup className='text-pink-200'>*</sup></label>
                         <input
                             type='text'
                             id='discountedPrice'
                             disabled
                             placeholder='Selling Price of product'
-                            className='field-style w-[180px] text-gray-600'
+                            className='field-style  text-gray-600'
                             {...register("discountedPrice")}
                         />
                     </div>
                 </div>
 
             
-                <div className='mt-8'>
-                   <div className='flex gap-8 items-center'>
-                        <div className='flex flex-col'>
-                        <label htmlFor='key' className='font-medium text-[14px]'>Specification key</label>
-                        <input
-                            type='text'
-                            id='key'
-                            placeholder='Enter specification key'
-                            className='field-style'
-                            {...register("key")}
-                        />
+                <div className='mt-5'>
+                   <div className='flex flex-col md:flex-row md:gap-8 gap-5 md:items-center'>
+                        <div className='flex flex-col w-[200px]'>
+                            <label htmlFor='key' className='font-medium text-[14px]'>Specification key</label>
+                            <input
+                                type='text'
+                                id='key'
+                                placeholder='Enter specification key'
+                                className='field-style'
+                                {...register("key")}
+                            />
                         </div>
-                        <div className='flex flex-col'>
-                        <label htmlFor='value' className='font-medium text-[14px]'>Specification value</label>
-                        <input
-                            type='text'
-                            id='value'
-                            placeholder='Enter specification value'
-                            className='field-style w-[465px]'
-                            {...register("value")}
-                        />
-                        </div>
+                        <div className='flex gap-2 items-center'>
+                            <div className='flex flex-col'>
+                                <label htmlFor='value' className='font-medium text-[14px]'>Specification value</label>
+                                <input
+                                    type='text'
+                                    id='value'
+                                    placeholder='Enter specification value'
+                                    className='field-style md:w-[465px] w-[320px]'
+                                    {...register("value")}
+                                />
+                            </div>
 
-                        <div onClick={addSpecification} className='mt-4 -ml-5'>
-                           <IoMdAddCircle size={30}/>
+                            <div onClick={addSpecification} className='mt-4'>
+                            <IoMdAddCircle size={30}/>
+                            </div>
                         </div>
                    </div>
                    {
@@ -335,7 +336,7 @@ const ProductDescription = ({setStep}) => {
 
                 {
                     isEdit ? (
-                        <div className='my-14 mx-auto flex justify-end px-10'>
+                        <div className='md:my-14 my-8 mx-auto flex justify-end md:px-10'>
                             <button onClick={handleEditProduct}
                                     className=' flex items-center gap-2 py-1 pt-2 px-5 bg-royal-blue-500 rounded-md text-white'>
                                 <p className='mb-1'>Save</p>
@@ -343,8 +344,9 @@ const ProductDescription = ({setStep}) => {
                             </button>
                         </div>
                     ) : (
-                        <div className='my-14 mx-auto flex justify-end px-10'>
+                        <div className='md:my-14 my-8 mx-auto flex justify-end md:px-10 '>
                             <button  onClick={onSubmit}
+                                     type='submit'
                                     className=' flex items-center gap-2 py-1 pt-2 px-5 bg-royal-blue-500 rounded-md text-white'>
                                 <p className='mb-1'>Next</p>
                                 <FaArrowRightLong/>

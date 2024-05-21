@@ -376,24 +376,24 @@ const Categories = ({setStep}) => {
     <div className='-mt-2'>
         
         <h2 className='font-medium'>
-          Select the category your product belong to (max. 3)
+          Select the categories your product belong to (max. 3)
         </h2>
 
-        <div className='flex gap-16 my-5 bg-gray-50 rounded-md p-6 h-[400px] overflow-hidden'>
-           <div className='flex flex-col gap-1 overflow-x-auto w-[250px]'>
+        <div className='flex md:gap-16 gap-5 my-5 bg-gray-50 rounded-md md:p-6 p-3 h-[400px] overflow-hidden'>
+           <div className='flex flex-col gap-1 overflow-x-auto md:w-[250px] md:max-w-[250px] min-w-[150px] max-w-[150px]'>
               {
                  categories.map((category , index) => (
                    <div 
                       onClick={() => setMainCategory(category)}
                       key={index} 
-                      className={`flex justify-between items-center rounded-md px-5 py-2 w-full  cursor-pointer ${mainCategory.name  === category.name && "bg-royal-blue-100" }`}>
+                      className={`flex justify-between items-center rounded-md md:px-5 px-3 py-2 w-full  cursor-pointer ${mainCategory.name  === category.name && "bg-royal-blue-100" }`}>
                           <p className='text-[17px]'>{category.name}</p>
                           <RiArrowRightSLine/>
                    </div>
                  ))
               }
            </div>
-           <div className='grid gap-x-12 gap-y-8 grid-cols-3 overflow-x-auto ' >
+           <div className='grid gap-x-12 gap-y-8 lg:grid-cols-3 md:grid-cols-2 grid-col-1 overflow-x-auto ' >
                {
                   mainCategory.subcategories1.map((subcategories1, index1) => (
                     <div key={index1}>
@@ -426,7 +426,7 @@ const Categories = ({setStep}) => {
                 <p className='font-medium'>
                   Selected categories:
                 </p>
-                <div className='flex gap-2'>
+                <div className='flex flex-row flex-wrap gap-2'>
                     {
                       selectedCategories.map((category, index) => (
                         <div key={index} className='flex justify-between gap-3 items-center py-[2px] pl-5 pr-2 rounded-full bg-royal-blue-100 w-fit'>
@@ -446,7 +446,7 @@ const Categories = ({setStep}) => {
             </div>
            )
         }
-        <div className='my-9 mx-auto flex justify-end px-16'>
+        <div className='my-9 mx-auto flex justify-end md:px-16'>
             <button 
               onClick={handleNextSubmit}
               className=' flex items-center gap-2 py-1 pt-2 px-5 bg-royal-blue-500 rounded-md text-white'>
