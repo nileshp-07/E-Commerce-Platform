@@ -85,7 +85,7 @@ const supports = [
 const Footer = () => {
   return (
     <div className='pt-10'>
-        <div className='w-11/12 max-[1200px] mx-auto border-t border-gray-700 md:pt-10 pt-5 ' >
+        <div className='w-11/12 max-[1200px] mx-auto border-t border-gray-700 md:pt-10 pt-2 ' >
             <div className='flex lg:flex-row flex-col gap-y-10 justify-between w-full p-5 pb-10'>
                 <div>
                     {/* <h2 className='text-5xl font-bold'>LOGO</h2> */}

@@ -368,6 +368,16 @@ const Reviews = ({avgRating}) => {
            ))
         }
       </div>
+      {
+         reviews?.length === 0  && (
+           <div className='flex justify-center'>
+              <div className='text-lg font-medium text-gray-500'>
+                  No reviews to this product
+              </div>
+           </div>
+
+         )
+      }
 
       {
          reviews?.length > 0 && (

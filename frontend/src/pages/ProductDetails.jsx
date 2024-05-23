@@ -101,7 +101,7 @@ const ProductDetails = () => {
             onClick={() => navigate(-1)}
             className='flex items-center gap-2 mt-5 ml-5 cursor-pointer'>
             <FaArrowLeftLong/>
-            <p className='text-xl font-medium'> Back</p>
+            <p className='md:text-xl text-lg font-medium'> Back</p>
         </div>
 
         <div className='mt-10 lg:mx-20 md:mx-10 mx-5 '>
@@ -115,8 +115,8 @@ const ProductDetails = () => {
 
 
             <div className='w-fit my-24'>
-                <h2 className='text-2xl font-semibold'>Seller Information</h2>
-                <div className='flex items-center w-[350px] md:w-full md:gap-5 gap-2 bg-royal-blue-50 mt-4 md:p-6 p-4 border border-black rounded-md'>
+                <h2 className='md:text-2xl text-xl font-semibold'>Seller Information</h2>
+                <div className='flex items-start w-[350px] md:w-full md:gap-5 gap-2 bg-royal-blue-50 mt-4 md:p-6 p-4 border border-black rounded-md'>
                     <div className='md:h-[100px] md:w-[100px] min-h-[70px] min-w-[70px] rounded-full border border-black'>
                         <img
                             src={product?.seller?.profileImage}
@@ -173,7 +173,10 @@ const ProductDetails = () => {
 
             {
                 relatedProducts.length > 0 && (
-                   <ProductCards products ={relatedProducts} heading={"Related Products"}/>
+                    <div className='mx-[-10px]'>
+                       <ProductCards products ={relatedProducts} heading={"Related Products"}/>
+                    </div>
+
                 )
             }
         </div>

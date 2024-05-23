@@ -8,7 +8,7 @@ const Error = () => {
         <div className='text-7xl text-center font-bold'>
             <img
               src={image}
-              className='h-[600px] w-[600px]'
+              className='md:h-[600px] h-[300px] w-[300px] md:w-[600px]'
             />
         </div>
     </div>

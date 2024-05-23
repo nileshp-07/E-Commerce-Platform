@@ -63,7 +63,7 @@ const ProductCard = ({product, isBestDeal}) => {
   return (
      <>
         <Link to={`/product/${product?._id}`}>
-            <div className='lg:p-3 p-2 lg:w-[280px] w-[170px] lg:min-h-[410px] min-h-[355px] custom-shadow rounded-lg hover:scale-105 duration-200 transition-all relative group'>
+            <div className='lg:p-3 p-2 lg:w-[280px] w-[170px] lg:min-h-[410px] min-h-[331px] custom-shadow rounded-lg hover:scale-105 duration-200 transition-all relative group'>
                 <div>
                     {
                         wishlists?.some(item => item._id === product._id) ? (
@@ -88,7 +88,7 @@ const ProductCard = ({product, isBestDeal}) => {
                         </div>
                     )
                 }
-                <div className='rounded-lg bg-gray-200 lg:p-6 p-4 flex items-center justify-center'>
+                <div className='rounded-lg bg-gray-200 lg:p-6 p-5 flex items-center justify-center'>
                     <img
                         src={product?.thumbnail}
                         alt='ProductThumbnail'
@@ -97,12 +97,14 @@ const ProductCard = ({product, isBestDeal}) => {
                         style={{ mixBlendMode: 'multiply' }}
                     />
                 </div> 
-                <div className='py-2'>
-                    <p className='lg:text-[17px] text-[15px] font-medium leading-[1.3rem]'>
-                       {product?.title?.split("").length > 30 ? `${product?.title?.split("").splice(0,50).join("")}...` : (product.title)}
-                    </p>
-                    <p className='font-medium text-gray-500 lg:text-[16px] text-[15px]'>{product?.categories?.[0].name}</p>
-                    <div className='flex flex-wrap gap-x-2 my-1'>
+                <div className='md:pt-2 pt-1'>
+                    <div className='max-h-[50px] overflow-hidden'>
+                        <p className='lg:text-[17px] text-[15px] font-medium md:leading-[1.3rem] leading-[1.1rem] '>
+                        {product?.title?.split("").length > 30 ? `${product?.title?.split("").splice(0,50).join("")}...` : (product.title)}
+                        </p>
+                    </div>
+                    <p className='font-medium text-gray-500 lg:text-[16px] text-[14px]'>{product?.categories?.[0].name}</p>
+                    <div className='flex flex-wrap gap-x-2 md:my-1'>
                         <p className='text-[#DB4444] font-medium lg:text-[16px] text-[15px]'>Rs.{product?.discountedPrice}</p>
                         <p className='flex line-through font-medium text-gray-400 lg:text-[16px] text-[15px]'>Rs.{product.price}</p>
                         <p className='font-medium text-[#008000] text-[14px]'>{product?.discount}% off</p>
@@ -116,7 +118,7 @@ const ProductCard = ({product, isBestDeal}) => {
                 {
                     !cartItems?.some(item => item.productId._id === product._id) && (
                         <div
-                        className='absolute right-2 bottom-2  p-[6px] hover:bg-[#c1c1c1] justify-center items-center rounded-full hidden group-hover:flex duration-200 transition-all'
+                        className='absolute right-2 bottom-2  p-[6px] hover:bg-[#c1c1c1] justify-center items-center rounded-full hidden lg:group-hover:flex duration-200 transition-all'
                         onClick={addToCartHandler}>
                             <div 
                             className='lg:p-3 p-2 rounded-full bg-black text-white font-medium flex justify-center items-center'>

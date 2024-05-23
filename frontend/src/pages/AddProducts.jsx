@@ -17,7 +17,7 @@ const AddProducts = () => {
   return (
     <div className='w-full pt-10'>
 
-        <h2 className='text-2xl font-semibold mb-8'>
+        <h2 className='md:text-2xl text-xl font-semibold mb-8'>
             {
                 isEdit ? "Edit Product" : "Add Product"
             }

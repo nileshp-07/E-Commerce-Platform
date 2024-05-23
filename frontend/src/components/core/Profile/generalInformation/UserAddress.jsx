@@ -77,7 +77,7 @@ const UserAddress = ({user}) => {
   return (
     <div className='md:my-20 my-16'>
         <div className='flex justify-between items-center'>
-            <h2 className='text-xl font-semibold'>Addresses</h2>
+            <h2 className='md:text-xl text-lg font-semibold'>Addresses</h2>
             <div 
                 onClick={() => setisNewAddress(true)}
                 className='flex md:py-[6px] py-[5px] px-4 items-center justify-center gap-1 border border-black rounded-full mr-2 cursor-pointer font-medium'

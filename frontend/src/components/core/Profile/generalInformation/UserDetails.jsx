@@ -53,7 +53,7 @@ const UserDetails = ({user, setLoading}) => {
   return (
     <div className='md:mt-20 mt-16'>
         <div className='flex justify-between items-center mb-3'>
-            <h2 className='text-xl font-semibold'>Profile Details</h2>
+            <h2 className='md:text-xl text-lg font-semibold'>Profile Details</h2>
             {
                 !isEdit  && (
                     <button 

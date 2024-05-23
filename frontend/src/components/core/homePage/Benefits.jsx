@@ -5,7 +5,7 @@ import { RiSecurePaymentLine } from "react-icons/ri";
 
 const Benefits = () => {
   return (
-    <div className='flex justify-center md:my-20 my-10'>
+    <div className='flex justify-center md:my-20 my-14'>
 
         <div className='flex md:flex-row flex-col gap-8 md:gap-0  justify-evenly items-center w-[90%] border lg:py-10 py-5 rounded-lg bg-gray-100'>
             <div className='flex flex-col items-center'>

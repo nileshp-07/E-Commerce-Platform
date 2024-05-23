@@ -36,7 +36,7 @@ const Dashboard = () => {
   }
   return (
     <div className='my-10'>
-       <h2 className='text-2xl font-semibold'>Dashboard</h2>
+       <h2 className='md:text-2xl text-xl font-semibold'>Dashboard</h2>
 
        <div className='mt-8'>
           <h2 className='text-xl font-medium'>Total Revenue</h2>

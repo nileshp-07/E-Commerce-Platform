@@ -11,8 +11,8 @@ const Specifications = ({productSpecification}) => {
                         {
                             specificationsArray && specificationsArray?.slice(0,6).map((item , index) => (
                                 <div key={index} className='flex gap-8 md:gap-5'>
-                                    <span className='text-lg font-medium'>{item?.key}  : </span>
-                                    <span className='text-lg'>{item?.value}</span>
+                                    <span className='md:text-lg font-medium'>{item?.key}  : </span>
+                                    <span className='md:text-lg'>{item?.value}</span>
                                 </div>
                             ))
                         }
@@ -22,8 +22,8 @@ const Specifications = ({productSpecification}) => {
                         {
                             specificationsArray && specificationsArray?.slice(6,12).map((item , index) => (
                                 <div key={index} className='flex gap-8 md:gap-5'>
-                                    <span  className='text-lg font-medium'>{item?.key}  : </span>
-                                    <span className='text-lg'>{item?.value}</span>
+                                    <span  className='md:text-lg font-medium'>{item?.key}  : </span>
+                                    <span className='md:text-lg'>{item?.value}</span>
                                 </div>
                             ))
                         }
@@ -35,8 +35,8 @@ const Specifications = ({productSpecification}) => {
                         {
                             specificationsArray && specificationsArray?.slice(0,specificationsArray.length/2).map((item , index) => (
                                 <div key={index}  className='flex gap-8 md:gap-5'>
-                                    <span className='text-lg font-medium'>{item?.key}  : </span>
-                                    <span className='text-lg'>{item?.value}</span>
+                                    <span className='md:text-lg font-medium'>{item?.key}  : </span>
+                                    <span className='md:text-lg'>{item?.value}</span>
                                 </div>
                             ))
                         }
@@ -46,8 +46,8 @@ const Specifications = ({productSpecification}) => {
                         {
                             specificationsArray && specificationsArray?.slice(specificationsArray.length/2,specificationsArray.length).map((item , index) => (
                                 <div key={index} className='flex gap-8 md:gap-5'>
-                                    <span className='text-lg font-medium'>{item?.key}  : </span>
-                                    <span className='text-lg'>{item?.value}</span>
+                                    <span className='md:text-lg font-medium'>{item?.key}  : </span>
+                                    <span className='md:text-lg'>{item?.value}</span>
                                 </div>
                             ))
                         }

@@ -71,7 +71,7 @@ const Checkout = () => {
     <div className='h-full w-full'>
       <div className='w-11/12 max-w-[1200px] flex flex-col md:flex-row lg:gap-0 gap-10 justify-between mx-auto my-10'>
         <div className='w-full '>
-          <h2 className='text-2xl font-semibold mb-8'>General Information</h2>
+          <h2 className='md:text-2xl text-xl font-semibold mb-8'>General Information</h2>
           
           <div className='flex flex-col gap-3 w-[350px] md:w-[400px] lg:w-[800px]'>
             <div className='flex flex-col gap-[2px]'>

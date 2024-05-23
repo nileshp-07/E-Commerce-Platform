@@ -59,13 +59,13 @@ const ProductImageSlider = () => {
             navigation={true}
             loop={true}
             modules={[Pagination, Navigation, Autoplay, Keyboard]}
-            className="mySwiper h-[250px] md:h-[550px]"
+            className="mySwiper h-[200px] md:h-[550px]"
         >
           {
              sliderImages.map((image,  index) => (
                 <SwiperSlide key={index}>
                     <Link to={image.link}>
-                        <div className='h-[250px] md:h-[550px] w-full'>
+                        <div className='h-[200px] md:h-[550px] w-full'>
                             <img
                                 src={image.image}
                                 alt='ProductSliderImage'

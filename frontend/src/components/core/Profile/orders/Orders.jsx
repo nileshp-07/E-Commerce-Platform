@@ -59,7 +59,7 @@ const Orders = () => {
   }
   return (
     <div className='my-10'>
-       <h2 className='text-2xl font-semibold '>Orders</h2>
+       <h2 className='md:text-2xl text-xl font-semibold '>Orders</h2>
        {
          user.isSeller && (
            <div className='flex items-center gap-2 justify-end mt-4'>
@@ -95,7 +95,7 @@ const Orders = () => {
                         />
                       </div>
                       <div className='md:py-1'>
-                        <p className='text-lg font-medium'>{order?.product?.title}</p>
+                        <p className='md:text-lg font-medium'>{order?.product?.title}</p>
                        
                            {
                              user.isSeller ? (

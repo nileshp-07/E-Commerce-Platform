@@ -72,7 +72,7 @@ const OrderDetails = () => {
   return (
     <div className='w-full min-h-[calc(100vh-3.5rem)]'>
        <div className='w-11/12 max-w-[1200px] mx-auto my-10 mb-10'>
-          <h2 className='text-[22px] md:text-2xl font-semibold  md:mb-14 mb-8'>Order Details</h2>
+          <h2 className='text-xl md:text-2xl font-semibold  md:mb-14 mb-8'>Order Details</h2>
           {
              order?.deliveryStatus?.status === "Cancel Request" && (
                <div className='flex items-center gap-2 justify-end py-2 mb-4'>

@@ -75,7 +75,7 @@ const SellerProducts = () => {
 
   return (
     <div className='my-10'>
-       <h2 className='text-2xl font-semibold md:mb-8 mb-5'>Products</h2>
+       <h2 className='md:text-2xl text-xl font-semibold md:mb-8 mb-5'>Products</h2>
         
         <div className='flex flex-col gap-5 items-center justify-center'>
           {

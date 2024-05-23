@@ -105,7 +105,7 @@ const Cart = () => {
   return (
     <div className='w-full h-full'>
         <div className='w-11/12 max-w-[1200px] mx-auto my-10'>
-            <h2 className='text-2xl font-semibold'>Shopping Cart</h2>
+            <h2 className='md:text-2xl text-xl font-semibold'>Shopping Cart</h2>
 
             {
                 products.length > 0 ? (
@@ -138,12 +138,12 @@ const Cart = () => {
                                             </div>
                                         </Link>
 
-                                        <div>
+                                        <div className='flex flex-row md:flex-col gap-2'>
                                             
                                             <select 
                                                 value={product?.qty}
                                                 onChange={(e) => quantityChangeHandler(e, product?.productId?._id)}
-                                                className='rounded-[8px] px-[10px] py-[8px] outline-none'>
+                                                className='rounded-[8px] px-[10px] py-[6px] outline-none'>
                                                 {
                                                     [...Array(product.productId?.stocks).keys()].map((item, index) => (
                                                         <option 
@@ -154,7 +154,7 @@ const Cart = () => {
                                                 }
                                             </select>
 
-                                            <div className='flex items-center gap-1 mt-2 w-fit text-[#FF2323] hover:bg-[#FF2323] hover:text-white py-1 px-3 rounded-md border border-[#FF2323] cursor-pointer transition-all duration-200 '
+                                            <div className='flex items-center gap-1 w-fit text-[#FF2323] hover:bg-[#FF2323] hover:text-white py-[6px] px-3 rounded-md border border-[#FF2323] cursor-pointer transition-all duration-200 '
                                             onClick={() => removeFromCartHandler(product?.productId?._id)}>
                                                 <p className='text-lg'>Remove</p>
                                                 <MdDelete size={24}/>

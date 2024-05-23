@@ -120,16 +120,20 @@ const ProductInfo = ({product}) => {
                 </div>
             </div>
 
-            <h2 className='md:text-3xl text-2xl font-semibold w-[90%]'>
+            <h2 className='md:text-3xl text-xl font-medium w-[90%]'>
                 {
                     product?.title
                 }
             </h2>
 
-            <div className='flex gap-8 my-2'>
-                <p className='font-semibold'>Brand:</p>
-                <p className="text-[17px]">{product?.brand}</p>
-            </div>
+            {
+                product?.brand && (
+                    <div className='flex gap-8 my-2 md:text-[17px]'>
+                        <p className='font-semibold'>Brand:</p>
+                        <p>{product?.brand}</p>
+                    </div>
+                )
+            }
         </div>
 
         <div className='md:px-5'>
@@ -211,14 +215,14 @@ const ProductInfo = ({product}) => {
                 )
             }
 
-            <div className='border border-black rounded-md mt-10'>
+            <div className='border border-black rounded-md mt-14'>
                 <div className='flex items-center gap-5 border-b border-black md:py-4 py-2 px-5'>
                     <div>
                         <FaTruckFast size={35}/>
                     </div>
                     <div>
-                        <h2 className='text-[20px] font-medium'>Free Delivery</h2>
-                        <p className='text-[16px] font-medium'>Free delivery for the product more than 500rs</p>
+                        <h2 className='md:text-[20px] text-[18px] font-medium'>Free Delivery</h2>
+                        <p className='text-[16px]'>Free delivery for the product more than 500rs</p>
                     </div>
                 </div>
                 <div className='flex items-center gap-5 md:py-4 py-2 px-5'>
@@ -226,8 +230,8 @@ const ProductInfo = ({product}) => {
                         <GrPowerCycle size={35}/>
                     </div>
                     <div>
-                        <h2 className='text-[20px] font-medium'>Return Delivery</h2>
-                        <p className='text-[16px] font-medium'>Free 30 Days Delivery Returns. Details</p>
+                        <h2 className='md:text-[20px] text-[18px] font-medium'>Return Delivery</h2>
+                        <p className='text-[16px]'>Free 30 Days Delivery Returns. Details</p>
                     </div>
                 </div>
             </div>

@@ -33,7 +33,7 @@ const Navbar = () => {
              <div className='lg:-ml-10 -ml-3'>
                <img
                   src={Logo}
-                  className='h-[50px] w-[120px] md:h-[60px] md:w-full'
+                  className='h-[45px]  md:h-[60px] md:w-full'
                   // style={{ mixBlendMode: 'multiply' }}
                />
              </div>
