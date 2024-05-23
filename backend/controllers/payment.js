@@ -8,8 +8,16 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
 
 exports.buyProducts = async (req, res) => {
     try{
-      const {products} = req.body;
+      const {products, isCOD, address} = req.body;
       const {email} = req.user;
+
+
+      // Store order details in session
+          req.session.orderDetails = {
+            products,
+            isCOD,
+            address
+          };
 
 
       // const address = {

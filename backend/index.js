@@ -5,11 +5,13 @@ const {connectCloudinary} = require("./config/cloudinary");
 const fileUpload = require("express-fileupload")
 const cookieParser = require("cookie-parser");
 const cors = require("cors")
+const session = require("express-session")
 
 const authRoutes = require("./routes/auth");
 const profileRoutes = require("./routes/profile");
 const productRoutes = require("./routes/product");
 const paymentRoutes = require("./routes/payment");
+
 
 require("dotenv").config();
 const PORT = process.env.PORT || 4000;
@@ -46,19 +48,22 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 
 // This is your Stripe CLI webhook secret for testing your endpoint locally.
+app.use(session({
+  secret: 'einal39hadmai29hfnma', // Replace with a long, random string
+  resave: false,
+  saveUninitialized: true,
+}));
+
 
 app.post('/webhook', express.raw({ type: 'application/json' }),(request, response) => {
-  console.log("Testing...")
-  console.log("body",request.body)
-  console.log("Headers:", request.headers);
   const sig = request.headers['stripe-signature'];
+  consolog.log(testing);
 
 
   let event;
 
   try {
     const rawBody = request.body.toString('utf8');
-    console.log("rawBody", rawBody);
     event = stripe.webhooks.constructEvent(rawBody, sig, process.env.STRIPE_WEBHOOK_SECRET);
   } catch (err) {
     response.status(400).send(`Webhook Error: ${err.message}`);
@@ -71,6 +76,16 @@ app.post('/webhook', express.raw({ type: 'application/json' }),(request, respons
   switch (event.type) {
     case 'payment_intent.succeeded':
       const paymentIntentSucceeded = event.data.object;
+      const orderDetails = request.session.orderDetails;
+      if (!orderDetails) {
+        console.log('Order details not found in session');
+      }
+
+      // Process order (e.g., create order in your system, send confirmation emails)
+      console.log('Order details:', orderDetails);
+
+      // Clear session data after processing
+      delete req.session.orderDetails;
       // Then define and call a function to handle the event payment_intent.succeeded
       break;
     // ... handle other event types
