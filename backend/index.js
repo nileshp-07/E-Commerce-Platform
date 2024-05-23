@@ -49,7 +49,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 app.post('/webhook', (request, response) => {
   console.log("Testing...")
-  console.log("body",request)
+  console.log("body",request.body)
   const sig = request.headers['stripe-signature'];
 
   let event;
@@ -61,6 +61,8 @@ app.post('/webhook', (request, response) => {
     return;
   }
 
+  console.log("Event", event);
+  console.log("Event-type", event.type);
   // Handle the event
   switch (event.type) {
     case 'payment_intent.succeeded':
