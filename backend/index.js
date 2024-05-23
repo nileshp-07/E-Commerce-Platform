@@ -50,8 +50,10 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 app.post('/webhook', express.raw({ type: 'application/json' }),(request, response) => {
   console.log("Testing...")
   console.log("body",request.body)
-  console.log("webhook secret : ", process.env.STRIPE_WEBHOOK_SECRET)
+  console.log("Headers:", req.headers);
   const sig = request.headers['stripe-signature'];
+
+  console.log("TEsting.....12")
 
   let event;
 
