@@ -50,10 +50,14 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 app.post('/webhook', express.raw({ type: 'application/json' }),(request, response) => {
   console.log("Testing...")
   console.log("body",request.body)
-  console.log("Headers:", req.headers);
+  console.log("Headers:", request.headers);
   const sig = request.headers['stripe-signature'];
 
   console.log("TEsting.....12")
+
+  if (!sig) {
+    console.log("No stripe-signature header received");
+  }
 
   let event;
 
