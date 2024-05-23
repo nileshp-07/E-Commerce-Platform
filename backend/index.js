@@ -53,16 +53,11 @@ app.post('/webhook', express.raw({ type: 'application/json' }),(request, respons
   console.log("Headers:", request.headers);
   const sig = request.headers['stripe-signature'];
 
-  console.log("TEsting.....12")
-
-  if (!sig) {
-    console.log("No stripe-signature header received");
-  }
 
   let event;
 
   try {
-    const rawBody = req.body.toString('utf8');
+    const rawBody = request.body.toString('utf8');
     console.log("rawBody", rawBody);
     event = stripe.webhooks.constructEvent(rawBody, sig, process.env.STRIPE_WEBHOOK_SECRET);
   } catch (err) {
