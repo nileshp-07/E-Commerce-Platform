@@ -57,7 +57,7 @@ app.use(session({
 
 app.post('/webhook', express.raw({ type: 'application/json' }),(request, response) => {
   const sig = request.headers['stripe-signature'];
-  consolo.log("testing....");
+  console.log("testing....");
 
 
   let event;
