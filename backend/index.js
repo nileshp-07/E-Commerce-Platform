@@ -58,12 +58,20 @@ app.use(session({
 app.post('/webhook', express.raw({ type: 'application/json' }),(request, response) => {
   const sig = request.headers['stripe-signature'];
   console.log("testing....");
+  const orderDetails = request.session.orderDetails;
+      if (!orderDetails) {
+        console.log('Order details not found in session');
+      }
+
+      // Process order (e.g., create order in your system, send confirmation emails)
+      console.log('Order details:', orderDetails);
 
 
   let event;
 
   try {
     const rawBody = request.body.toString('utf8');
+    console.log(rawBody)
     event = stripe.webhooks.constructEvent(rawBody, sig, process.env.STRIPE_WEBHOOK_SECRET);
   } catch (err) {
     response.status(400).send(`Webhook Error: ${err.message}`);
