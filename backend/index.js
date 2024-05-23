@@ -49,6 +49,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 app.post('/webhook', (request, response) => {
   console.log("Testing...")
+  console.log("body",request)
   const sig = request.headers['stripe-signature'];
 
   let event;

@@ -11,7 +11,6 @@ exports.buyProducts = async (req, res) => {
       const {products} = req.body;
       const {email} = req.user;
 
-      console.log("testing11");
 
       // const address = {
       //    name : "Nilesh Patidar",
