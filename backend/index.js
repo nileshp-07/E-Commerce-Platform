@@ -60,6 +60,7 @@ app.post('/webhook', express.raw({ type: 'application/json' }),async(request, re
     // const rawBody = request.body.toString('utf8');
     // console.log(rawBody.data.object.metadata);
     event = stripe.webhooks.constructEvent(request.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+    console.log("Stripe event verified:", event);
   } catch (err) {
     response.status(400).send(`Webhook Error: ${err.message}`);
     return;
