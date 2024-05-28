@@ -73,7 +73,7 @@ app.post('/webhook', express.raw({ type: 'application/json' }),async(request, re
   switch (event.type) {
     case 'payment_intent.succeeded':
       const paymentIntentSucceeded = event.data.object;
-      const orders = paymentIntentSucceeded.metadata.orders;
+      const orders = JSON.parse(paymentIntentSucceeded.metadata.orders); 
       const email = paymentIntentSucceeded.metadata.email;
       const userId = paymentIntentSucceeded.metadata.id;
       

@@ -78,7 +78,7 @@ exports.buyProducts = async (req, res) => {
             allowed_countries: ['IN'], // Allow only Indian addresses
         },
         metadata: {
-            orders : orders,
+            orders : JSON.stringify(orders),
             email : email,
             id : id
         },
