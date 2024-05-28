@@ -57,9 +57,9 @@ app.post('/webhook', express.raw({ type: 'application/json' }),async(request, re
   let event;
 
   try {
-    const rawBody = request.body.toString('utf8');
-    console.log(rawBody.data.object.metadata);
-    event = stripe.webhooks.constructEvent(rawBody, sig, process.env.STRIPE_WEBHOOK_SECRET);
+    // const rawBody = request.body.toString('utf8');
+    // console.log(rawBody.data.object.metadata);
+    event = stripe.webhooks.constructEvent(request.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
   } catch (err) {
     response.status(400).send(`Webhook Error: ${err.message}`);
     return;
