@@ -6,18 +6,12 @@ const mailSender = require("../utils/mailSender");
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
 
+
+
 exports.buyProducts = async (req, res) => {
     try{
-      const {products, isCOD, address} = req.body;
-      const {email} = req.user;
-
-
-      // Store order details in session
-          req.session.orderDetails = {
-            products,
-            isCOD,
-            address
-          };
+      const {products, address} = req.body;
+      const {email,id} = req.user;
 
 
       // const address = {
@@ -30,7 +24,7 @@ exports.buyProducts = async (req, res) => {
       //    country : "India"
       // }
 
-      if(products?.lenght === 0)
+      if(products?.length === 0)
       {
         return res.status(404).json({
             success: false,
@@ -38,6 +32,25 @@ exports.buyProducts = async (req, res) => {
         })
       }
 
+      let orders = [];
+      for(const item of products)
+      {
+          const product = item.productId;
+          const qty = item.qty;
+
+          const order = await Order.create({
+            buyer: id,
+            seller: product.seller,
+            product : product,
+            qty,
+            totalPrice : product.discountedPrice*qty,
+            paymentMethod : "Card",
+            shippingAddress: address,
+            orderStatus : "Pending"
+          })
+
+          orders.push(order._id);
+      }
 
       const lineItems = products.map((product) => (
         {
@@ -64,9 +77,11 @@ exports.buyProducts = async (req, res) => {
         shipping_address_collection: {
             allowed_countries: ['IN'], // Allow only Indian addresses
         },
-        // metadata: {
-        //     shipping_address: JSON.stringify(address),
-        // },
+        metadata: {
+            orders : orders,
+            email : email,
+            id : id
+        },
       })
 
 
@@ -97,7 +112,7 @@ exports.createOrder = async (req , res) => {
       const {id, email} = req.user;
 
 
-      console.log("Address",address);
+      // console.log("Address",address);
 
       // 1.  make the cart empty
       if(products.length > 1)  
@@ -115,12 +130,12 @@ exports.createOrder = async (req , res) => {
         const qty = item.qty;
         // 1. increment the sold
         const updatedProduct = await Product.findByIdAndUpdate(product._id,{
-                                                            $inc: { sold: 1 }  //increment the sold by 1
+                                                            $inc: { sold: qty }  //increment the sold by
                                                           },
                                                           {new: true}); 
         // 2. decreament the stock
         const updatedProducte = await Product.findByIdAndUpdate(product._id,{
-                                                          $dec: { stocks: item.qty }  //increment the sold by 1
+                                                          $dec: { stocks: qty }  //increment the sold by
                                                         },
                                                         {new: true}); 
 
@@ -165,4 +180,67 @@ exports.createOrder = async (req , res) => {
           message : error.message
       })
    }
+}
+
+
+
+
+exports.updateOrders = async (userId, email, orders) => {
+  try{
+     // 1.  make the cart empty
+     if(orders.length > 1)  
+     {
+         const updateCart = await Cart.findByIdAndUpdate(userId, {
+                                                             products : []
+                                                           })
+     }
+
+
+     // 2.  increment the sold field of product and insert the product id into user model and create the order for each products
+     for(const item of orders)
+     {
+       const order = await Order.findById(item)
+       const productId = order.product;
+       const qty = order.qty;
+       // 1. increment the sold and decreament the stock
+       const updatedProduct = await Product.findByIdAndUpdate(productId,{
+                                                           $inc: { sold:  qty},  //increment the sold 
+                                                           $dec: { stocks: qty }
+                                                          },
+                                                         {new: true}); 
+       
+       // 2. insert the product id into userSchema
+       const user = await User.findByIdAndUpdate(userId,{
+                                               $push : {
+                                                 products : productId
+                                               }
+                                             },
+                                             {new: true});
+
+
+       // 4. update order
+       const updateOrder = await Order.findByIdAndUpdate(order._id ,{
+                                                            orderStatus : "Success"
+                                                        })
+     }
+
+
+     // send the mail to the user 
+     const mailResponse = await mailSender(email, "products has been ordered", "you have successfully orders the products ")
+
+     return res.status(200).json({
+       success: true,
+       message : "Payment verified and order created",
+     })
+
+
+  }
+  catch(error)
+  {
+     console.log(error);
+     return res.status(401).json({
+         success : false,
+         message : error.message
+     })
+  }
 }

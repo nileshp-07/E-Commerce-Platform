@@ -43,11 +43,10 @@ export const buyProducts = async (products,isCOD, address, token) => {
                 toast.success("Payment Done");
             }
         }
-
-
-        console.log("REACHING HERE/......");
-
-        const createOrderResponse =  await createOrderOfProducts(products, isCOD, address, token);
+        else
+        {
+            const createOrderResponse =  await createOrderOfProducts(products, isCOD, address, token);
+        }
 
     }
     catch(error)

@@ -23,22 +23,6 @@ const orderSchema = new mongoose.Schema({
     totalPrice : {
         type : Number,
     },
-    // orderItems : [{
-    //     name : String,
-    //     qty : Number,
-    //     price : Number,
-    //     image : String,
-    //     productId : {
-    //         type : mongoose.Schema.Types.ObjectId,
-    //         ref : "Product"
-    //     }
-    // }],
-    // totalPrice : {
-    //     type : Number
-    // },
-    // totalItems : {
-    //     type : Number
-    // },
     coinUsed : {
         type : Number,
         default: 0
@@ -50,6 +34,11 @@ const orderSchema = new mongoose.Schema({
         type : String,
         required: [true , "please define the payment method"],
         enum : ['Card' , 'Cash' , 'Online']
+    },
+    orderStatus : {
+        type : String,
+        enum : ["Pending", "Success"],
+        default : "Success"
     },
     deliveryStatus : {
         status : {
