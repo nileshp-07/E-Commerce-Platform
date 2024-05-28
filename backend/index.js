@@ -51,8 +51,6 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 app.post('/webhook', express.raw({ type: 'application/json' }),async(request, response) => {
   console.log("Testing...")
-  console.log("body",request.body)
-  console.log("Headers:", request.headers);
   const sig = request.headers['stripe-signature'];
 
 
@@ -60,7 +58,7 @@ app.post('/webhook', express.raw({ type: 'application/json' }),async(request, re
 
   try {
     const rawBody = request.body.toString('utf8');
-    console.log("rawBody", rawBody);
+    console.log(rawBody.data.object.metadata);
     event = stripe.webhooks.constructEvent(rawBody, sig, process.env.STRIPE_WEBHOOK_SECRET);
   } catch (err) {
     response.status(400).send(`Webhook Error: ${err.message}`);
