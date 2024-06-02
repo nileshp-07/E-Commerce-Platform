@@ -20,7 +20,8 @@ exports.addProduct = async (req , res) => {
                 message : "All fields are required"
             })
         }
-        console.log(specifications);
+        
+
         // productDetails should be jsonObject 
         const specificationJSON = JSON.parse(specifications);
 
@@ -44,12 +45,17 @@ exports.addProduct = async (req , res) => {
             })
         }
         
-        const objIdCategory = new mongoose.Types.ObjectId(categories);
+        const objIdCategories = categories.split(",").map(category => {
+            if (!mongoose.Types.ObjectId.isValid(category)) {
+                throw new Error('Invalid category ID format. Each category ID must be a 24 character hex string.');
+            }
+            return new mongoose.Types.ObjectId(category);
+        });
 
         const product = await Product.create({
                                         title,
                                         price,
-                                        categories : objIdCategory,
+                                        categories : objIdCategories,
                                         stocks,
                                         brand,
                                         seller : id,
@@ -99,9 +105,6 @@ exports.editProductDetails = async (req , res) => {
     try{
         const updatedDetails = req.body;
         const {productId} = updatedDetails;
-        console.log(updatedDetails);
-
-        console.log(productId);
 
         // fetch the product  
         const product = await Product.findById(productId);
@@ -115,7 +118,6 @@ exports.editProductDetails = async (req , res) => {
             })
         }
 
-        console.log("testing");
 
         // // upload image to cloudinary if exist 
         // if(req.files)
@@ -131,6 +133,14 @@ exports.editProductDetails = async (req , res) => {
             if(key === "specifications")
             {
                 product[key] = JSON.parse(updatedDetails[key]);
+            }
+            else if(key === "categories")
+            {
+                const newCategories = updatedDetails[key].split(",").map(category => {
+                    return new mongoose.Types.ObjectId(category);
+                });
+
+                product[key] = newCategories;
             }
             else
             product[key] = updatedDetails[key];
@@ -167,7 +177,7 @@ exports.uploadProduct = async (req , res) => {
         const {title , price, categories,sellerId,thumbnail,images,stocks, brand , discountPercentage,discountedPrice, specifications } = req.body;
         // const {id} = req.user;
         // const thumbnail = req.files.image;
-
+        
 
         if(!title || !price || !categories || !sellerId || !images  || !thumbnail || !discountedPrice || !specifications )
         {
@@ -535,14 +545,6 @@ exports.searchProducts = async (req , res) => {
     try{
         const {searchQuery, filters, sortOption} = req.body;
 
-        // console.log("reqBody : ", req.body);
-
-        // console.log(
-        //     "Filters : " , filters,
-        //     "SearchQuery : ", searchQuery,
-        //     "SortOption : " , sortOption
-        // )
-
         let query = {};
 
         // applying filters 
@@ -577,8 +579,8 @@ exports.searchProducts = async (req , res) => {
             const searchTerms = searchQuery.split(" ").map(term => `(?=.*${term})`).join("");
             query.title = { $regex: `^${searchTerms}`, $options: 'i' };
             // query.brand = { $regex: `^${searchTerms}`, $options: 'i' };
+            // query.brand = { $regex: `^${searchTerms}`, $options: 'i' };
         }
-        // console.log("query :", query);
 
 
         // sortOptions 

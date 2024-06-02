@@ -9,321 +9,17 @@ import { getAllCategories } from '../../../../services/operations/productAPI';
 
 
 
-
-const categories = [
-  {
-    "name": "Electronics",
-    "subcategories1": [
-      {
-        "name": "Computers & Accessories",
-        "subcategories2": [
-          { "name": "Laptops" },
-          { "name": "Desktops" },
-          { "name": "Monitors" },
-          { "name": "Printers & Scanners" },
-          { "name": "Computer Accessories"}
-        ]
-      },
-      {
-        "name": "Smartphones & Tablets",
-        "subcategories2": [
-          { "name": "Smartphones" },
-          { "name": "Tablets" },
-          { "name": "Accessories" }
-        ]
-      },
-      {
-        "name": "Books",
-        "subcategories2": [
-          { "name": "Fiction" },
-          { "name": "Non-Fiction" },
-          { "name": "Children's Books" },
-          { "name": "Textbooks" },
-          { "name": "Audio Books" }
-        ]
-      },
-      {
-        "name": "Movies & TV Shows",
-        "subcategories2": [
-          { "name": "Action & Adventure" },
-          { "name": "Comedy" },
-          { "name": "Drama" },
-          { "name": "Documentaries" },
-          { "name": "TV Series" }
-        ]
-      },
-      {
-        "name": "Music",
-        "subcategories2": [
-          { "name": "Rock" },
-          { "name": "Pop" },
-          { "name": "Hip Hop" },
-          { "name": "Jazz" },
-          { "name": "Classical" }
-        ]
-      },
-      {
-        "name": "Furniture",
-        "subcategories2": [
-          { "name": "Living Room Furniture" },
-          { "name": "Bedroom Furniture" },
-          { "name": "Kitchen & Dining Furniture" },
-          { "name": "Office Furniture" },
-          { "name": "Outdoor Furniture" }
-        ]
-      },
-      {
-        "name": "Home Appliances",
-        "subcategories2": [
-          { "name": "Refrigerators" },
-          { "name": "Washing Machines" },
-          { "name": "Microwaves" },
-          { "name": "Coffee Makers" },
-          { "name": "Blenders & Mixers" },
-          { "name": "Air Purifiers" }
-        ]
-      },
-      {
-        "name": "Cookware",
-        "subcategories2": [
-          { "name": "Pots & Pans" },
-          { "name": "Cooking Utensils" },
-          { "name": "Bakeware" },
-          { "name": "Pressure Cookers" },
-          { "name": "Grilling Accessories" }
-        ]
-      }
-    ]
-  },
-  {
-    "name": "Home & Kitchen",
-    "subcategories1": [
-      {
-        "name": "Furniture",
-        "subcategories2": [
-          { "name": "Living Room Furniture" },
-          { "name": "Bedroom Furniture" },
-          { "name": "Kitchen & Dining Furniture" },
-          { "name": "Office Furniture" },
-          { "name": "Outdoor Furniture" }
-        ]
-      },
-      {
-        "name": "Home Appliances",
-        "subcategories2": [
-          { "name": "Refrigerators" },
-          { "name": "Washing Machines" },
-          { "name": "Microwaves" },
-          { "name": "Coffee Makers" },
-          { "name": "Blenders & Mixers" },
-          { "name": "Air Purifiers" }
-        ]
-      },
-      {
-        "name": "Cookware",
-        "subcategories2": [
-          { "name": "Pots & Pans" },
-          { "name": "Cooking Utensils" },
-          { "name": "Bakeware" },
-          { "name": "Pressure Cookers" },
-          { "name": "Grilling Accessories" }
-        ]
-      }
-      // More subcategories1 can be added here
-    ]
-  },
-  {
-    "name": "Fashion",
-    "subcategories1": [
-      {
-        "name": "Men's Clothing",
-        "subcategories2": [
-          { "name": "Shirts" },
-          { "name": "Pants & Jeans" },
-          { "name": "Jackets & Coats" },
-          { "name": "Shoes" },
-          { "name": "Accessories" }
-        ]
-      },
-      {
-        "name": "Women's Clothing",
-        "subcategories2": [
-          { "name": "Dresses" },
-          { "name": "Tops & Blouses" },
-          { "name": "Skirts" },
-          { "name": "Shoes" },
-          { "name": "Swimwear" }
-        ]
-      },
-      {
-        "name": "Accessories",
-        "subcategories2": [
-          { "name": "Bags & Purses" },
-          { "name": "Watches" },
-          { "name": "Jewelry" },
-          { "name": "Sunglasses" },
-          { "name": "Scarves & Wraps" }
-        ]
-      }
-      // More subcategories1 can be added here
-    ]
-  },
-  {
-    "name": "Books & Media",
-    "subcategories1": [
-      {
-        "name": "Books",
-        "subcategories2": [
-          { "name": "Fiction" },
-          { "name": "Non-Fiction" },
-          { "name": "Children's Books" },
-          { "name": "Textbooks" },
-          { "name": "Audio Books" }
-        ]
-      },
-      {
-        "name": "Movies & TV Shows",
-        "subcategories2": [
-          { "name": "Action & Adventure" },
-          { "name": "Comedy" },
-          { "name": "Drama" },
-          { "name": "Documentaries" },
-          { "name": "TV Series" }
-        ]
-      },
-      {
-        "name": "Music",
-        "subcategories2": [
-          { "name": "Rock" },
-          { "name": "Pop" },
-          { "name": "Hip Hop" },
-          { "name": "Jazz" },
-          { "name": "Classical" }
-        ]
-      }
-      // More subcategories1 can be added here
-    ]
-  },
-  {
-    "name": "Toys & Games",
-    "subcategories1": [
-      {
-        "name": "Board Games & Puzzles",
-        "subcategories2": [
-          { "name": "Strategy Games" },
-          { "name": "Educational Games" },
-          { "name": "Jigsaw Puzzles" },
-          { "name": "Family Games" },
-          { "name": "Party Games" }
-        ]
-      },
-      {
-        "name": "Outdoor Play",
-        "subcategories2": [
-          { "name": "Swing Sets" },
-          { "name": "Trampolines" },
-          { "name": "Playhouses" },
-          { "name": "Sandbox Toys" },
-          { "name": "Water Toys" }
-        ]
-      },
-      {
-        "name": "Action Figures & Dolls",
-        "subcategories2": [
-          { "name": "Superheroes" },
-          { "name": "Barbie Dolls" },
-          { "name": "Collectible Figures" },
-          { "name": "Dollhouses" },
-          { "name": "Dress-Up Dolls" }
-        ]
-      }
-      // More subcategories1 can be added here
-    ]
-  },
-  {
-    "name": "Health & Beauty",
-    "subcategories1": [
-      {
-        "name": "Skincare",
-        "subcategories2": [
-          { "name": "Moisturizers" },
-          { "name": "Cleansers" },
-          { "name": "Serums" },
-          { "name": "Sunscreen" },
-          { "name": "Masks" }
-        ]
-      },
-      {
-        "name": "Haircare",
-        "subcategories2": [
-          { "name": "Shampoo" },
-          { "name": "Conditioner" },
-          { "name": "Styling Products" },
-          { "name": "Hair Color" },
-          { "name": "Hair Accessories" }
-        ]
-      },
-      {
-        "name": "Makeup",
-        "subcategories2": [
-          { "name": "Lipstick" },
-          { "name": "Foundation" },
-          { "name": "Mascara" },
-          { "name": "Eyeshadow" },
-          { "name": "Makeup Brushes" }
-        ]
-      }
-      // More subcategories1 can be added here
-    ]
-  },
-  {
-    "name": "Sports & Outdoors",
-    "subcategories1": [
-      {
-        "name": "Outdoor Recreation",
-        "subcategories2": [
-          { "name": "Camping & Hiking" },
-          { "name": "Cycling" },
-          { "name": "Fishing" },
-          { "name": "Hunting" },
-          { "name": "Water Sports" }
-        ]
-      },
-      {
-        "name": "Fitness",
-        "subcategories2": [
-          { "name": "Exercise Machines" },
-          { "name": "Yoga & Pilates" },
-          { "name": "Fitness Accessories" },
-          { "name": "Strength Training" },
-          { "name": "Cardio Equipment" }
-        ]
-      },
-      {
-        "name": "Team Sports",
-        "subcategories2": [
-          { "name": "Soccer" },
-          { "name": "Basketball" },
-          { "name": "Football" },
-          { "name": "Baseball" },
-          { "name": "Volleyball" }
-        ]
-      }
-      // More subcategories1 can be added here
-    ]
-  }
-]
-
  
 const Categories = ({setStep}) => {
+  const [categories, setCategories] = useState([]);
   const [mainCategory, setMainCategory] = useState(categories[0]);
   const dispatch = useDispatch()
-  const [selectedCategories , setSelectedCategories] = useState(["660add6677a1575468c1a7d3"]);
-  const {product} = useSelector((state) => state.product);
+  const [selectedCategories , setSelectedCategories] = useState([]);
+  const {product, isEdit} = useSelector((state) => state.product);
   const [loading ,setLoading] = useState(false);
 
-  console.log("product : ",product);
-  console.log(selectedCategories);
+  // console.log("product : ",product);
+  console.log("selectedCategories : ",selectedCategories);
 
   const fetchAllCategories = async () => {
      setLoading(true);
@@ -332,18 +28,24 @@ const Categories = ({setStep}) => {
 
      if(response)
      {
-      console.log(response);
+      setCategories(response);
+      setMainCategory(response[0])
      }
   }
 
   useEffect(() => {
     fetchAllCategories();
+
+    if(isEdit)
+    {
+       setSelectedCategories(product.categories)
+    }
   }, [])
 
 
-  const changeHandler = (e) => {
-      const category = e.target.value;
+  const changeHandler = (e, category) => {
 
+      // console.log("CAtegory :", category);
       if(selectedCategories.includes(category))
       {
         const newSelectedCategories = [...selectedCategories];
@@ -362,16 +64,27 @@ const Categories = ({setStep}) => {
   }
 
   const handleNextSubmit = () => {
-     const newProduct = {...product};
+    if(selectedCategories?.length == 0 )
+    {
+       toast.error("Please select the categories first!!");
+       return;
+    }
 
-     newProduct.categories = selectedCategories;
+    const newProduct = {...product};
 
-     dispatch(setProduct(newProduct));
+    let newSelectedCategories = [];
+    selectedCategories.forEach(category => {
+       newSelectedCategories.push(category._id)
+    });
 
-     setStep(3);
+
+    newProduct.categories = newSelectedCategories;
+
+    dispatch(setProduct(newProduct));
+
+    setStep(3);
   }
 
-  console.log(mainCategory)
   return (
     <div className='-mt-2'>
         
@@ -380,14 +93,14 @@ const Categories = ({setStep}) => {
         </h2>
 
         <div className='flex md:gap-16 gap-5 my-5 bg-gray-50 rounded-md md:p-6 p-3 h-[400px] overflow-hidden'>
-           <div className='flex flex-col gap-1 overflow-x-auto md:w-[250px] md:max-w-[250px] min-w-[150px] max-w-[150px]'>
+           <div className='flex flex-col gap-1 overflow-x-auto md:w-[250px] md:min-w-[250px] min-w-[150px] max-w-[150px]'>
               {
                  categories.map((category , index) => (
                    <div 
                       onClick={() => setMainCategory(category)}
                       key={index} 
-                      className={`flex justify-between items-center rounded-md md:px-5 px-3 py-2 w-full  cursor-pointer ${mainCategory.name  === category.name && "bg-royal-blue-100" }`}>
-                          <p className='text-[17px]'>{category.name}</p>
+                      className={`flex justify-between items-center rounded-md md:px-5 px-3 py-2 w-full  cursor-pointer ${mainCategory?.name  === category?.name && "bg-royal-blue-100" }`}>
+                          <p className='text-[17px]'>{category?.name}</p>
                           <RiArrowRightSLine/>
                    </div>
                  ))
@@ -395,22 +108,22 @@ const Categories = ({setStep}) => {
            </div>
            <div className='grid gap-x-12 gap-y-8 lg:grid-cols-3 md:grid-cols-2 grid-col-1 overflow-x-auto ' >
                {
-                  mainCategory.subcategories1.map((subcategories1, index1) => (
+                  mainCategory?.subCategories?.map((subCategories, index1) => (
                     <div key={index1}>
-                       <h2 className='font-medium mb-2'>{subcategories1.name}</h2>
+                       <h2 className='font-medium mb-2'>{subCategories?.name}</h2>
                        <div className='flex flex-col gap-1'>
                         {
-                           subcategories1.subcategories2.map((subcategories2, index2) => (
+                          subCategories?.subSubCategories?.map((subSubCategories, index2) => (
                               <div className='flex gap-2 cursor-pointer' key={index2}>
                                  <input
                                    type='checkbox'
-                                   name={subcategories1.name}
-                                   id={subcategories2.name}
-                                   checked = {selectedCategories.includes(subcategories2.name)}
-                                   value={subcategories2.name}
-                                   onChange={changeHandler}
+                                   name={subCategories?.name}
+                                   id={subSubCategories?.name}
+                                   checked = {selectedCategories?.includes(subSubCategories)}
+                                   value={subSubCategories?.name}
+                                   onChange={(e) => changeHandler(e, subSubCategories)}
                                  />
-                                 <label htmlFor={subcategories2.name} className='cursor-pointer'>{subcategories2.name}</label>
+                                 <label htmlFor={subSubCategories?.name} className='cursor-pointer'>{subSubCategories?.name}</label>
                               </div>
                            ))
                         }
@@ -428,13 +141,13 @@ const Categories = ({setStep}) => {
                 </p>
                 <div className='flex flex-row flex-wrap gap-2'>
                     {
-                      selectedCategories.map((category, index) => (
+                      selectedCategories?.map((category, index) => (
                         <div key={index} className='flex justify-between gap-3 items-center py-[2px] pl-5 pr-2 rounded-full bg-royal-blue-100 w-fit'>
-                          <p className='font-medium text-[14px]'>{category}</p>
+                          <p className='font-medium text-[14px]'>{category?.name}</p>
                           <div className='cursor-pointer'
                                 onClick={() => {
                                   const newSelectedCategories = [...selectedCategories];
-                                  newSelectedCategories.splice(index, 1);
+                                  newSelectedCategories?.splice(index, 1);
                                   setSelectedCategories(newSelectedCategories);
                                 }}>
                             <RxCross2/>

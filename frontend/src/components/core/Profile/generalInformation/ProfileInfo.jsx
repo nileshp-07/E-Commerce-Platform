@@ -9,8 +9,6 @@ const ProfileInfo = () => {
   const [loading , setLoading] = useState(false);
 
  
-  // console.log(user);
-
   if(loading)
   {
      return (<div className='h-[calc(100vh-3.5rem)] grid place-items-center'>

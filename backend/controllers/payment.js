@@ -10,19 +10,9 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
 
 exports.buyProducts = async (req, res) => {
     try{
-      const {products, address} = req.body;
+      const {products, address, contactNumber} = req.body;
       const {email,id} = req.user;
-
-
-      // const address = {
-      //    name : "Nilesh Patidar",
-      //    line1 : "viswas nagar",
-      //    line2 : "viswas nagar",
-      //    city : "pithampur",
-      //    postal_code : "573238",
-      //    state : "m.p.",
-      //    country : "India"
-      // }
+      const addressJSON = JSON.parse(address);
 
       if(products?.length === 0)
       {
@@ -45,12 +35,21 @@ exports.buyProducts = async (req, res) => {
             qty,
             totalPrice : product.discountedPrice*qty,
             paymentMethod : "Card",
-            shippingAddress: address,
-            orderStatus : "Pending"
+            buyersContactNumber: contactNumber,
+            orderStatus : "Pending",
+            shippingAddress: {
+              street :  addressJSON.street,
+              city : addressJSON.city,
+              postalCode : addressJSON.postalCode,
+              state : addressJSON.state,
+              country  : addressJSON.country,
+             }
           })
 
           orders.push(order._id);
       }
+
+      await this.updateOrders(req, res);
 
       const lineItems = products.map((product) => (
         {
@@ -70,8 +69,8 @@ exports.buyProducts = async (req, res) => {
          payment_method_types : ["card"],
          line_items : lineItems,
          mode : "payment",
-         success_url : "http://localhost:3000/payment-success",
-         cancel_url : "http://localhost:3000/payment-fail",
+         success_url : "https://ecommerce-platform-nileshp07.vercel.app/payment-success",
+         cancel_url : "https://ecommerce-platform-nileshp07.vercel.app/payment-fail",
          customer_email : email,
          billing_address_collection: 'required', // Require billing address
         shipping_address_collection: {
@@ -108,11 +107,10 @@ exports.buyProducts = async (req, res) => {
 
 exports.createOrder = async (req , res) => {
    try{
-      const {products, isCOD, address} = req.body;
+      const {products, isCOD, address, contactNumber} = req.body;
       const {id, email} = req.user;
+      const addressJSON = JSON.parse(address);
 
-
-      // console.log("Address",address);
 
       // 1.  make the cart empty
       if(products.length > 1)  
@@ -148,6 +146,7 @@ exports.createOrder = async (req , res) => {
                                               {new: true});
 
 
+
         // 4. create an order for each product;
         const paymentMethod = isCOD ? "Cash" : "Card";
         const order = await Order.create({
@@ -155,9 +154,17 @@ exports.createOrder = async (req , res) => {
            seller: product.seller,
            product : product,
            qty,
+           buyersContactNumber: contactNumber,
+           shippingAddress : address, 
            totalPrice : product.discountedPrice*qty,
            paymentMethod,
-           shippingAddress: address
+           shippingAddress: {
+            street :  addressJSON.street,
+            city : addressJSON.city,
+            postalCode : addressJSON.postalCode,
+            state : addressJSON.state,
+            country  : addressJSON.country,
+           }
         })
       }
 

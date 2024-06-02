@@ -28,7 +28,7 @@ const {
 export const addProduct = async (formData, token) => {
     const toastId = toast.loading("loading...");
     try{
-        const response = await apiConnector("POST" ,ADD_PRODUCT_API ,formData,{
+        const response = await apiConnector("POST" ,ADD_PRODUCT_API ,formData, {
             "Content-Type": "multipart/form-data",
             Authorization : `Bearer ${token}`
         });
@@ -102,7 +102,7 @@ export const deleteProduct = async (productId, token) => {
         if(response.data.updatedWishlists)
         localStorage.setItem("wishlists", JSON.stringify(response.data.updatedWishlists));
         if(response.data.updatedCart)
-        localStorage.setItem("cartItems", JSON.stringify(response.data.updatedCart));
+        localStorage.setItem("cartItems", JSON.stringify(response.data.updatedCart.products));
 
         toast.success("Product Deleted Successfullly");
     }

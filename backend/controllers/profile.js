@@ -124,7 +124,6 @@ exports.editProfileDetails = async (req , res) => {
 
 exports.changeProfileImage = async (req , res) => {
     try{
-        console.log(req.files);
         const profileImage = req.files.image;
         const {id} =  req.user;
 
@@ -137,7 +136,6 @@ exports.changeProfileImage = async (req , res) => {
             })
         }
 
-        // console.log("TESTing");
 
         // upload image to cloudinary 
         const uploadResponse = await uploadImageToCloudinary(profileImage , process.env.FOLDER_NAME);

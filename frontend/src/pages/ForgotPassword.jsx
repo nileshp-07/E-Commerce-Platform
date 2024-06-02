@@ -9,7 +9,6 @@ const ForgotPassword = () => {
     const [email , setEmail] = useState("");
     const [mailSent , setMailSent] = useState(false)
 
-    console.log(email)
 
     const submitHandler = async (e) => {
         e.preventDefault();

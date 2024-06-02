@@ -12,76 +12,10 @@ import visa from "../../assets/footerPaymentMethods/visa.png"
 import masterCard from "../../assets/footerPaymentMethods/mastercard.png"
 import upi from "../../assets/footerPaymentMethods/upi.png"
 import paypal from "../../assets/footerPaymentMethods/paypal.png"
-
-const quickLinks = [
-    {
-        title : "About Us",
-        link : "/about-us"
-    },
-    {
-        title : "Contact Us",
-        link : "/contact-us"
-    },
-    {
-        title : "Products",
-        link : "/products"
-    },
-    {
-        title : "Login",
-        link : "/login"
-    },
-    {
-        title : "Signup",
-        link : "/signup"
-    },
-]
-
-const account = [
-    {
-        title : "Orders",
-        link : "/profile/orders"
-    },
-    {
-        title : "Wishlist",
-        link : "/wishlists"
-    },
-    {
-        title : "Payment Info",
-        link : "/payment-info"
-    },
-    {
-        title : "Address",
-        link : "profile/info"
-    },
-    {
-        title : "Personal Info",
-        link : "/profile/info"
-    },
-]
+import { quickLinks, account,supports } from '../../data/footerLinks';
 
 
-const supports = [
-    {
-        title : "Payment Guide",
-        link : "/payment-guide"
-    },
-    {
-        title : "Help Center",
-        link : "/help-center"
-    },
-    {
-        title : "Privacy Policy",
-        link : "/privacy-policy"
-    },
-    {
-        title : "Return Policy",
-        link : "/return-policy"
-    },
-    {
-        title : "FAQs",
-        link : "/faqs"
-    },
-]
+
 const Footer = () => {
   return (
     <div className='pt-10'>

@@ -55,7 +55,6 @@ const SellerProducts = () => {
 
 
   const handleDeleteProduct = async () => {
-    console.log("id : ",productId);
      await deleteProduct(productId, token);
 
      setOpen(false);
@@ -83,7 +82,7 @@ const SellerProducts = () => {
                 (
                    products.map((product) => (
                      <div key={product._id}
-                          className='relative flex justify-between profile-shadow p-2 rounded-md'>
+                          className='relative w-full flex justify-between profile-shadow p-2 rounded-md'>
                         <Link to={`/product/${product._id}`} className='md:max-w-[80%]'>
                             <div className='flex flex-col md:flex-row gap-3 w-full' >
                                 <div className='p-8 bg-[#DCDCDC] min-h-[200px] max-h-[200px] md:max-w-[300px] md:min-w-[300px] w-full rounded-md flex items-center justify-center'>
@@ -96,7 +95,7 @@ const SellerProducts = () => {
                                 <div className='flex flex-col gap-[2px]'>
                                   <p className='text-lg font-medium'>{product?.title}</p>
                                   <p className='font-medium text-gray-500 -mt-1'>{product?.categories?.[0].name}</p>
-                                  <p className='mt-1 bg-royal-blue-100'>{description.length > 110 ? `${description.slice(0, 110)}...` : description}</p>
+                                  <p className='mt-1'>{description.length > 110 ? `${description.slice(0, 110)}...` : description}</p>
                                   <div className='flex gap-2 my-1'>
                                       <p className='text-[#DB4444] font-me'>Rs.{product?.discountedPrice}</p>
                                       <p className='flex line-through font-medium text-gray-400'>Rs.{product.price}</p>
@@ -122,7 +121,6 @@ const SellerProducts = () => {
                            <p 
                              onClick={() =>{ 
                                   setOpen(true)
-                                  console.log("ADFADF",product._id)
                                   setProductId(product._id)
                                 }
                               }
@@ -144,7 +142,6 @@ const SellerProducts = () => {
                            <p 
                              onClick={() =>{ 
                                   setOpen(true)
-                                  console.log("ADFADF",product._id)
                                   setProductId(product._id)
                                 }
                               }

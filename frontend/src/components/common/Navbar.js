@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { GrFavorite } from "react-icons/gr";
@@ -9,21 +9,51 @@ import { useSelector } from 'react-redux';
 import { BsShopWindow } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
 import Logo from "../../assets/logo_white.png"
+import { getAllCategories } from "../../services/operations/productAPI"
 
 const Navbar = () => {
   const [searchInput , setSearchInput] = useState("")
   const {token} = useSelector((state) => state.user);
   const {user} = useSelector((state) => state.user);
+  const [categories, setCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([])
+  const [subSubCategories, setSubSubCategories] = useState([])
   const navigate = useNavigate();
 
   const searchHandler = async (e) => {
     e.preventDefault();
 
-    console.log(searchInput)
 
     navigate(`/search?query=${encodeURIComponent(searchInput)}`)
   }
 
+
+  const getAllCategoriesHandler = async () => {
+     const response = await getAllCategories();
+
+     if(response)
+      {
+        setCategories(response);
+      }
+  }
+
+  const handleMouseEnterMain = (subCategories) => {
+    setSubCategories(subCategories);
+    setSubSubCategories([]);
+  };
+
+  const handleMouseEnterSub = (subSubCategories) => {
+    setSubSubCategories(subSubCategories);
+  };
+
+  const handleMouseLeaveMain = () => {
+    setSubCategories([]);
+    setSubSubCategories([]);
+  };
+
+  useEffect(() => {
+    getAllCategoriesHandler();
+  }, [])
 
   return (
     <div className='h-[3.5rem] bg-royal-blue-500 text-white relative'>
@@ -42,10 +72,49 @@ const Navbar = () => {
 
            <div className='flex gap-10 items-center'>
 
-              <div className='flex gap-3'>
-                  <div className='lg:flex hidden items-center gap-1 group'>
-                    <p>Categories</p>
-                    <MdKeyboardArrowDown className='group-hover:rotate-180'/>
+              <div className='flex gap-3 relative'>
+
+                  <div className="relative group">
+                      <div className="lg:flex hidden items-center gap-1 cursor-pointer">
+                        <p>Categories</p>
+                        <MdKeyboardArrowDown className="group-hover:rotate-180 transition-transform" />
+                      </div>
+
+                      <div className="absolute hidden group-hover:flex bg-white z-[1000] text-black  p-2 shadow-lg"
+                          onMouseLeave={handleMouseLeaveMain}>
+                        <div className='w-[280px]'>
+                          {categories.map((mainCategory, index) => (
+                            <div
+                              key={index}
+                              onMouseEnter={() => handleMouseEnterMain(mainCategory.subCategories)}
+                              className="py-2 px-4 hover:bg-gray-200 cursor-pointer group"
+                            >
+                              {mainCategory.name}
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className='border-l border-r'>
+                          {subCategories.map((subCategory, index) => (
+                            <div
+                              key={index}
+                              onMouseEnter={() => handleMouseEnterSub(subCategory.subSubCategories || [])}
+                              className="py-2 px-4 hover:bg-gray-200 cursor-pointer group w-[200px]"
+                            >
+                              {subCategory.name}
+                            </div>
+                          ))}
+                        </div>
+
+                        <div>
+                          {subSubCategories.map((subSubCategory, index) => (
+                            <div key={index} className="py-2 px-4 hover:bg-gray-200 cursor-pointer w-[200px]"
+                                 onClick={() => navigate(`/search?query=${encodeURIComponent(subSubCategory?.name)}`)}>
+                              {subSubCategory.name}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                   </div>
 
                   <div className='relative hidden lg:block'>

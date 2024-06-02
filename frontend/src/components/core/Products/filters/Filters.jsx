@@ -4,116 +4,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import { FaStar } from "react-icons/fa";
-
-
-
-// const brandNames = [
-//     "QuantumPulse",
-//     "VortexEdge",
-//     "ZenithSphere",
-//     "NovaFusion",
-//     "ApexGlide",
-//     "InfinityForge",
-//     "SummitRise",
-//     "AuroraBlaze",
-//     "FusionBloom",
-//     "VertexQuest",
-//     "EchoZest",
-//     "SwiftSail",
-//     "StellarPulse",
-//     "Everglow",
-//     "VelocityVista",
-//     "EonEmerge",
-//     "GenesisGlide",
-//     "MomentumMist",
-//     "VitalityVista",
-//     "BlazeBurst",
-//     "HorizonHarbor",
-//     "RadiantRise",
-//     "CrestCrest",
-//     "SolarCrest",
-//     "EvolveGlow",
-//     "ThriveThrive",
-//     "RiseRise",
-//     "EchoEcho",
-//     "PulsePulse",
-//     "QuestQuest",
-//     "NexusNexus",
-//     "SurgeSurge",
-//     "EdgeEdge",
-//     "HorizonHorizon",
-//     "VelocityVelocity",
-//     "EclipseEclipse",
-//     "FusionFusion",
-//     "AuroraAurora",
-//     "NovaNova",
-//     "VortexVortex",
-//     "SummitSummit",
-//     "ZenithZenith",
-//     "QuantumQuantum",
-//     "VertexVertex",
-//     "StellarStellar",
-//     "EverglowEverglow",
-//     "VitalityVitality",
-//     "MomentumMomentum",
-//     "VelocityVelocity",
-//     "AuroraAurora"
-//   ];
-
-const discountFilter = [
-    {
-        id : "90_per_discount",
-        value : "90",
-        label : "90% & above"
-    },
-    {
-        id : "80_per_discount",
-        value : "80",
-        label : "80% & above"
-    },
-    {
-        id : "70_per_discount",
-        value : "70",
-        label : "70% & above"
-    },
-    {
-        id : "60_per_discount",
-        value : "60",
-        label : "60% & above"
-    }
-]
-
-const ratingFilter = [
-    {
-        id : "4_star",
-        value : "4",
-        label : "4"
-    },
-    {
-        id : "3_star",
-        value : "3",
-        label : "3"
-    },
-    {
-        id : "2_star",
-        value : "2",
-        label : "2"
-    }
-]
-
-const indianCities = [
-    "Mumbai",
-    "Delhi",
-    "Bangalore",
-    "Hyderabad",
-    "Chennai",
-    "Kolkata",
-    "Pune",
-    "Jaipur",
-    "Ahmedabad",
-    "Lucknow"
-];
-
+import {cities, ratingFilter, discountFilter} from "../../../../data/filterData"
 
 const Filters = ({filters ,filtersData, setFilters, setShowFilters}) => {
 //   const [priceSliderValue , setPriceSliderValue] = useState([0 , 20]);
@@ -175,13 +66,6 @@ const Filters = ({filters ,filtersData, setFilters, setShowFilters}) => {
 
         setFilters(updatedFilters);
   }
-
-  console.log(
-    "filtersData : ",filtersData
-  )
-
-
-console.log("Filters : ", filters);
 
   return (
     <div className='w-[367px] '>
@@ -362,7 +246,7 @@ console.log("Filters : ", filters);
                     {
                         filterOpen.location && (
                             <>
-                                {indianCities.map((city, index) => (
+                                {cities.map((city, index) => (
                                     <div className='flex gap-2 items-center' key={index}>
                                         <input
                                             type='checkbox'

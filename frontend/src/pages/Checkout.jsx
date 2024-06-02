@@ -9,7 +9,7 @@ const Checkout = () => {
   const {token} = useSelector((state) => state.user);
   const [addreses , setAddresses] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [contactNumber , setContactNumber] = useState(user?.contactNumber)
+  const [contactNumber , setContactNumber] = useState(user?.profileDetails?.contactNumber)
   const {order} = useSelector((state)  => state.order);
   const [paymentMethod , setPaymentMethod] = useState("");
   const [selectedAddress, setSelectedAddress] = useState({
@@ -19,6 +19,20 @@ const Checkout = () => {
                                                         state : "",
                                                         country : "India"
                                                       })
+
+
+  const handleChangeAddress = (e) => {
+     const {name, value} = e.target;
+
+     setSelectedAddress(prevState => (
+       {
+         ...prevState,
+         [name] : value
+       }
+     ))
+  }
+
+
 
   const fetchAllAddresses = async () => {
 
@@ -43,16 +57,13 @@ const Checkout = () => {
 
 
   const handleBuyProducts = async () => {
-  //   const address = {
-  //      //  name : "Nilesh Patidar",
-  //      street : "viswas nagar",
-  //      //  line2 : "viswas nagar",
-  //      city : "pithampur",
-  //      postalCode : "573238",
-  //      state : "m.p.",
-  //      country : "India"
-  //  }
 
+  if(!contactNumber || !selectedAddress.street || !selectedAddress?.city || !selectedAddress?.state)
+    {
+      toast.error("Please fill all the details to checkout");
+      return;
+    }
+ 
   if(!paymentMethod)
   {
     toast.error("Select Payment method first")
@@ -62,7 +73,7 @@ const Checkout = () => {
   const isCOD = paymentMethod === "Cash" ? true :  false;
  setLoading(true);
 
- await buyProducts(order,isCOD,JSON.stringify(selectedAddress), token);
+ await buyProducts(order,isCOD,JSON.stringify(selectedAddress),contactNumber, token);
 
  setLoading(false);
 }
@@ -107,9 +118,11 @@ const Checkout = () => {
             <div className='flex flex-col gap-[2px]'>
                 <label htmlFor='street' className='font-medium'>Street Address</label>
                 <input
+                  required
                   type='text'
                   name='street'
                   value={selectedAddress.street}
+                  onChange={handleChangeAddress}
                   className='field-style lg:w-[70%]'
                 />
             </div>
@@ -118,18 +131,22 @@ const Checkout = () => {
                 <div className='flex flex-col gap-[2px]'>
                     <label htmlFor='city' className='font-medium'>City</label>
                     <input
+                      required
                       type='text'
                       name='city'
                       value={selectedAddress.city}
+                      onChange={handleChangeAddress}
                       className='field-style w-full'
                     />
                 </div>
                 <div className='flex flex-col gap-[2px]'>
                     <label htmlFor='postalCode' className='font-medium'>Postal Code</label>
                     <input
+                      required
                       type='email'
                       name='postalCode'
                       value={selectedAddress.postalCode}
+                      onChange={handleChangeAddress}
                       className='field-style w-full'
                     />
                 </div>
@@ -139,15 +156,18 @@ const Checkout = () => {
               <div className='flex flex-col gap-[2px]'>
                   <label htmlFor='state' className='font-medium'>State</label>
                   <input
+                    required
                     type='email'
                     name='state'
                     value={selectedAddress.state}
+                    onChange={handleChangeAddress}
                     className='field-style w-full'
                   />
               </div>
               <div className='flex flex-col gap-[2px]'>
                   <label htmlFor='country' className='font-medium'>Country</label>
                   <input
+                    disabled
                     type='email'
                     name='country'
                     value={selectedAddress.country}

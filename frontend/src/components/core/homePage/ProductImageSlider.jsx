@@ -13,34 +13,9 @@ import { Pagination, Navigation, Autoplay, Keyboard } from "swiper/modules";
 
 import { Link } from 'react-router-dom';
 
-import sliderImage1  from "../../../assets/ProductImageSlider/sliderImage1.png"
-import sliderImage2  from "../../../assets/ProductImageSlider/sliderImage2.jpg"
-import sliderImage3  from "../../../assets/ProductImageSlider/sliderImage3.jpg"
-import sliderImage4  from "../../../assets/ProductImageSlider/sliderImage4.jpg"
-import sliderImage5  from "../../../assets/ProductImageSlider/sliderImage5.jpg"
 
-const sliderImages = [
-    {
-        image : sliderImage1,
-        link : "/search?query=iphone"
-    },
-    {
-        image : sliderImage2,
-        link : "/search?query=shoes"
-    },
-    {
-        image : sliderImage3,
-        link : "/search?query=shoes"
-    },
-    {
-        image : sliderImage4,
-        link : "/search?query=speakers"
-    },
-    {
-        image : sliderImage5,
-        link : `/search?query=${encodeURIComponent("women's fashion")}`
-    },
-]
+
+import { sliderImagesLinks } from '../../../data/homePageData';
 
 const ProductImageSlider = () => {
   return (
@@ -62,7 +37,7 @@ const ProductImageSlider = () => {
             className="mySwiper h-[200px] md:h-[550px]"
         >
           {
-             sliderImages.map((image,  index) => (
+             sliderImagesLinks.map((image,  index) => (
                 <SwiperSlide key={index}>
                     <Link to={image.link}>
                         <div className='h-[200px] md:h-[550px] w-full'>

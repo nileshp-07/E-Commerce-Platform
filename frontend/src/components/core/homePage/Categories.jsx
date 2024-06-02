@@ -1,47 +1,13 @@
 import React from 'react'
 
-import mobile from "../../../assets/Categories/mobiles.png"
-import computer from "../../../assets/Categories/computer.png"
-import smartwatch from "../../../assets/Categories/smartwatch.png"
-import headphone from "../../../assets/Categories/headphones.png"
-import shoes from "../../../assets/Categories/shoes.png"
-import fashion from "../../../assets/Categories/fashion.png"
+// import mobile from "../../../assets/Categories/mobiles.png"
+// import computer from "../../../assets/Categories/computer.png"
+// import smartwatch from "../../../assets/Categories/smartwatch.png"
+// import headphone from "../../../assets/Categories/headphones.png"
+// import shoes from "../../../assets/Categories/shoes.png"
+// import fashion from "../../../assets/Categories/fashion.png"
 import { Link } from 'react-router-dom'
-
-
-const categories = [
-    {
-        icon : mobile,
-        category : "Mobiles",
-        link : "/search?query=mobiles"
-    },
-    {
-        icon : computer,
-        category : "Computers",
-        link : "/search?query=computers"
-    },
-    {
-        icon : smartwatch,
-        category : "SmartWatch",
-        link : "/search?query=smartwatch"
-    },
-    {
-        icon : headphone,
-        category : "Headphones",
-        link : "/search?query=headphones"
-    },
-    {
-        icon : shoes,
-        category : "Shoes",
-        link : "/search?query=shoes"
-    },
-    {
-        icon : fashion,
-        category: "Fashion",
-        link : "/search?query=fashion"
-    }
-]
-
+import { categories } from '../../../data/homePageData'
 
 const Categories = () => {
   return (

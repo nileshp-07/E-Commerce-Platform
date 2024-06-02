@@ -5,6 +5,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
 import {useDispatch, useSelector} from "react-redux"
 import { setProduct } from '../../../../redux/slices/productSlice';
+import {toast} from "sonner"
 
 const ProductDescription = ({setStep}) => {
   const [specifications , setSpecifications] = useState({})
@@ -87,6 +88,12 @@ const ProductDescription = ({setStep}) => {
     productDetails.brand = values.brand;
     productDetails.specifications = specifications;
 
+    if(!productDetails.title || !productDetails.price || !productDetails?.stocks)
+    {
+        toast.error("Please  fill the required details to proceed");
+        return;
+    }
+
     dispatch(setProduct(productDetails));
 
     setStep(2);
@@ -145,7 +152,7 @@ const ProductDescription = ({setStep}) => {
                 </div>
 
                 {/* brand and stocks  */}
-                <div className='flex gap-8 mt-5'>
+                <div className='flex gap-5 mt-5'>
     
                     <div className='flex flex-col'>
                         <label htmlFor='brand' className='font-medium text-[14px]'>Brand</label>

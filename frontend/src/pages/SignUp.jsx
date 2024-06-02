@@ -21,7 +21,6 @@ const SignUp = () => {
         confirmPassword : "",
     })
 
-    console.log(formData);
 
     const changeHandler = (e) => {
         const {name , value} = e.target;

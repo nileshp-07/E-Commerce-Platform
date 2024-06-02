@@ -1,27 +1,5 @@
 import React, { useEffect } from 'react'
-
-const sortOptions = [
-    {
-        name : "Highest Rated",
-        value : "highest_rated"
-    },
-    {
-        name : "Price: Low to High",
-        value : "lowest_price"
-    },
-    {
-        name : "Price: High to Low",
-        value : "highest_price"
-    },
-    {
-        name : "Newest First",
-        value : "newest_first"
-    },
-    {
-        name : "Most Discount",
-        value : "most_discounted"
-    }
-]
+import {sortOptions} from '../../../data/sortOptions'
 
 const SortOption = ({sortBy ,setSortBy}) => {
   return (

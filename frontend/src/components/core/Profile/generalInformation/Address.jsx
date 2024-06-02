@@ -83,7 +83,6 @@ const Address = ({addr, isNewAddress, setNewAddress, setLoading}) => {
       if(response)
       {
         setAddress(response);
-        console.log("Address after delete : ",response);
       }
       setLoading(false);
       setOpen(false)

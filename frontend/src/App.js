@@ -16,7 +16,6 @@ import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
 import Error from './components/common/Error';
 import AddProducts from './pages/AddProducts';
-import ProductUploader from "./util/ProductUploader"
 import Cart from './pages/Cart';
 import Dashboard from './components/core/Profile/Dashboard';
 import SellerProducts from './components/core/Profile/SellerProducts';
@@ -26,6 +25,7 @@ import OpenRoute from './components/core/auth/OpenRoute';
 import PrivateRoute from './components/core/auth/PrivateRoute';
 import { useSelector } from 'react-redux';
 import Checkout from './pages/Checkout';
+import PaymentSuccess from './pages/PaymentSuccess';
 
 function App() {
   const {user} = useSelector((state) => state.user);
@@ -63,7 +63,6 @@ function App() {
 
           <Route path='/search' element={<Products/>}/>
           <Route path='/product/:id' element={<ProductDetails/>}/>
-          <Route path='/product-uploader' element={<ProductUploader/>}/>
           <Route path='/cart' element={
                                       <PrivateRoute>
                                         <Cart/>
@@ -145,7 +144,7 @@ function App() {
               }
           </Route> 
 
-
+          <Route path="/payment-success" element={<PaymentSuccess/>}/>
           <Route path='*' element={<Error/>}/> 
       </Routes>
     </div>

@@ -44,7 +44,6 @@ const UserDetails = ({user, setLoading}) => {
       // const parts = formData.dateOfBirth.split('-');
       const parts = date?.split('-');
       if (parts?.length === 3) {
-        //   console.log(`Date : ${parts[2]}-${parts[1]}-${parts[0]}`)
           return `${parts[0]}-${parts[1]}-${parts[2]}`;
       }
       return ''; // Invalid date format, return empty string or handle error

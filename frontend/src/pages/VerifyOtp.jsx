@@ -30,7 +30,7 @@ const VerifyOtp = () => {
   }
   return (
     <div className='h-[calc(100vh-3.5rem)] flex items-center justify-center'>
-       <div className='min-h-[500px] lg:w-[800px] px-16 py-12 rounded-xl flex justify-between custom-shadow'>
+       <div className='lg:min-h-[500px] lg:w-[900px] md:w-[500px] w-[350px] md:px-16 px-8  md:py-12 py-6 rounded-xl flex justify-between custom-shadow'>
           <div className='flex flex-col justify-center gap-4'>
              <Link to="/signup">
                 <p className='flex gap-1 items-center text-[14px] font-medium text-[#313131]'>
@@ -39,7 +39,7 @@ const VerifyOtp = () => {
                 </p>
              </Link>
 
-             <h2 className='text-3xl font-semibold'>Verify Code</h2>
+             <h2 className='md:text-3xl text-2xl  font-semibold'>Verify Code</h2>
 
              <p className='text-[14px] text-[#313131] -mt-3'>an authentication code has been sent to your email</p>
 
@@ -76,6 +76,7 @@ const VerifyOtp = () => {
             loading='lazy'
             width={300}
             height={470}
+            className='hidden md:block'
           />
        </div>
     </div>

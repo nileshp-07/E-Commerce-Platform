@@ -11,7 +11,7 @@ const {
 } = paymentEndPoints;
 
 
-export const buyProducts = async (products,isCOD, address, token) => {
+export const buyProducts = async (products,isCOD, address,contactNumber, token) => {
     const toastId = toast.loading("loading....");
 
     try{
@@ -19,7 +19,7 @@ export const buyProducts = async (products,isCOD, address, token) => {
         if(!isCOD){
             const stripe = await loadStripe("pk_test_51P3eJbSDP8bYTlUtAo5Sv2m6AJo3xUfAIz60KO26ZJBBgIyaXCe23VqXAA3QSRWkfOIIPk8MdHwgzs0ZpJNgXbnP00JtJedXR7");
             
-            const response = await apiConnector("POST", BUY_PRODUCT_API , {products},{
+            const response = await apiConnector("POST", BUY_PRODUCT_API , {products, address,contactNumber},{
                 "Content-Type" :  "application/json",
                 Authorization : `Bearer ${token}`
             });
@@ -45,7 +45,7 @@ export const buyProducts = async (products,isCOD, address, token) => {
         }
         else
         {
-            const createOrderResponse =  await createOrderOfProducts(products, isCOD, address, token);
+            const createOrderResponse =  await createOrderOfProducts(products, isCOD, address,contactNumber, token);
         }
 
     }
@@ -59,11 +59,11 @@ export const buyProducts = async (products,isCOD, address, token) => {
 }
 
 
-export const createOrderOfProducts = async (products, isCOD, address, token) => {
+export const createOrderOfProducts = async (products, isCOD, address,contactNumber, token) => {
      const toastId = toast.loading("Creating Order...");
 
      try{
-        const response = await apiConnector("POST", CREATE_ORDER_API,{products, isCOD, address},{
+        const response = await apiConnector("POST", CREATE_ORDER_API,{products, isCOD, address, contactNumber},{
             "Content-Type" :  "application/json",
              Authorization : `Bearer ${token}`
         });

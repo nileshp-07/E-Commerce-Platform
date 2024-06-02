@@ -11,32 +11,11 @@ import Stack from '@mui/material/Stack';
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import { RiSearch2Line } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom'
+import {sortOptions} from "../data/sortOptions"
 
 
 
 
-const sortOptions = [
-    {
-        name : "Highest Rated",
-        value : "highest_rated"
-    },
-    {
-        name : "Price: Low to High",
-        value : "lowest_price"
-    },
-    {
-        name : "Price: High to Low",
-        value : "highest_price"
-    },
-    {
-        name : "Newest First",
-        value : "newest_first"
-    },
-    {
-        name : "Most Discount",
-        value : "most_discounted"
-    }
-]
 
 const Products = () => {
   const [products, setProducts] = useState([])
@@ -65,8 +44,6 @@ const Products = () => {
   const searchHandler = async (e) => {
     e.preventDefault();
 
-    console.log(searchInput)
-
     navigate(`/search?query=${encodeURIComponent(searchInput)}`)
   }
 
@@ -74,15 +51,14 @@ const Products = () => {
   const searchProductsHandler = async () => {
       setLoading(true);
       
-      // console.log("Queries :  ",searchQuery, "  ",sortBy , "  ",filters);
       const response = await searchProducts(searchQuery, filters, sortBy);
 
-      if(response.products)
+      if(response?.products)
       {
-        setProducts(response.products);
+        setProducts(response?.products);
 
         if(response.filtersData && firstRender)
-        setFiltersData(response.filtersData);
+        setFiltersData(response?.filtersData);
         setFirstRender(false);
       }
       setLoading(false);
@@ -121,13 +97,9 @@ const Products = () => {
     const calculateTotalPagesCount = (totalProducts) => {
        
         let pages=  Math.floor(totalProducts/productPerPage);
-
-        console.log(pages);
-
         if(totalProducts%productPerPage > 0)
             pages += 1;
 
-        console.log(pages);
 
         setTotalPages(pages)
 
@@ -194,7 +166,7 @@ const Products = () => {
                             onChange={(e) => setSortBy(e.target.value)}
                             >
                             {
-                                sortOptions.map((sort, index) => (
+                                sortOptions?.map((sort, index) => (
                                     <option className={`text-[17px] py-1 px-3 rounded-full cursor-pointer ${sortBy === sort.value && "text-royal-blue-500 bg-royal-blue-100"}`} 
                                         key={index}>
                                         {sort.name}

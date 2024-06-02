@@ -10,7 +10,7 @@ const ProductImages = ({images}) => {
                 {
                     images?.map((url , index) => (
                         <div key={index}  
-                            className={`md:min-h-[117px] md:h-[117px] md:min-w-[120px] min-h-[100px] h-[100px] min-w-[100px] p-3 bg-gray-100 cursor-pointer ${selectedImage === url && "border-2 border-royal-blue-500 scale-105"}`}
+                            className={`md:min-h-[117px] md:h-[117px] md:min-w-[120px] md:w-[120px] min-h-[100px] h-[100px] min-w-[100px] p-3 bg-gray-100 cursor-pointer ${selectedImage === url && "border-2 border-royal-blue-500 scale-105"}`}
                             onClick={() => setSelectedImage(url)}>
                             <img
                                 src={url}

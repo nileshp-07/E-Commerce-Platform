@@ -9,13 +9,6 @@ import { IoMdAlert } from "react-icons/io";
 import { toast } from 'sonner';
 
 
-const Address = {
-   street : "125/A jay nagar",
-   city : "Pithampur",
-   postalCode : 473819,
-   state : "Madhya pradesh",
-   country : "India"
-}
 const description = "This will help you identify if any of these values are null or undefined, or if the structure of your data is different from what you expect. Once you identify the issue, you can adjust your code accordingly."
 const deliveryStatus = ["Processing", "Shipped" , "Delivered" , "Cancelled"];
 const OrderDetails = () => {
@@ -40,7 +33,6 @@ const OrderDetails = () => {
   }  
 
   const deliveryStatusChangeHandler = async () => {
-    console.log(selectedStatus)
       if(order?.deliveryStatus?.status === selectedStatus)
       {
          toast.error("Please select another status")
@@ -58,7 +50,6 @@ const OrderDetails = () => {
        getOrdersFullDetailsHandler();
   }, [])
 
-  console.log(selectedStatus)
 
   if(loading)
   {
@@ -99,7 +90,7 @@ const OrderDetails = () => {
                           <p>{order?.buyer?.name}</p>
 
                           <div>
-                            {Address.street}, {Address.city}, {Address.postalCode}, {Address.state}, {Address.country}
+                            {`${order?.shippingAddress?.street}, ${order?.shippingAddress?.city}, ${order?.shippingAddress?.postalCode}, ${order?.shippingAddress?.state}, ${order?.shippingAddress?.country || "India"}`}
                           </div>
 
                           <p className='font-medium mt-2'>Contact Number</p>
@@ -160,7 +151,7 @@ const OrderDetails = () => {
                       <div className='flex flex-col gap-[2px]'>
                         <p className='text-lg font-medium'>{order?.product?.title}</p>
                         <p className='font-medium text-gray-500 -mt-1'>{order?.product?.categories?.[0].name}</p>
-                        <p className='mt-1 bg-royal-blue-100'>{description.length > 110 ? `${description.slice(0, 110)}...` : description}</p>
+                        {/* <p className='mt-1 bg-royal-blue-100'>{description.length > 110 ? `${description.slice(0, 110)}...` : description}</p> */}
                         <div className='flex flex-col my-1'>
                             <div className='flex gap-1'>
                               <p className='font-medium'>Quantity:</p>

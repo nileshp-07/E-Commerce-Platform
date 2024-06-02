@@ -21,8 +21,6 @@ const HomePage = () => {
   const searchHandler = async (e) => {
     e.preventDefault();
 
-    console.log(searchInput)
-
     navigate(`/search?query=${encodeURIComponent(searchInput)}`)
   }
 

@@ -9,9 +9,6 @@ const ProfileImage = ({user, setLoading}) => {
   const dispatch  = useDispatch();
   const inputRef = useRef(null);
 
-  console.log(user);
-
-  console.log(image);
 
   const changeProfileImage = async () => {
         if(!image) {

@@ -19,7 +19,6 @@ const ProductImages = ({setStep}) => {
   const {token} = useSelector((state) => state.user)
 
 
-  console.log("product : ",product);
   const handleThumbnailInput = (e) => {
     const productThumbnail = e.target.files[0];
     setThumbnail(productThumbnail);
@@ -31,7 +30,6 @@ const ProductImages = ({setStep}) => {
        setThumbnail(product.thumbnail);
        setImages(product.images)
 
-       console.log("Edited product :  : ",product);
       //  setImages(product.images);
     }
   }, [])
@@ -49,6 +47,13 @@ const ProductImages = ({setStep}) => {
   }
 
   const handleAddProduct = async () => {
+      if(!thumbnail || !images.length===0)
+      {
+         toast.error("Please select the thumbnail and image to add product");
+         return;
+      }
+
+
       const newProduct = {...product};
 
       newProduct.thumbnail = thumbnail; 

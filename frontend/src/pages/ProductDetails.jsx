@@ -20,8 +20,6 @@ const ProductDetails = () => {
     const [isReview ,setIsReviews] = useState(false);
     const [relatedProducts, setRelatedProducts] = useState([]);
 
-    console.log(product);
-
     const addProductToRecentlyViewed = (product) => {
         let recentlyViewedProducts = JSON.parse(localStorage.getItem("recentlyViewedProducts")) || [];
 
@@ -55,7 +53,6 @@ const ProductDetails = () => {
        {
          setProduct(response);
          addProductToRecentlyViewed(response);
-         console.log(response);
        }
 
        setLoading(false)

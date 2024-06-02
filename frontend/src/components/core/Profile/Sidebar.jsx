@@ -11,6 +11,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { BsBoxSeam } from "react-icons/bs";
 import { BsFillHandbagFill } from "react-icons/bs";
 import { MdOutlineAddCircle } from "react-icons/md";
+import { LiaUserLockSolid } from "react-icons/lia";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -96,6 +97,16 @@ const Sidebar = () => {
                 </Link>
              </div>
           )
+        }
+        {
+           !user.isSeller && (
+             <Link to="/become-seller">
+                <div className={`flex gap-2 items-center font-medium transition-all duration-200 px-5 py-2 ${matchRoute("/become-seller") ? "border-l-[5px] bg-royal-blue-50 text-royal-blue-700 border-royal-blue-500" : "border-l-[5px] border-white hover:bg-gray-100"}  mr-3 rounded-r-full`}>
+                   <LiaUserLockSolid size={20}/>
+                   <p>Become Seller</p> 
+                </div>
+             </Link>
+           )
         }
         
         <Link to="/profile/wishlists">

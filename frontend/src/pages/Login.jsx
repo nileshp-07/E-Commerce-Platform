@@ -13,7 +13,6 @@ const Login = () => {
     const [showPassword , setShowPassword] = useState(false);
     const [email, setEmail] = useState("");
     const [password , setPassword] = useState("");
-    console.log(email);
 
     const submitHandler = async (e) => {
         e.preventDefault();

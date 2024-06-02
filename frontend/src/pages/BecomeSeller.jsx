@@ -19,7 +19,6 @@ const BecomeSeller = () => {
     })
 
 
-    console.log("Form Data: ",formData);
   const changeHandler = (e) => {
       const {name , value} = e.target;
 

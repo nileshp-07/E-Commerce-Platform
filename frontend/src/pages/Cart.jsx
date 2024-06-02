@@ -34,7 +34,6 @@ const Cart = () => {
         let total = 0;
         let discount = 0;
         let totalPrice;
-        console.log(products);
         products.forEach((product) => {
             const {price , discountedPrice} = product.productId;
             const qty = product.qty;
